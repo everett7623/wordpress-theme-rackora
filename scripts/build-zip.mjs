@@ -15,7 +15,11 @@ if (dirty) console.warn("工作区有未提交的修改，ZIP 只包含已提交
 
 const output = path.join(root, "dist", `rackora-${version}.zip`);
 mkdirSync(path.dirname(output), { recursive: true });
-execFileSync("git", ["archive", "--format=zip", "--prefix=rackora/", "-o", output, "HEAD"], { cwd: root });
+// git archive 按本机时区写入条目的 DOS 时间，固定 UTC 才能与 GitHub Actions 打出的包逐字节一致
+execFileSync("git", ["archive", "--format=zip", "--prefix=rackora/", "-o", output, "HEAD"], {
+  cwd: root,
+  env: { ...process.env, TZ: "UTC" },
+});
 
 const zip = readFileSync(output);
 const sha256 = createHash("sha256").update(zip).digest("hex");
