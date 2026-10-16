@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rackora/pagination",
+	"title": "Page navigation",
+	"category": "rackora",
+	"icon": "controls-forward",
+	"description": "Previous and next links with the current page count for the main query. Place it after a Query Loop that inherits the template query.",
+	"textdomain": "rackora",
+	"supports": {
+		"html": false
+	},
+	"editorScript": "rackora-editor",
+	"render": "file:./render.php"
+}

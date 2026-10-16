@@ -1,0 +1,246 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.6/theme.json",
+	"version": 3,
+	"settings": {
+		"appearanceTools": true,
+		"useRootPaddingAwareAlignments": false,
+		"color": {
+			"defaultPalette": false,
+			"defaultGradients": false,
+			"defaultDuotone": false,
+			"palette": [
+				{ "slug": "paper", "name": "Paper", "color": "#f4f6f4" },
+				{ "slug": "surface", "name": "Surface", "color": "#ffffff" },
+				{ "slug": "ink", "name": "Ink", "color": "#171a18" },
+				{ "slug": "ink-soft", "name": "Ink soft", "color": "#414643" },
+				{ "slug": "muted", "name": "Muted", "color": "#686e6a" },
+				{ "slug": "line", "name": "Line", "color": "#e1e5e2" },
+				{ "slug": "line-strong", "name": "Line strong", "color": "#c8ceca" },
+				{ "slug": "accent", "name": "Accent", "color": "#08775b" },
+				{ "slug": "signal", "name": "Signal", "color": "#c64840" },
+				{ "slug": "amber", "name": "Amber", "color": "#9a5d12" }
+			]
+		},
+		"layout": {
+			"contentSize": "760px",
+			"wideSize": "1240px"
+		},
+		"spacing": {
+			"units": [ "px", "em", "rem", "%", "vh", "vw" ]
+		},
+		"typography": {
+			"defaultFontSizes": false,
+			"fluid": false,
+			"fontFamilies": [
+				{
+					"slug": "sans",
+					"name": "IBM Plex Sans",
+					"fontFamily": "\"IBM Plex Sans\", \"PingFang SC\", \"Microsoft YaHei\", ui-sans-serif, system-ui, sans-serif",
+					"fontFace": [
+						{
+							"fontFamily": "IBM Plex Sans",
+							"fontStyle": "normal",
+							"fontWeight": "400",
+							"fontDisplay": "swap",
+							"src": [ "file:./assets/fonts/ibm-plex-sans-latin-400-normal.woff2" ]
+						},
+						{
+							"fontFamily": "IBM Plex Sans",
+							"fontStyle": "normal",
+							"fontWeight": "500",
+							"fontDisplay": "swap",
+							"src": [ "file:./assets/fonts/ibm-plex-sans-latin-500-normal.woff2" ]
+						},
+						{
+							"fontFamily": "IBM Plex Sans",
+							"fontStyle": "normal",
+							"fontWeight": "600",
+							"fontDisplay": "swap",
+							"src": [ "file:./assets/fonts/ibm-plex-sans-latin-600-normal.woff2" ]
+						}
+					]
+				},
+				{
+					"slug": "serif",
+					"name": "Source Serif 4",
+					"fontFamily": "\"Source Serif 4\", \"Noto Serif SC\", \"Songti SC\", \"SimSun\", Georgia, serif",
+					"fontFace": [
+						{
+							"fontFamily": "Source Serif 4",
+							"fontStyle": "normal",
+							"fontWeight": "400",
+							"fontDisplay": "swap",
+							"src": [ "file:./assets/fonts/source-serif-4-latin-ext-400-normal.woff2" ],
+							"unicodeRange": "U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF"
+						},
+						{
+							"fontFamily": "Source Serif 4",
+							"fontStyle": "normal",
+							"fontWeight": "400",
+							"fontDisplay": "swap",
+							"src": [ "file:./assets/fonts/source-serif-4-latin-400-normal.woff2" ],
+							"unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD"
+						},
+						{
+							"fontFamily": "Source Serif 4",
+							"fontStyle": "normal",
+							"fontWeight": "600",
+							"fontDisplay": "swap",
+							"src": [ "file:./assets/fonts/source-serif-4-latin-ext-600-normal.woff2" ],
+							"unicodeRange": "U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF"
+						},
+						{
+							"fontFamily": "Source Serif 4",
+							"fontStyle": "normal",
+							"fontWeight": "600",
+							"fontDisplay": "swap",
+							"src": [ "file:./assets/fonts/source-serif-4-latin-600-normal.woff2" ],
+							"unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD"
+						}
+					]
+				},
+				{
+					"slug": "mono",
+					"name": "Monospace",
+					"fontFamily": "ui-monospace, SFMono-Regular, Consolas, \"Liberation Mono\", monospace"
+				}
+			],
+			"fontSizes": [
+				{ "slug": "x-small", "name": "Extra small", "size": "0.75rem" },
+				{ "slug": "small", "name": "Small", "size": "0.875rem" },
+				{ "slug": "medium", "name": "Medium", "size": "1rem" },
+				{ "slug": "large", "name": "Large", "size": "1.32rem" },
+				{ "slug": "x-large", "name": "Extra large", "size": "2rem" },
+				{ "slug": "xx-large", "name": "Huge", "size": "clamp(2.1rem, 4vw, 3rem)" }
+			]
+		},
+		"blocks": {
+			"core/image": {
+				"lightbox": {
+					"enabled": true,
+					"allowEditing": true
+				}
+			}
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "var(--rack-paper)",
+			"text": "var(--rack-ink)"
+		},
+		"typography": {
+			"fontFamily": "var(--wp--preset--font-family--sans)",
+			"fontSize": "16px",
+			"lineHeight": "1.65"
+		},
+		"spacing": {
+			"blockGap": "1.25rem",
+			"padding": {
+				"top": "0",
+				"right": "0",
+				"bottom": "0",
+				"left": "0"
+			}
+		},
+		"elements": {
+			"link": {
+				"color": {
+					"text": "var(--rack-accent)"
+				},
+				":hover": {
+					"color": {
+						"text": "var(--rack-accent-hover)"
+					}
+				}
+			},
+			"heading": {
+				"color": {
+					"text": "var(--rack-ink)"
+				},
+				"typography": {
+					"fontWeight": "700",
+					"lineHeight": "1.35"
+				}
+			},
+			"button": {
+				"color": {
+					"background": "var(--rack-accent)",
+					"text": "#ffffff"
+				},
+				"border": {
+					"radius": "5px"
+				},
+				"typography": {
+					"fontSize": "0.86rem",
+					"fontWeight": "700"
+				},
+				"spacing": {
+					"padding": {
+						"top": "8px",
+						"right": "14px",
+						"bottom": "8px",
+						"left": "14px"
+					}
+				},
+				":hover": {
+					"color": {
+						"background": "var(--rack-accent-hover)",
+						"text": "#ffffff"
+					}
+				}
+			},
+			"caption": {
+				"color": {
+					"text": "var(--rack-muted)"
+				},
+				"typography": {
+					"fontSize": "0.78rem"
+				}
+			}
+		}
+	},
+	"customTemplates": [
+		{
+			"name": "single-docs",
+			"title": "Documentation",
+			"postTypes": [ "post" ]
+		},
+		{
+			"name": "page-about",
+			"title": "About",
+			"postTypes": [ "page" ]
+		},
+		{
+			"name": "page-archives",
+			"title": "Archives",
+			"postTypes": [ "page" ]
+		},
+		{
+			"name": "page-categories",
+			"title": "All categories",
+			"postTypes": [ "page" ]
+		},
+		{
+			"name": "page-tags",
+			"title": "All tags",
+			"postTypes": [ "page" ]
+		},
+		{
+			"name": "page-links",
+			"title": "Links",
+			"postTypes": [ "page" ]
+		}
+	],
+	"templateParts": [
+		{
+			"name": "header",
+			"title": "Header",
+			"area": "header"
+		},
+		{
+			"name": "footer",
+			"title": "Footer",
+			"area": "footer"
+		}
+	]
+}

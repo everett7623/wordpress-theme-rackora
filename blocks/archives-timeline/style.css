@@ -1,0 +1,126 @@
+.timeline {
+	width: 100%;
+}
+
+.timeline-year {
+	display: grid;
+	grid-template-columns: 5.5rem minmax(0, 1fr);
+	gap: 28px;
+	padding: 30px 0;
+	border-top: 1px solid var(--rack-line-strong);
+}
+
+.timeline-year > h2 {
+	position: sticky;
+	top: calc(var(--rack-header-height) + 20px);
+	align-self: start;
+	margin: 0;
+	color: var(--rack-accent);
+	font-family: var(--rack-font-mono);
+	font-size: 1.35rem;
+}
+
+/* 月份必须整体包在第二列里；直接作为 grid 子项时，第二个月份会被自动排进窄的年份列 */
+.timeline-year__months {
+	min-width: 0;
+}
+
+.timeline-month + .timeline-month {
+	margin-top: 24px;
+}
+
+.timeline-month h3 {
+	margin: 0 0 8px;
+	color: var(--rack-muted);
+	font-size: 0.78rem;
+}
+
+.timeline-month ol {
+	min-width: 0;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.timeline-entry {
+	display: grid;
+	grid-template-columns: 3.4rem minmax(0, 1fr) auto;
+	align-items: baseline;
+	gap: 14px 16px;
+	min-width: 0;
+	padding: 10px 0;
+}
+
+.timeline-entry + .timeline-entry {
+	border-top: 1px solid var(--rack-line);
+}
+
+.timeline-entry__date {
+	color: var(--rack-muted);
+	font-family: var(--rack-font-mono);
+	font-size: 0.72rem;
+}
+
+.timeline-entry__title {
+	min-width: 0;
+	color: var(--rack-ink-soft);
+	overflow-wrap: break-word;
+	text-decoration: none;
+}
+
+.timeline-entry__title:hover {
+	color: var(--rack-accent);
+}
+
+.timeline-entry__category {
+	max-width: 9rem;
+	overflow: hidden;
+	justify-self: end;
+	color: var(--rack-muted);
+	font-size: 0.75rem;
+	font-weight: 650;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	text-decoration: none;
+}
+
+a.timeline-entry__category:hover {
+	color: var(--rack-accent);
+}
+
+.timeline-entry__category--empty {
+	font-weight: 500;
+}
+
+@media (max-width: 720px) {
+	.timeline-year {
+		grid-template-columns: 1fr;
+		gap: 16px;
+	}
+
+	.timeline-year > h2 {
+		position: static;
+	}
+
+	.timeline-entry {
+		grid-template-areas:
+			"date title"
+			". category";
+		grid-template-columns: 2.9rem minmax(0, 1fr);
+		gap: 4px 10px;
+	}
+
+	.timeline-entry__date {
+		grid-area: date;
+	}
+
+	.timeline-entry__title {
+		grid-area: title;
+	}
+
+	.timeline-entry__category {
+		grid-area: category;
+		max-width: none;
+		justify-self: start;
+	}
+}

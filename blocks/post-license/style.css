@@ -1,0 +1,91 @@
+.article-license {
+	position: relative;
+	overflow: hidden;
+	display: grid;
+	grid-template-columns: minmax(0, 1.4fr) minmax(260px, 1fr);
+	gap: 22px;
+	padding: 18px 20px;
+	background: color-mix(in srgb, var(--rack-surface) 70%, var(--rack-paper));
+	border: 1px solid var(--rack-line);
+	border-radius: var(--rack-radius);
+}
+
+.wp-block-rackora-post-license.article-license {
+	margin-top: 24px;
+}
+
+.article-license__lead,
+.article-license dl {
+	position: relative;
+	z-index: 1;
+}
+
+.article-license__lead strong,
+.article-license__lead a {
+	min-width: 0;
+	display: block;
+}
+
+.article-license__lead strong {
+	color: var(--rack-ink);
+	font-size: 0.88rem;
+}
+
+.article-license__lead a {
+	overflow: hidden;
+	margin-top: 7px;
+	color: var(--rack-accent);
+	font-family: var(--rack-font-mono);
+	font-size: 0.7rem;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.article-license dl {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 12px;
+	margin: 0;
+}
+
+.article-license dt,
+.article-license dd {
+	margin: 0;
+}
+
+.article-license dt {
+	color: var(--rack-muted);
+	font-size: 0.68rem;
+}
+
+.article-license dd {
+	overflow: hidden;
+	margin-top: 4px;
+	color: var(--rack-ink-soft);
+	font-size: 0.75rem;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.article-license__mark {
+	position: absolute;
+	right: -12px;
+	bottom: -30px;
+	color: color-mix(in srgb, var(--rack-ink) 5%, transparent);
+	font-size: 5.5rem;
+	font-weight: 800;
+	line-height: 1;
+	pointer-events: none;
+}
+
+@media (max-width: 720px) {
+	.article-license {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 440px) {
+	.article-license dl {
+		grid-template-columns: 1fr;
+	}
+}

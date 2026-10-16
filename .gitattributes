@@ -1,0 +1,16 @@
+* text=auto eol=lf
+
+*.png binary
+*.woff2 binary
+*.mo binary
+
+# 发布包由 git archive 生成，以下开发文件不进入主题 ZIP
+/.github export-ignore
+/docs export-ignore
+/scripts export-ignore
+/.editorconfig export-ignore
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/package.json export-ignore
+/pnpm-lock.yaml export-ignore
+/pnpm-workspace.yaml export-ignore

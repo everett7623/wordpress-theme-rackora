@@ -1,0 +1,46 @@
+/* 侧栏分类列表：名称左对齐，文章数以等宽小字右对齐。 */
+
+.wp-block-categories.sidebar-list {
+	margin: 8px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.sidebar-list .cat-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin: 0;
+	padding: 9px 0;
+}
+
+.sidebar-list .cat-item + .cat-item {
+	border-top: 1px solid color-mix(in srgb, var(--rack-line) 52%, transparent);
+}
+
+.sidebar-list .cat-item a {
+	color: var(--rack-ink-soft);
+	font-size: 0.82rem;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.sidebar-list .cat-item a:hover {
+	color: var(--rack-accent);
+}
+
+.sidebar-list .cat-count {
+	min-width: 24px;
+	color: var(--rack-muted);
+	font-family: var(--rack-font-mono);
+	font-size: 0.68rem;
+	text-align: right;
+}
+
+.sidebar-list .children {
+	flex-basis: 100%;
+	margin: 0;
+	padding-left: 12px;
+	list-style: none;
+}

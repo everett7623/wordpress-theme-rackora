@@ -1,0 +1,38 @@
+.wp-block-rackora-post-meta {
+	margin-bottom: 32px;
+}
+
+.article-deck {
+	margin: 18px 0 0;
+	color: var(--rack-ink-soft);
+	font-size: 1.1rem;
+	line-height: 1.7;
+}
+
+.article-meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px 14px;
+	margin-top: 20px;
+	color: var(--rack-muted);
+	font-family: var(--rack-font-mono);
+	font-size: 0.75rem;
+}
+
+.article-author {
+	color: inherit;
+	font-family: var(--rack-font-sans);
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.article-author:hover {
+	color: var(--rack-accent);
+}
+
+@media (max-width: 720px) {
+	.article-deck {
+		font-size: 1rem;
+	}
+}

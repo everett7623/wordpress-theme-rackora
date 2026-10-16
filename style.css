@@ -1,0 +1,19 @@
+/*
+Theme Name: Rackora
+Theme URI: https://github.com/everett7623/wordpress-theme-rackora
+Author: everettlabs
+Author URI: https://everettlabs.dev/
+Description: A minimal, content-first block theme for independent publishing, knowledge bases, and technical writing. Quiet low-image layouts, light and dark color schemes, table of contents, code highlighting, and complete page-level SEO output.
+Requires at least: 6.6
+Tested up to: 7.1
+Requires PHP: 7.4
+Version: 0.1.0
+License: GNU General Public License v3 or later
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
+Text Domain: rackora
+Domain Path: /languages
+Tags: blog, two-columns, right-sidebar, block-patterns, custom-colors, custom-logo, custom-menu, editor-style, full-site-editing, threaded-comments, translation-ready, wide-blocks
+
+Rackora is distributed under the terms of the GNU GPL v3 or later.
+主题样式位于 assets/css，本文件仅保留 WordPress 主题头信息。
+*/

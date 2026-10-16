@@ -1,0 +1,25 @@
+.wp-block-rackora-color-scheme-toggle span {
+	display: contents;
+}
+
+.wp-block-rackora-color-scheme-toggle .theme-toggle__sun {
+	display: none;
+}
+
+:root[data-color-scheme="dark"] .wp-block-rackora-color-scheme-toggle .theme-toggle__moon {
+	display: none;
+}
+
+:root[data-color-scheme="dark"] .wp-block-rackora-color-scheme-toggle .theme-toggle__sun {
+	display: contents;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root[data-color-scheme="auto"] .wp-block-rackora-color-scheme-toggle .theme-toggle__moon {
+		display: none;
+	}
+
+	:root[data-color-scheme="auto"] .wp-block-rackora-color-scheme-toggle .theme-toggle__sun {
+		display: contents;
+	}
+}

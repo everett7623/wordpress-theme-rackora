@@ -1,0 +1,43 @@
+/* 资料卡与关于页的社交账号：中性方形图标，悬停时使用强调色。 */
+
+.wp-block-social-links.profile-socials {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 7px;
+	margin: 0;
+	padding: 0;
+}
+
+.wp-block-social-links.profile-socials:not(.is-style-logos-only) .wp-social-link {
+	margin: 0;
+	color: var(--rack-muted);
+	background: var(--rack-paper);
+	border: 1px solid var(--rack-line);
+	border-radius: 8px;
+	transition:
+		color 160ms ease,
+		border-color 160ms ease,
+		background-color 160ms ease;
+}
+
+.wp-block-social-links.profile-socials:not(.is-style-logos-only) .wp-social-link:hover {
+	color: var(--rack-accent);
+	background: var(--rack-accent-soft);
+	border-color: color-mix(in srgb, var(--rack-accent) 28%, var(--rack-line));
+	transform: none;
+}
+
+.wp-block-social-links.profile-socials .wp-block-social-link-anchor {
+	width: 34px;
+	height: 34px;
+	display: grid;
+	place-items: center;
+	padding: 0;
+	color: inherit;
+}
+
+.wp-block-social-links.profile-socials .wp-block-social-link-anchor svg {
+	width: 17px;
+	height: 17px;
+	fill: currentColor;
+}

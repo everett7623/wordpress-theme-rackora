@@ -1,0 +1,23 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rackora/term-index",
+	"title": "Category or tag index",
+	"category": "rackora",
+	"icon": "category",
+	"description": "A grid of every category with descriptions and subcategories, or of every tag with post counts.",
+	"textdomain": "rackora",
+	"attributes": {
+		"taxonomy": {
+			"type": "string",
+			"enum": [ "category", "post_tag" ],
+			"default": "category"
+		}
+	},
+	"supports": {
+		"html": false
+	},
+	"editorScript": "rackora-editor",
+	"render": "file:./render.php",
+	"style": "file:./style.css"
+}

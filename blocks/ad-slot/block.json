@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rackora/ad-slot",
+	"title": "Sponsor slot",
+	"category": "rackora",
+	"icon": "megaphone",
+	"description": "A disclosed group of static sponsor cards. Links get sponsored, nofollow and safety attributes automatically; no third-party scripts are allowed.",
+	"keywords": [ "ad", "affiliate", "sponsor" ],
+	"textdomain": "rackora",
+	"attributes": {
+		"disclosure": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false
+	},
+	"allowedBlocks": [ "rackora/ad-card" ],
+	"editorScript": "rackora-editor",
+	"render": "file:./render.php",
+	"style": "file:./style.css"
+}

@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rackora/post-meta",
+	"title": "Post meta",
+	"category": "rackora",
+	"icon": "info-outline",
+	"description": "Manual excerpt as a deck, then author, published and updated dates, verification date, reading time and views.",
+	"textdomain": "rackora",
+	"attributes": {
+		"variant": {
+			"type": "string",
+			"enum": [ "article", "docs", "page" ],
+			"default": "article"
+		},
+		"showDeck": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"usesContext": [ "postId", "postType" ],
+	"supports": {
+		"html": false
+	},
+	"editorScript": "rackora-editor",
+	"render": "file:./render.php",
+	"style": "file:./style.css"
+}

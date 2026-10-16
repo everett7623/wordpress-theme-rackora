@@ -1,0 +1,35 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rackora/ad-card",
+	"title": "Sponsor card",
+	"category": "rackora",
+	"icon": "tag",
+	"description": "A static text or image sponsor card.",
+	"textdomain": "rackora",
+	"parent": [ "rackora/ad-slot" ],
+	"attributes": {
+		"name": {
+			"type": "string",
+			"default": ""
+		},
+		"description": {
+			"type": "string",
+			"default": ""
+		},
+		"image": {
+			"type": "string",
+			"default": ""
+		},
+		"url": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"reusable": false
+	},
+	"editorScript": "rackora-editor",
+	"render": "file:./render.php"
+}

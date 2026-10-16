@@ -1,0 +1,34 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rackora/filing",
+	"title": "ICP filing",
+	"category": "rackora",
+	"icon": "shield",
+	"description": "ICP and public security filing numbers with optional links, for sites hosted in mainland China.",
+	"keywords": [ "icp", "beian" ],
+	"textdomain": "rackora",
+	"attributes": {
+		"icpNumber": {
+			"type": "string",
+			"default": ""
+		},
+		"icpUrl": {
+			"type": "string",
+			"default": "https://beian.miit.gov.cn/"
+		},
+		"psbNumber": {
+			"type": "string",
+			"default": ""
+		},
+		"psbUrl": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false
+	},
+	"editorScript": "rackora-editor",
+	"render": "file:./render.php"
+}

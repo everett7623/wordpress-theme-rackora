@@ -1,0 +1,81 @@
+.archive-heading,
+.page-heading,
+.author-heading {
+	width: 100%;
+}
+
+.wp-block-rackora-archive-heading.archive-heading {
+	margin: 0 0 38px;
+}
+
+.wp-block-rackora-archive-heading.page-heading {
+	margin: 0 0 32px;
+}
+
+.wp-block-rackora-archive-heading.author-heading {
+	margin: 0 0 40px;
+}
+
+.archive-heading h1,
+.author-heading h1,
+.page-heading h1 {
+	margin: 6px 0 10px;
+	color: var(--rack-ink);
+	font-family: var(--rack-font-display);
+	font-size: clamp(2.1rem, 4vw, 3rem);
+	font-weight: 600;
+	line-height: 1.12;
+	letter-spacing: -0.02em;
+	overflow-wrap: anywhere;
+}
+
+.archive-heading > p,
+.author-heading p,
+.page-heading > p:not(.eyebrow) {
+	max-width: 42rem;
+	margin: 0;
+	color: var(--rack-ink-soft);
+	font-size: 1.05rem;
+	line-height: 1.55;
+}
+
+.author-heading {
+	display: flex;
+	align-items: center;
+	gap: 22px;
+}
+
+.author-heading img {
+	width: 80px;
+	height: 80px;
+	flex: 0 0 80px;
+	object-fit: cover;
+	border: 1px solid var(--rack-line);
+	border-radius: 50%;
+}
+
+.author-heading .author-heading__count {
+	margin-top: 10px;
+	color: var(--rack-muted);
+	font-size: 0.88rem;
+}
+
+@media (max-width: 720px) {
+	.archive-heading h1,
+	.author-heading h1,
+	.page-heading h1 {
+		font-size: 2.2rem;
+	}
+}
+
+@media (max-width: 440px) {
+	.author-heading {
+		align-items: flex-start;
+	}
+
+	.author-heading img {
+		width: 60px;
+		height: 60px;
+		flex-basis: 60px;
+	}
+}

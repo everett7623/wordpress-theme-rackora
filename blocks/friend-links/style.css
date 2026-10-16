@@ -1,0 +1,97 @@
+.link-groups {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 0 0 20px;
+}
+
+.link-groups a {
+	padding: 6px 10px;
+	color: var(--rack-muted);
+	border: 1px solid var(--rack-line);
+	border-radius: 5px;
+	font-size: 0.78rem;
+	text-decoration: none;
+}
+
+.link-groups a:hover,
+.link-groups a.is-active {
+	color: var(--rack-accent);
+	background: var(--rack-accent-soft);
+	border-color: var(--rack-accent);
+}
+
+.friend-grid {
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 12px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.friend-grid > li > a {
+	min-height: 84px;
+	display: grid;
+	grid-template-columns: 44px minmax(0, 1fr) auto;
+	align-items: center;
+	gap: 12px;
+	padding: 14px;
+	color: var(--rack-ink);
+	background: var(--rack-surface);
+	border: 1px solid var(--rack-line);
+	border-radius: 7px;
+	box-shadow: 0 1px 2px rgb(0 0 0 / 2%);
+	text-decoration: none;
+	transition:
+		border-color 160ms ease,
+		box-shadow 160ms ease,
+		transform 160ms ease;
+}
+
+.friend-grid > li > a:not(:has(img)) {
+	grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.friend-grid > li > a:hover {
+	border-color: var(--rack-line-strong);
+	box-shadow: 0 6px 18px rgb(0 0 0 / 5%);
+	transform: translateY(-1px);
+}
+
+.friend-grid img {
+	width: 44px;
+	height: 44px;
+	object-fit: cover;
+	border-radius: 8px;
+}
+
+.friend-grid span,
+.friend-grid strong,
+.friend-grid small {
+	min-width: 0;
+	display: block;
+}
+
+.friend-grid small {
+	overflow: hidden;
+	margin-top: 4px;
+	color: var(--rack-muted);
+	font-size: 0.74rem;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.friend-grid svg {
+	width: 15px;
+	color: var(--rack-muted);
+}
+
+@media (max-width: 720px) {
+	.friend-grid {
+		grid-template-columns: 1fr;
+		gap: 10px;
+	}
+}

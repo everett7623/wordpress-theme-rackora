@@ -1,0 +1,16 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rackora/post-toc",
+	"title": "Table of contents",
+	"category": "rackora",
+	"icon": "editor-ol",
+	"description": "Builds a table of contents from the H2 and H3 headings of the post, highlights the current section and opens as a drawer on small screens.",
+	"textdomain": "rackora",
+	"supports": {
+		"html": false,
+		"multiple": false
+	},
+	"editorScript": "rackora-editor",
+	"render": "file:./render.php"
+}

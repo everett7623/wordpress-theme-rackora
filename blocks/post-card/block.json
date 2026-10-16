@@ -1,0 +1,23 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rackora/post-card",
+	"title": "Post card",
+	"category": "rackora",
+	"icon": "id-alt",
+	"description": "A quiet post entry with category, date, title, excerpt, views and comments. Place it inside a Post Template.",
+	"textdomain": "rackora",
+	"attributes": {
+		"showCover": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"usesContext": [ "postId", "postType" ],
+	"supports": {
+		"html": false
+	},
+	"editorScript": "rackora-editor",
+	"render": "file:./render.php",
+	"style": "file:./style.css"
+}

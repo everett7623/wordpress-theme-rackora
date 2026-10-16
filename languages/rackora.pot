@@ -1,0 +1,1568 @@
+# Copyright (C) 2026 everettlabs
+# This file is distributed under the GNU General Public License v3 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Rackora 0.1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/everett7623/wordpress-theme-rackora/issues\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Rackora\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-10-15T13:08:44+08:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: rackora\n"
+
+#. Theme Name of the theme
+#: style.css
+#: inc/blocks.php:110
+#: inc/blocks.php:145
+#: inc/settings.php:326
+#: inc/setup.php:35
+msgid "Rackora"
+msgstr ""
+
+#. Theme URI of the theme
+#: style.css
+msgid "https://github.com/everett7623/wordpress-theme-rackora"
+msgstr ""
+
+#. Description of the theme
+#: style.css
+msgid "A minimal, content-first block theme for independent publishing, knowledge bases, and technical writing. Quiet low-image layouts, light and dark color schemes, table of contents, code highlighting, and complete page-level SEO output."
+msgstr ""
+
+#. Author of the theme
+#: style.css
+msgid "everettlabs"
+msgstr ""
+
+#. Author URI of the theme
+#: style.css
+msgid "https://everettlabs.dev/"
+msgstr ""
+
+#. translators: %s: sponsor name.
+#: blocks/ad-card/render.php:21
+#, php-format
+msgid "%s (sponsored link)"
+msgstr ""
+
+#: blocks/ad-card/render.php:29
+msgctxt "sponsor card label"
+msgid "Sponsored"
+msgstr ""
+
+#: blocks/ad-slot/render.php:18
+msgid "Sponsored content"
+msgstr ""
+
+#: blocks/ad-slot/render.php:19
+msgid "The site may earn a commission from promotional links without affecting editorial judgment or your price."
+msgstr ""
+
+#. translators: %s: number of public posts.
+#: blocks/archive-heading/render.php:31
+#: blocks/archive-heading/render.php:81
+#, php-format
+msgid "%s public post, organized by publish date."
+msgid_plural "%s public posts, organized by publish date."
+msgstr[0] ""
+msgstr[1] ""
+
+#: blocks/archive-heading/render.php:34
+msgid "Browse posts by their primary content type."
+msgstr ""
+
+#: blocks/archive-heading/render.php:37
+msgid "Browse all tags by topic and context."
+msgstr ""
+
+#: blocks/archive-heading/render.php:40
+msgid "Independent sites and creators worth following."
+msgstr ""
+
+#: blocks/archive-heading/render.php:47
+msgid "Connections"
+msgstr ""
+
+#: blocks/archive-heading/render.php:76
+msgctxt "monthly archives date format"
+msgid "F Y"
+msgstr ""
+
+#. translators: %s: search query.
+#: blocks/archive-heading/render.php:84
+#, php-format
+msgid "Search: %s"
+msgstr ""
+
+#. translators: %s: number of search results.
+#: blocks/archive-heading/render.php:86
+#, php-format
+msgid "%s result"
+msgid_plural "%s results"
+msgstr[0] ""
+msgstr[1] ""
+
+#: blocks/archive-heading/render.php:94
+#: patterns/post-sidebar.php:18
+#: patterns/template-home.php:21
+msgid "Latest posts"
+msgstr ""
+
+#. translators: %s: number of public posts.
+#: blocks/archive-heading/render.php:117
+#, php-format
+msgid "%s public post"
+msgid_plural "%s public posts"
+msgstr[0] ""
+msgstr[1] ""
+
+#: blocks/archives-timeline/render.php:39
+msgid "The archive is empty"
+msgstr ""
+
+#: blocks/archives-timeline/render.php:39
+msgid "Published posts will be organized here by year and month."
+msgstr ""
+
+#. translators: %s: month number.
+#: blocks/archives-timeline/render.php:64
+#, php-format
+msgid "Month %s"
+msgstr ""
+
+#: blocks/archives-timeline/render.php:76
+msgid "Uncategorized"
+msgstr ""
+
+#: blocks/archives-timeline/render.php:95
+msgid "Archive pagination"
+msgstr ""
+
+#: blocks/color-scheme-toggle/render.php:10
+msgid "Toggle color scheme"
+msgstr ""
+
+#: blocks/featured-entry/render.php:20
+msgid "Featured"
+msgstr ""
+
+#: blocks/friend-links/render.php:36
+msgid "Link groups"
+msgstr ""
+
+#: blocks/friend-links/render.php:37
+#: patterns/home-sidebar.php:47
+#: patterns/home-sidebar.php:63
+msgid "All"
+msgstr ""
+
+#: blocks/friend-links/render.php:69
+msgid "No public links yet"
+msgstr ""
+
+#: blocks/friend-links/render.php:69
+msgid "Add links under Links → Add New in the dashboard."
+msgstr ""
+
+#: blocks/home-heading/render.php:17
+msgid "Independent publishing"
+msgstr ""
+
+#. translators: %s: number of published posts.
+#: blocks/home-heading/render.php:26
+#, php-format
+msgid "%s post"
+msgid_plural "%s posts"
+msgstr[0] ""
+msgstr[1] ""
+
+#: blocks/home-heading/render.php:29
+msgid "Written for clarity and longevity"
+msgstr ""
+
+#: blocks/post-card/render.php:44
+msgid "Pinned"
+msgstr ""
+
+#. translators: %s: modified date.
+#: blocks/post-card/render.php:62
+#: blocks/post-meta/render.php:60
+#, php-format
+msgid "Updated %s"
+msgstr ""
+
+#: blocks/post-disclosure/render.php:14
+msgid "This post contains affiliate or referral links. The site may earn a commission without affecting your price or our editorial judgment."
+msgstr ""
+
+#: blocks/post-disclosure/render.php:15
+msgid "A vendor supplied resources for this review; the methods, results, and limitations remain independently documented."
+msgstr ""
+
+#: blocks/post-disclosure/render.php:16
+msgid "The product or service covered in this post was independently purchased for testing."
+msgstr ""
+
+#: blocks/post-disclosure/render.php:23
+msgid "Content relationship disclosure"
+msgstr ""
+
+#: blocks/post-license/render.php:22
+msgid "All rights reserved"
+msgstr ""
+
+#: blocks/post-license/render.php:24
+msgid "Author and copyright notice"
+msgstr ""
+
+#: blocks/post-license/render.php:31
+msgid "Author"
+msgstr ""
+
+#: blocks/post-license/render.php:35
+msgid "Published"
+msgstr ""
+
+#: blocks/post-license/render.php:39
+msgid "License"
+msgstr ""
+
+#. translators: %s: estimated reading time in minutes.
+#: blocks/post-meta/render.php:38
+#, php-format
+msgid "%s min read"
+msgid_plural "%s min read"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: publish date.
+#: blocks/post-meta/render.php:53
+#, php-format
+msgid "Published %s"
+msgstr ""
+
+#. translators: %s: content verification date.
+#: blocks/post-meta/render.php:68
+#, php-format
+msgid "Verified %s"
+msgstr ""
+
+#: blocks/post-recent-comments/render.php:27
+msgid "Recent comments"
+msgstr ""
+
+#: blocks/post-recent-comments/render.php:38
+msgid "No comments yet"
+msgstr ""
+
+#: blocks/post-series/render.php:55
+#: blocks/post-series/render.php:56
+#: inc/meta.php:20
+msgid "Series"
+msgstr ""
+
+#: blocks/post-toc/render.php:15
+#: inc/assets.php:143
+msgid "On this page"
+msgstr ""
+
+#: blocks/post-toc/render.php:16
+msgid "Table of contents"
+msgstr ""
+
+#: blocks/related-posts/render.php:51
+msgid "In this category"
+msgstr ""
+
+#: blocks/related-posts/render.php:51
+msgid "Related posts"
+msgstr ""
+
+#: blocks/share-bar/render.php:38
+msgid "Share this post"
+msgstr ""
+
+#: blocks/share-bar/render.php:39
+msgid "Share"
+msgstr ""
+
+#. translators: %s: share target such as X or Facebook.
+#: blocks/share-bar/render.php:44
+msgid "Share by email"
+msgstr ""
+
+#. translators: %s: share target such as X or Facebook.
+#: blocks/share-bar/render.php:44
+#, php-format
+msgid "Share on %s"
+msgstr ""
+
+#: blocks/share-bar/render.php:56
+msgid "Copy post link"
+msgstr ""
+
+#: blocks/site-stats/render.php:15
+msgid "Visits"
+msgstr ""
+
+#: blocks/site-stats/render.php:17
+msgid "Posts"
+msgstr ""
+
+#: blocks/site-stats/render.php:18
+#: patterns/comments.php:15
+msgid "Comments"
+msgstr ""
+
+#: blocks/site-stats/render.php:19
+#: inc/blocks.php:103
+#: patterns/home-sidebar.php:42
+msgid "Categories"
+msgstr ""
+
+#: blocks/site-stats/render.php:30
+msgctxt "site stats: days since launch"
+msgid "Days"
+msgstr ""
+
+#: blocks/term-index/render.php:26
+msgid "No tags yet"
+msgstr ""
+
+#: blocks/term-index/render.php:26
+msgid "Tags will appear after tagged posts are published."
+msgstr ""
+
+#: blocks/term-index/render.php:27
+msgid "No categories yet"
+msgstr ""
+
+#: blocks/term-index/render.php:27
+msgid "Categories you create will appear here."
+msgstr ""
+
+#: blocks/term-index/render.php:61
+msgid "View every post in this category"
+msgstr ""
+
+#: inc/assets.php:137
+msgid "Switch to light mode"
+msgstr ""
+
+#: inc/assets.php:138
+msgid "Switch to dark mode"
+msgstr ""
+
+#: inc/assets.php:139
+msgid "Section"
+msgstr ""
+
+#. translators: %s: heading text.
+#: inc/assets.php:141
+#, php-format
+msgid "Link to %s"
+msgstr ""
+
+#: inc/assets.php:142
+msgid "Contents"
+msgstr ""
+
+#: inc/assets.php:144
+msgid "Close"
+msgstr ""
+
+#: inc/assets.php:145
+msgid "Copy code"
+msgstr ""
+
+#: inc/assets.php:146
+msgid "Copy"
+msgstr ""
+
+#: inc/assets.php:147
+msgid "Copied"
+msgstr ""
+
+#: inc/assets.php:148
+msgid "Copy failed"
+msgstr ""
+
+#: inc/assets.php:149
+msgid "Link copied"
+msgstr ""
+
+#: inc/assets.php:150
+msgid "Product comparison table"
+msgstr ""
+
+#: inc/assets.php:151
+msgid "Data table"
+msgstr ""
+
+#: inc/assets.php:152
+msgid "Sponsored"
+msgstr ""
+
+#: inc/assets.php:182
+msgid "Back to top"
+msgstr ""
+
+#: inc/blocks.php:67
+msgid "Eyebrow"
+msgstr ""
+
+#: inc/blocks.php:68
+msgid "Tagline"
+msgstr ""
+
+#: inc/blocks.php:69
+msgid "Launch date (YYYY-MM-DD)"
+msgstr ""
+
+#: inc/blocks.php:70
+msgid "Show featured image"
+msgstr ""
+
+#: inc/blocks.php:71
+msgid "Variant"
+msgstr ""
+
+#: inc/blocks.php:72
+msgid "Show manual excerpt as deck"
+msgstr ""
+
+#: inc/blocks.php:73
+msgid "Show copy link button"
+msgstr ""
+
+#: inc/blocks.php:74
+msgid "Share targets"
+msgstr ""
+
+#: inc/blocks.php:75
+msgid "Number of items"
+msgstr ""
+
+#: inc/blocks.php:76
+msgid "Layout"
+msgstr ""
+
+#: inc/blocks.php:77
+msgid "Title"
+msgstr ""
+
+#: inc/blocks.php:78
+msgid "Include the current post"
+msgstr ""
+
+#: inc/blocks.php:79
+msgid "License name"
+msgstr ""
+
+#: inc/blocks.php:80
+msgid "License URL"
+msgstr ""
+
+#: inc/blocks.php:81
+msgid "Taxonomy"
+msgstr ""
+
+#: inc/blocks.php:82
+msgid "Disclosure text"
+msgstr ""
+
+#: inc/blocks.php:83
+msgid "Name"
+msgstr ""
+
+#: inc/blocks.php:84
+msgid "Short description"
+msgstr ""
+
+#: inc/blocks.php:85
+msgid "Image"
+msgstr ""
+
+#: inc/blocks.php:86
+msgid "Destination URL"
+msgstr ""
+
+#: inc/blocks.php:87
+msgid "ICP filing number"
+msgstr ""
+
+#: inc/blocks.php:88
+msgid "ICP filing link"
+msgstr ""
+
+#: inc/blocks.php:89
+msgid "Public security filing number"
+msgstr ""
+
+#: inc/blocks.php:90
+msgid "Public security filing link"
+msgstr ""
+
+#: inc/blocks.php:93
+msgid "Automatic"
+msgstr ""
+
+#: inc/blocks.php:94
+msgid "Archives"
+msgstr ""
+
+#: inc/blocks.php:95
+msgid "All categories"
+msgstr ""
+
+#: inc/blocks.php:96
+msgid "All tags"
+msgstr ""
+
+#: inc/blocks.php:97
+msgid "Links"
+msgstr ""
+
+#: inc/blocks.php:98
+msgid "Article"
+msgstr ""
+
+#: inc/blocks.php:99
+#: patterns/template-single-docs.php:17
+msgid "Documentation"
+msgstr ""
+
+#: inc/blocks.php:100
+msgid "Page deck only"
+msgstr ""
+
+#: inc/blocks.php:101
+msgid "Below the post"
+msgstr ""
+
+#: inc/blocks.php:102
+msgid "Sidebar list"
+msgstr ""
+
+#: inc/blocks.php:104
+#: patterns/home-sidebar.php:58
+msgid "Tags"
+msgstr ""
+
+#: inc/blocks.php:109
+msgid "Settings"
+msgstr ""
+
+#: inc/blocks.php:111
+msgid "Rendered on the front end with live content."
+msgstr ""
+
+#: inc/blocks.php:112
+#: inc/settings.php:302
+msgid "Choose image"
+msgstr ""
+
+#: inc/blocks.php:113
+msgid "Remove image"
+msgstr ""
+
+#: inc/blocks.php:125
+msgid "X"
+msgstr ""
+
+#: inc/blocks.php:126
+msgid "Facebook"
+msgstr ""
+
+#: inc/blocks.php:127
+msgid "LinkedIn"
+msgstr ""
+
+#: inc/blocks.php:128
+msgid "Reddit"
+msgstr ""
+
+#: inc/blocks.php:129
+msgid "Telegram"
+msgstr ""
+
+#: inc/blocks.php:130
+msgid "WhatsApp"
+msgstr ""
+
+#: inc/blocks.php:131
+msgid "Weibo"
+msgstr ""
+
+#: inc/blocks.php:132
+msgid "Email"
+msgstr ""
+
+#: inc/blocks.php:226
+msgid "Pagination"
+msgstr ""
+
+#: inc/blocks.php:232
+msgctxt "pagination"
+msgid "Previous"
+msgstr ""
+
+#: inc/blocks.php:240
+msgctxt "pagination"
+msgid "Next"
+msgstr ""
+
+#. translators: %s: number of views.
+#: inc/helpers.php:244
+#, php-format
+msgid "%s view"
+msgid_plural "%s views"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of comments.
+#: inc/helpers.php:255
+#, php-format
+msgid "%s comment"
+msgid_plural "%s comments"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of posts.
+#: inc/helpers.php:266
+#, php-format
+msgid "%s related post"
+msgid_plural "%s related posts"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/meta.php:22
+msgid "Use exactly the same name for every post in a series."
+msgstr ""
+
+#: inc/meta.php:25
+msgid "Series order"
+msgstr ""
+
+#: inc/meta.php:27
+msgid "Optional. Smaller numbers come first."
+msgstr ""
+
+#: inc/meta.php:30
+msgid "Commercial relationship"
+msgstr ""
+
+#: inc/meta.php:34
+#: inc/meta.php:218
+msgid "None"
+msgstr ""
+
+#: inc/meta.php:35
+msgid "Contains affiliate or referral links"
+msgstr ""
+
+#: inc/meta.php:36
+msgid "Vendor-supplied review resources"
+msgstr ""
+
+#: inc/meta.php:37
+msgid "Independently purchased"
+msgstr ""
+
+#: inc/meta.php:39
+msgid "Shows a matching disclosure above the post content."
+msgstr ""
+
+#: inc/meta.php:42
+msgid "Content verified on"
+msgstr ""
+
+#: inc/meta.php:44
+msgid "Shown in the post meta. Do not update a post only to change this date."
+msgstr ""
+
+#: inc/meta.php:47
+msgid "Next review due"
+msgstr ""
+
+#: inc/meta.php:51
+msgid "Primary keyword"
+msgstr ""
+
+#: inc/meta.php:53
+msgid "For editorial review only; it is not output as meta keywords."
+msgstr ""
+
+#: inc/meta.php:56
+msgid "Search intent"
+msgstr ""
+
+#: inc/meta.php:59
+msgid "Not set"
+msgstr ""
+
+#: inc/meta.php:60
+msgid "Informational"
+msgstr ""
+
+#: inc/meta.php:61
+msgid "Commercial investigation"
+msgstr ""
+
+#: inc/meta.php:62
+msgid "Transactional"
+msgstr ""
+
+#: inc/meta.php:63
+msgid "Navigational"
+msgstr ""
+
+#: inc/meta.php:67
+msgid "Pillar"
+msgstr ""
+
+#: inc/meta.php:69
+msgid "Only fill in an ownership that has been reviewed against your content architecture."
+msgstr ""
+
+#: inc/meta.php:152
+msgid "Follow theme setting"
+msgstr ""
+
+#: inc/meta.php:153
+msgid "Allow indexing"
+msgstr ""
+
+#: inc/meta.php:154
+msgid "Do not index"
+msgstr ""
+
+#: inc/meta.php:172
+msgid "\"Follow theme setting\" uses the global tag policy under Appearance → Rackora; keep selected tags indexable here."
+msgstr ""
+
+#: inc/meta.php:180
+#: inc/meta.php:193
+msgid "Index policy"
+msgstr ""
+
+#: inc/meta.php:216
+msgid "Featured post"
+msgstr ""
+
+#: inc/meta.php:228
+msgid "Highlighted at the top of this category archive. Leave as None to hide the entry."
+msgstr ""
+
+#: inc/settings.php:45
+msgid "General"
+msgstr ""
+
+#: inc/settings.php:49
+msgid "Default color scheme"
+msgstr ""
+
+#: inc/settings.php:51
+msgid "Follow system"
+msgstr ""
+
+#: inc/settings.php:52
+msgid "Light"
+msgstr ""
+
+#: inc/settings.php:53
+msgid "Dark"
+msgstr ""
+
+#: inc/settings.php:55
+msgid "Visitors can still switch with the header button; their choice is remembered in the browser."
+msgstr ""
+
+#: inc/settings.php:59
+msgid "Site region"
+msgstr ""
+
+#: inc/settings.php:60
+msgid "ISO 3166 region code such as CN, SG or US-CA. Leave empty to omit the region signal."
+msgstr ""
+
+#: inc/settings.php:64
+msgid "Count post views"
+msgstr ""
+
+#: inc/settings.php:65
+msgid "Counts each visitor once per browser session with a lightweight request that works with page caching."
+msgstr ""
+
+#: inc/settings.php:70
+msgid "SEO"
+msgstr ""
+
+#: inc/settings.php:74
+msgid "Output theme SEO tags"
+msgstr ""
+
+#: inc/settings.php:75
+msgid "Canonical URLs, Open Graph, Twitter Cards and JSON-LD. Turned off automatically when a dedicated SEO plugin is active."
+msgstr ""
+
+#: inc/settings.php:79
+msgid "Site description"
+msgstr ""
+
+#: inc/settings.php:80
+msgid "Used as the meta description of the home page and archives. Leave empty to use the tagline."
+msgstr ""
+
+#: inc/settings.php:84
+msgid "Do not index tag pages"
+msgstr ""
+
+#: inc/settings.php:85
+msgid "Outputs noindex,follow on tag archives and the tag index page. Each tag can override this on its edit screen."
+msgstr ""
+
+#: inc/settings.php:89
+msgid "Do not index date archives"
+msgstr ""
+
+#: inc/settings.php:90
+msgid "Outputs noindex,follow on date archives and the Archives page. Posts and categories are not affected."
+msgstr ""
+
+#: inc/settings.php:94
+msgid "Google verification code"
+msgstr ""
+
+#: inc/settings.php:95
+msgid "Only the content value of google-site-verification, not the whole meta tag."
+msgstr ""
+
+#: inc/settings.php:99
+msgid "Bing verification code"
+msgstr ""
+
+#: inc/settings.php:100
+msgid "Only the content value of msvalidate.01."
+msgstr ""
+
+#: inc/settings.php:104
+msgid "Baidu verification code"
+msgstr ""
+
+#: inc/settings.php:105
+msgid "Only the content value of baidu-site-verification."
+msgstr ""
+
+#: inc/settings.php:109
+msgid "Organization name"
+msgstr ""
+
+#: inc/settings.php:110
+msgid "Used in Organization and WebSite structured data. Leave empty to use the site title."
+msgstr ""
+
+#: inc/settings.php:114
+msgid "Organization logo"
+msgstr ""
+
+#: inc/settings.php:115
+msgid "A clear square image for structured data. Leave empty to use the site logo or the Rackora mark."
+msgstr ""
+
+#: inc/settings.php:119
+msgid "About page URL"
+msgstr ""
+
+#: inc/settings.php:120
+msgid "Optional, adds context to the Organization entity."
+msgstr ""
+
+#: inc/settings.php:124
+msgid "Social profile URLs"
+msgstr ""
+
+#: inc/settings.php:125
+msgid "One URL per line, output as sameAs in Organization structured data."
+msgstr ""
+
+#: inc/settings.php:130
+msgid "Analytics"
+msgstr ""
+
+#: inc/settings.php:134
+msgid "Enable third-party analytics"
+msgstr ""
+
+#: inc/settings.php:135
+msgid "Off by default. Only services with a valid ID are loaded."
+msgstr ""
+
+#: inc/settings.php:139
+msgid "GA4 Measurement ID"
+msgstr ""
+
+#: inc/settings.php:140
+msgid "Format G-XXXXXXXXXX. Do not paste the whole script."
+msgstr ""
+
+#: inc/settings.php:144
+msgid "Microsoft Clarity project ID"
+msgstr ""
+
+#: inc/settings.php:145
+msgid "Only the project ID. Inform visitors about cookies as required in your region."
+msgstr ""
+
+#: inc/settings.php:149
+msgid "Baidu Analytics site ID"
+msgstr ""
+
+#: inc/settings.php:150
+msgid "The 32 hexadecimal characters after hm.js?."
+msgstr ""
+
+#: inc/settings.php:236
+msgid "The site region must be an ISO 3166 code such as CN or US-CA."
+msgstr ""
+
+#. translators: %s: setting label.
+#: inc/settings.php:252
+#, php-format
+msgid "%s has an invalid format and was not saved."
+msgstr ""
+
+#: inc/settings.php:325
+#: inc/settings.php:359
+msgid "Rackora settings"
+msgstr ""
+
+#. translators: 1: Site Editor URL, 2: Styles URL.
+#: inc/settings.php:364
+#, php-format
+msgid "Page layouts, sidebars, the header and the footer are edited in the <a href=\"%1$s\">Site Editor</a>; colors, fonts and widths live under <a href=\"%2$s\">Styles</a>."
+msgstr ""
+
+#. translators: %s: SEO plugin name.
+#: inc/settings.php:375
+#, php-format
+msgid "%s is active, so Rackora leaves canonical, Open Graph, JSON-LD and robots rules to it. Verification codes and analytics still apply."
+msgstr ""
+
+#: inc/setup.php:36
+msgid "Layouts and components provided by the Rackora theme."
+msgstr ""
+
+#: inc/views.php:126
+msgid "Views are not counted for this content."
+msgstr ""
+
+#: patterns/comments.php
+msgctxt "Pattern title"
+msgid "Comments"
+msgstr ""
+
+#: patterns/footer.php
+msgctxt "Pattern title"
+msgid "Footer"
+msgstr ""
+
+#. translators: 1: WordPress link, 2: theme link, 3: studio link.
+#: patterns/footer.php:31
+#, php-format
+msgid "Powered by %1$s · %2$s · %3$s"
+msgstr ""
+
+#: patterns/footer.php:42
+msgid "Footer navigation"
+msgstr ""
+
+#: patterns/header.php
+msgctxt "Pattern title"
+msgid "Header"
+msgstr ""
+
+#: patterns/header.php:28
+#: patterns/template-search.php:15
+msgid "Search"
+msgstr ""
+
+#: patterns/header.php:28
+#: patterns/template-search.php:15
+msgid "Search this site"
+msgstr ""
+
+#: patterns/home-sidebar.php
+msgctxt "Pattern title"
+msgid "Home sidebar"
+msgstr ""
+
+#: patterns/home-sidebar.php
+msgctxt "Pattern description"
+msgid "Site profile with social links and stats, categories with post counts, and popular tags."
+msgstr ""
+
+#: patterns/home-sidebar.php:16
+#: patterns/home-sidebar.php:17
+msgid "Site information"
+msgstr ""
+
+#: patterns/post-footer.php
+msgctxt "Pattern title"
+msgid "Post footer"
+msgstr ""
+
+#: patterns/post-footer.php
+msgctxt "Pattern description"
+msgid "Tags and share bar, series, related posts, the license notice and adjacent posts."
+msgstr ""
+
+#: patterns/post-navigation.php
+msgctxt "Pattern title"
+msgid "Adjacent posts"
+msgstr ""
+
+#: patterns/post-navigation.php:13
+#: patterns/post-navigation.php:14
+msgid "Adjacent posts"
+msgstr ""
+
+#: patterns/post-navigation.php:14
+msgctxt "adjacent post"
+msgid "Previous"
+msgstr ""
+
+#: patterns/post-navigation.php:16
+msgctxt "adjacent post"
+msgid "Next"
+msgstr ""
+
+#: patterns/post-sidebar.php
+msgctxt "Pattern title"
+msgid "Post sidebar"
+msgstr ""
+
+#: patterns/post-sidebar.php
+msgctxt "Pattern description"
+msgid "Sticky table of contents and the latest posts, shown beside the article on wide screens."
+msgstr ""
+
+#: patterns/post-sidebar.php:13
+#: patterns/post-sidebar.php:14
+msgid "Post navigation"
+msgstr ""
+
+#: patterns/sponsor-slot.php
+msgctxt "Pattern title"
+msgid "Sponsor slot"
+msgstr ""
+
+#: patterns/sponsor-slot.php
+msgctxt "Pattern description"
+msgid "A disclosed sponsor card that can be placed on the home page, in the sidebar or before and after the post content."
+msgstr ""
+
+#: patterns/template-404.php
+msgctxt "Pattern title"
+msgid "Page not found"
+msgstr ""
+
+#: patterns/template-404.php:21
+msgid "Page not found"
+msgstr ""
+
+#: patterns/template-404.php:25
+msgid "This address may have changed, or the content may have been consolidated."
+msgstr ""
+
+#: patterns/template-404.php:30
+msgid "Back home"
+msgstr ""
+
+#: patterns/template-404.php:35
+msgid "Browse archives"
+msgstr ""
+
+#: patterns/template-archive.php
+msgctxt "Pattern title"
+msgid "Archive"
+msgstr ""
+
+#: patterns/template-archive.php:27
+msgid "No posts here yet"
+msgstr ""
+
+#: patterns/template-archive.php:31
+msgid "Browse another category or return home."
+msgstr ""
+
+#: patterns/template-archives.php
+msgctxt "Pattern title"
+msgid "Archives page"
+msgstr ""
+
+#: patterns/template-categories.php
+msgctxt "Pattern title"
+msgid "All categories page"
+msgstr ""
+
+#: patterns/template-date.php
+msgctxt "Pattern title"
+msgid "Date archive"
+msgstr ""
+
+#: patterns/template-home.php
+msgctxt "Pattern title"
+msgid "Home"
+msgstr ""
+
+#: patterns/template-home.php:26
+msgid "View archives"
+msgstr ""
+
+#: patterns/template-home.php:39
+#: patterns/template-index.php:23
+msgid "No public posts yet"
+msgstr ""
+
+#: patterns/template-home.php:43
+#: patterns/template-index.php:27
+msgid "Your first published post will appear here."
+msgstr ""
+
+#: patterns/template-index.php
+msgctxt "Pattern title"
+msgid "Index"
+msgstr ""
+
+#: patterns/template-links.php
+msgctxt "Pattern title"
+msgid "Links page"
+msgstr ""
+
+#: patterns/template-page-about.php
+msgctxt "Pattern title"
+msgid "About page"
+msgstr ""
+
+#: patterns/template-page.php
+msgctxt "Pattern title"
+msgid "Page"
+msgstr ""
+
+#: patterns/template-search.php
+msgctxt "Pattern title"
+msgid "Search results"
+msgstr ""
+
+#: patterns/template-search.php:25
+msgid "Nothing matched your search"
+msgstr ""
+
+#: patterns/template-search.php:29
+msgid "Try different keywords, or browse the archives."
+msgstr ""
+
+#: patterns/template-single-docs.php
+msgctxt "Pattern title"
+msgid "Documentation post"
+msgstr ""
+
+#: patterns/template-single-docs.php:34
+#: patterns/template-single-docs.php:35
+msgid "Documentation outline"
+msgstr ""
+
+#: patterns/template-single.php
+msgctxt "Pattern title"
+msgid "Single post"
+msgstr ""
+
+#: patterns/template-tags.php
+msgctxt "Pattern title"
+msgid "All tags page"
+msgstr ""
+
+#: blocks/ad-card/block.json
+msgctxt "block title"
+msgid "Sponsor card"
+msgstr ""
+
+#: blocks/ad-card/block.json
+msgctxt "block description"
+msgid "A static text or image sponsor card."
+msgstr ""
+
+#: blocks/ad-slot/block.json
+msgctxt "block title"
+msgid "Sponsor slot"
+msgstr ""
+
+#: blocks/ad-slot/block.json
+msgctxt "block description"
+msgid "A disclosed group of static sponsor cards. Links get sponsored, nofollow and safety attributes automatically; no third-party scripts are allowed."
+msgstr ""
+
+#: blocks/ad-slot/block.json
+msgctxt "block keyword"
+msgid "ad"
+msgstr ""
+
+#: blocks/ad-slot/block.json
+msgctxt "block keyword"
+msgid "affiliate"
+msgstr ""
+
+#: blocks/ad-slot/block.json
+msgctxt "block keyword"
+msgid "sponsor"
+msgstr ""
+
+#: blocks/archive-heading/block.json
+msgctxt "block title"
+msgid "Archive heading"
+msgstr ""
+
+#: blocks/archive-heading/block.json
+msgctxt "block description"
+msgid "The page H1 and a short description for archives, search results and the Rackora index pages."
+msgstr ""
+
+#: blocks/archives-timeline/block.json
+msgctxt "block title"
+msgid "Archives timeline"
+msgstr ""
+
+#: blocks/archives-timeline/block.json
+msgctxt "block description"
+msgid "All posts grouped by year and month with pagination. On date archives it lists the posts of that period."
+msgstr ""
+
+#: blocks/color-scheme-toggle/block.json
+msgctxt "block title"
+msgid "Color scheme toggle"
+msgstr ""
+
+#: blocks/color-scheme-toggle/block.json
+msgctxt "block description"
+msgid "Lets visitors switch between light and dark color schemes."
+msgstr ""
+
+#: blocks/color-scheme-toggle/block.json
+msgctxt "block keyword"
+msgid "dark mode"
+msgstr ""
+
+#: blocks/color-scheme-toggle/block.json
+msgctxt "block keyword"
+msgid "theme"
+msgstr ""
+
+#: blocks/featured-entry/block.json
+msgctxt "block title"
+msgid "Category featured post"
+msgstr ""
+
+#: blocks/featured-entry/block.json
+msgctxt "block description"
+msgid "Highlights the featured post chosen on the category edit screen."
+msgstr ""
+
+#: blocks/filing/block.json
+msgctxt "block title"
+msgid "ICP filing"
+msgstr ""
+
+#: blocks/filing/block.json
+msgctxt "block description"
+msgid "ICP and public security filing numbers with optional links, for sites hosted in mainland China."
+msgstr ""
+
+#: blocks/filing/block.json
+msgctxt "block keyword"
+msgid "icp"
+msgstr ""
+
+#: blocks/filing/block.json
+msgctxt "block keyword"
+msgid "beian"
+msgstr ""
+
+#: blocks/friend-links/block.json
+msgctxt "block title"
+msgid "Friend links"
+msgstr ""
+
+#: blocks/friend-links/block.json
+msgctxt "block description"
+msgid "Links from Links → All Links, grouped by link category."
+msgstr ""
+
+#: blocks/home-heading/block.json
+msgctxt "block title"
+msgid "Home heading"
+msgstr ""
+
+#: blocks/home-heading/block.json
+msgctxt "block description"
+msgid "Eyebrow, site title as the page H1, tagline, post count and a short line."
+msgstr ""
+
+#: blocks/pagination/block.json
+msgctxt "block title"
+msgid "Page navigation"
+msgstr ""
+
+#: blocks/pagination/block.json
+msgctxt "block description"
+msgid "Previous and next links with the current page count for the main query. Place it after a Query Loop that inherits the template query."
+msgstr ""
+
+#: blocks/post-card/block.json
+msgctxt "block title"
+msgid "Post card"
+msgstr ""
+
+#: blocks/post-card/block.json
+msgctxt "block description"
+msgid "A quiet post entry with category, date, title, excerpt, views and comments. Place it inside a Post Template."
+msgstr ""
+
+#: blocks/post-disclosure/block.json
+msgctxt "block title"
+msgid "Commercial disclosure"
+msgstr ""
+
+#: blocks/post-disclosure/block.json
+msgctxt "block description"
+msgid "Shows the affiliate, sponsored review or self-purchase disclosure chosen in the post's Rackora panel."
+msgstr ""
+
+#: blocks/post-license/block.json
+msgctxt "block title"
+msgid "Author and license notice"
+msgstr ""
+
+#: blocks/post-license/block.json
+msgctxt "block description"
+msgid "Post title, permalink, author, publish date and the content license."
+msgstr ""
+
+#: blocks/post-meta/block.json
+msgctxt "block title"
+msgid "Post meta"
+msgstr ""
+
+#: blocks/post-meta/block.json
+msgctxt "block description"
+msgid "Manual excerpt as a deck, then author, published and updated dates, verification date, reading time and views."
+msgstr ""
+
+#: blocks/post-recent-comments/block.json
+msgctxt "block title"
+msgid "Recent comments on this post"
+msgstr ""
+
+#: blocks/post-recent-comments/block.json
+msgctxt "block description"
+msgid "The latest approved comments on the current post, for the article sidebar."
+msgstr ""
+
+#: blocks/post-series/block.json
+msgctxt "block title"
+msgid "Post series"
+msgstr ""
+
+#: blocks/post-series/block.json
+msgctxt "block description"
+msgid "Lists other posts with the same series name, ordered by the series order field."
+msgstr ""
+
+#: blocks/post-toc/block.json
+msgctxt "block title"
+msgid "Table of contents"
+msgstr ""
+
+#: blocks/post-toc/block.json
+msgctxt "block description"
+msgid "Builds a table of contents from the H2 and H3 headings of the post, highlights the current section and opens as a drawer on small screens."
+msgstr ""
+
+#: blocks/related-posts/block.json
+msgctxt "block title"
+msgid "Related posts"
+msgstr ""
+
+#: blocks/related-posts/block.json
+msgctxt "block description"
+msgid "Posts from the same primary category, falling back to the first tag."
+msgstr ""
+
+#: blocks/share-bar/block.json
+msgctxt "block title"
+msgid "Share bar"
+msgstr ""
+
+#: blocks/share-bar/block.json
+msgctxt "block description"
+msgid "Share links for X, Facebook, LinkedIn, Reddit, Telegram, WhatsApp, Weibo and email, plus a copy link button."
+msgstr ""
+
+#: blocks/site-stats/block.json
+msgctxt "block title"
+msgid "Site stats"
+msgstr ""
+
+#: blocks/site-stats/block.json
+msgctxt "block description"
+msgid "Lightweight counts of visits, posts, comments and categories, plus days online."
+msgstr ""
+
+#: blocks/term-index/block.json
+msgctxt "block title"
+msgid "Category or tag index"
+msgstr ""
+
+#: blocks/term-index/block.json
+msgctxt "block description"
+msgid "A grid of every category with descriptions and subcategories, or of every tag with post counts."
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Paper"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Surface"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Ink"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Ink soft"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Muted"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Line"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Line strong"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Accent"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Signal"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Amber"
+msgstr ""
+
+#: theme.json
+msgctxt "Font family name"
+msgid "IBM Plex Sans"
+msgstr ""
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Source Serif 4"
+msgstr ""
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Monospace"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Extra small"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Small"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Medium"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Large"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Extra large"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Huge"
+msgstr ""
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Documentation"
+msgstr ""
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "About"
+msgstr ""
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Archives"
+msgstr ""
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "All categories"
+msgstr ""
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "All tags"
+msgstr ""
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Links"
+msgstr ""
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Header"
+msgstr ""
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Footer"
+msgstr ""

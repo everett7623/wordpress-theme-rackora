@@ -1,0 +1,18 @@
+{
+  "name": "wordpress-theme-rackora",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Rackora, a minimal, content-first WordPress block theme for independent publishing and technical writing.",
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "scripts": {
+    "check": "node scripts/validate-theme.mjs",
+    "vendor": "node scripts/vendor-highlight.mjs",
+    "zip": "node scripts/build-zip.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "highlight.js": "11.12.0"
+  },
+  "packageManager": "pnpm@11.6.0"
+}

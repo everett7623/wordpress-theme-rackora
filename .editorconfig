@@ -1,0 +1,19 @@
+# EditorConfig: https://editorconfig.org
+# PHP、CSS、JS 与 JSON 遵循 WordPress 编码规范使用 Tab 缩进。
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = tab
+
+[*.{md,yml,yaml}]
+indent_style = space
+indent_size = 2
+
+[{package.json,scripts/*.mjs}]
+indent_style = space
+indent_size = 2

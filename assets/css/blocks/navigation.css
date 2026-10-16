@@ -1,0 +1,117 @@
+/* 页头主导航与页脚导航。 */
+
+.site-nav {
+	min-width: 0;
+	justify-self: center;
+}
+
+.site-nav .wp-block-navigation__container {
+	gap: 4px;
+}
+
+.site-nav .wp-block-navigation-item__content {
+	display: block;
+	padding: 8px 10px;
+	color: var(--rack-ink-soft);
+	border-radius: 5px;
+	font-size: 0.9rem;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.site-nav .wp-block-navigation-item__content:hover,
+.site-nav .current-menu-item > .wp-block-navigation-item__content,
+.site-nav .current-menu-ancestor > .wp-block-navigation-item__content {
+	color: var(--rack-ink);
+	background: var(--rack-accent-soft);
+}
+
+.site-nav .current-menu-item > .wp-block-navigation-item__content {
+	color: var(--rack-accent-hover);
+}
+
+.site-nav .wp-block-navigation__submenu-container {
+	min-width: 180px !important;
+	padding: 6px;
+	color: var(--rack-ink);
+	background: var(--rack-surface) !important;
+	border: 1px solid var(--rack-line) !important;
+	border-radius: 8px;
+	box-shadow: 0 10px 28px rgb(0 0 0 / 8%);
+}
+
+.site-nav .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
+	white-space: nowrap;
+}
+
+/* 只调整外观，显示与隐藏交给核心导航区块的响应式逻辑 */
+.site-nav .wp-block-navigation__responsive-container-open,
+.site-nav .wp-block-navigation__responsive-container-close {
+	padding: 7px;
+	color: var(--rack-ink-soft);
+	border-radius: 5px;
+}
+
+.site-nav .wp-block-navigation__responsive-container-open:hover {
+	color: var(--rack-ink);
+	background: var(--rack-accent-soft);
+}
+
+/* 遮罩层颜色由区块的 overlayBackgroundColor / overlayTextColor 指定为调色板颜色，随深色模式切换 */
+.site-nav .wp-block-navigation__responsive-container.is-menu-open {
+	--navigation-layout-justification-setting: flex-start;
+	padding: calc(var(--rack-admin-bar) + 18px) 20px 24px;
+}
+
+/* 页面列表回退会把导航的 items-justified-center 类加在内层列表上，需在列表上再次声明左对齐 */
+.site-nav .is-menu-open .wp-block-navigation__container,
+.site-nav .is-menu-open .wp-block-page-list {
+	--navigation-layout-justification-setting: flex-start;
+}
+
+.site-nav .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__responsive-container-content {
+	padding-top: 48px;
+}
+
+.site-nav .is-menu-open .wp-block-navigation-item__content {
+	padding: 11px 12px;
+	font-size: 1rem;
+}
+
+/* 与 Halo 版一致，窄于 960px 时折叠为菜单按钮 */
+@media (min-width: 600px) and (max-width: 960px) {
+	.site-nav .wp-block-navigation__responsive-container-open:not(.always-shown) {
+		display: flex;
+	}
+
+	.site-nav .wp-block-navigation__responsive-container:not(.hidden-by-default):not(.is-menu-open) {
+		display: none;
+	}
+}
+
+.footer-nav {
+	justify-self: end;
+}
+
+.footer-nav .wp-block-navigation__container {
+	gap: 8px 14px;
+}
+
+.footer-nav .wp-block-navigation-item__content {
+	color: var(--rack-muted);
+	font-size: 0.8rem;
+}
+
+.footer-nav .wp-block-navigation-item__content:hover {
+	color: var(--rack-accent);
+}
+
+@media (max-width: 720px) {
+	.footer-nav {
+		justify-self: start;
+	}
+
+	.footer-nav .wp-block-navigation__container {
+		justify-content: flex-start;
+	}
+}

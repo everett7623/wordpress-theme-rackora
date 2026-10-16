@@ -1,0 +1,16 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rackora/archives-timeline",
+	"title": "Archives timeline",
+	"category": "rackora",
+	"icon": "calendar-alt",
+	"description": "All posts grouped by year and month with pagination. On date archives it lists the posts of that period.",
+	"textdomain": "rackora",
+	"supports": {
+		"html": false
+	},
+	"editorScript": "rackora-editor",
+	"render": "file:./render.php",
+	"style": "file:./style.css"
+}

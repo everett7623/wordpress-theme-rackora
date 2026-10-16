@@ -1,0 +1,16 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rackora/featured-entry",
+	"title": "Category featured post",
+	"category": "rackora",
+	"icon": "star-filled",
+	"description": "Highlights the featured post chosen on the category edit screen.",
+	"textdomain": "rackora",
+	"supports": {
+		"html": false
+	},
+	"editorScript": "rackora-editor",
+	"render": "file:./render.php",
+	"style": "file:./style.css"
+}

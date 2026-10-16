@@ -1,0 +1,31 @@
+/* 面包屑：小号灰色文字，当前项过长时省略。 */
+
+.wp-block-breadcrumbs {
+	color: var(--rack-muted);
+	font-size: 0.8rem;
+}
+
+.wp-block-breadcrumbs a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.wp-block-breadcrumbs a:hover {
+	color: var(--rack-accent);
+}
+
+.wp-block-breadcrumbs li {
+	min-width: 0;
+}
+
+.wp-block-breadcrumbs [aria-current="page"] {
+	display: block;
+	overflow: hidden;
+	max-width: 28rem;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.archive-breadcrumbs {
+	margin-bottom: 14px !important;
+}

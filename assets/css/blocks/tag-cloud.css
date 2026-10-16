@@ -1,0 +1,27 @@
+/* 侧栏高频标签：统一字号的小标签。 */
+
+.wp-block-tag-cloud.sidebar-tag-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 7px;
+	margin: 8px 0 0;
+}
+
+.sidebar-tag-list a.tag-cloud-link {
+	margin: 0;
+	padding: 5px 8px;
+	color: var(--rack-ink-soft);
+	background: var(--rack-paper);
+	border: 1px solid var(--rack-line);
+	border-radius: 4px;
+	font-size: 0.72rem !important;
+	font-weight: 600;
+	line-height: 1.2;
+	text-decoration: none;
+}
+
+.sidebar-tag-list a.tag-cloud-link:hover {
+	color: var(--rack-accent);
+	background: var(--rack-accent-soft);
+	border-color: color-mix(in srgb, var(--rack-accent) 28%, var(--rack-line));
+}

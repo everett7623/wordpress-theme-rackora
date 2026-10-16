@@ -1,0 +1,110 @@
+.wp-block-rackora-ad-slot.ad-slot {
+	margin: 0 0 20px;
+}
+
+.article-content + .wp-block-rackora-ad-slot.ad-slot,
+.article-header + .wp-block-rackora-ad-slot.ad-slot {
+	margin-top: 24px;
+}
+
+.ad-disclosure {
+	margin: 0 0 8px;
+	color: var(--rack-muted);
+	font-size: 0.7rem;
+	line-height: 1.5;
+}
+
+.ad-list {
+	display: grid;
+	gap: 8px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ad-card a {
+	min-width: 0;
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr) auto;
+	align-items: center;
+	gap: 12px;
+	padding: 12px;
+	color: var(--rack-ink-soft);
+	background: color-mix(in srgb, var(--rack-surface) 94%, var(--rack-paper));
+	border: 1px solid color-mix(in srgb, var(--rack-line) 82%, transparent);
+	border-radius: 8px;
+	text-decoration: none;
+}
+
+.ad-card a:not(:has(img)) {
+	grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.ad-card a:hover {
+	color: var(--rack-ink);
+	border-color: color-mix(in srgb, var(--rack-accent) 22%, var(--rack-line));
+}
+
+.ad-card img {
+	width: 104px;
+	height: 59px;
+	object-fit: cover;
+	border-radius: 5px;
+}
+
+.ad-card__body {
+	min-width: 0;
+	display: grid;
+	gap: 2px;
+}
+
+.ad-card__body small {
+	width: max-content;
+	padding: 1px 5px;
+	color: var(--rack-amber);
+	background: var(--rack-amber-soft);
+	border-radius: 3px;
+	font-size: 0.62rem;
+	font-weight: 700;
+}
+
+.ad-card__body strong {
+	color: var(--rack-ink);
+	font-size: 0.9rem;
+}
+
+.ad-card__body > span {
+	overflow: hidden;
+	color: var(--rack-muted);
+	font-size: 0.76rem;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.ad-card svg {
+	width: 16px;
+	height: 16px;
+	color: var(--rack-muted);
+}
+
+.home-sidebar .wp-block-rackora-ad-slot.ad-slot {
+	margin: 0;
+}
+
+.home-sidebar .ad-card a {
+	grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.home-sidebar .ad-card img {
+	grid-column: 1 / -1;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 16 / 9;
+}
+
+@media (max-width: 720px) {
+	.ad-card img {
+		width: 88px;
+		height: 50px;
+	}
+}

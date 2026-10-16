@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rackora/post-recent-comments",
+	"title": "Recent comments on this post",
+	"category": "rackora",
+	"icon": "admin-comments",
+	"description": "The latest approved comments on the current post, for the article sidebar.",
+	"textdomain": "rackora",
+	"attributes": {
+		"count": {
+			"type": "number",
+			"default": 3,
+			"minimum": 1,
+			"maximum": 5
+		}
+	},
+	"usesContext": [ "postId", "postType" ],
+	"supports": {
+		"html": false
+	},
+	"editorScript": "rackora-editor",
+	"render": "file:./render.php"
+}

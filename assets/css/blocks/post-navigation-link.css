@@ -1,0 +1,45 @@
+/* 上一篇 / 下一篇卡片。 */
+
+.post-navigation .wp-block-post-navigation-link {
+	min-width: 0;
+}
+
+.post-navigation .wp-block-post-navigation-link a {
+	min-width: 0;
+	display: grid;
+	gap: 4px;
+	padding: 14px;
+	color: var(--rack-ink);
+	background: var(--rack-surface);
+	border: 1px solid var(--rack-line);
+	border-radius: var(--rack-radius);
+	text-decoration: none;
+}
+
+.post-navigation .wp-block-post-navigation-link a:hover {
+	border-color: color-mix(in srgb, var(--rack-accent) 24%, var(--rack-line));
+}
+
+.post-navigation .post-navigation__next {
+	grid-column: 2;
+	text-align: right;
+}
+
+.post-navigation .post-navigation-link__label {
+	color: var(--rack-muted);
+	font-size: 0.72rem;
+}
+
+.post-navigation .post-navigation-link__title {
+	overflow: hidden;
+	font-size: 0.88rem;
+	font-weight: 650;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+	.post-navigation .post-navigation__next {
+		grid-column: auto;
+	}
+}

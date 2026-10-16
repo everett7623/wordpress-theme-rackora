@@ -1,0 +1,17 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rackora/post-disclosure",
+	"title": "Commercial disclosure",
+	"category": "rackora",
+	"icon": "info",
+	"description": "Shows the affiliate, sponsored review or self-purchase disclosure chosen in the post's Rackora panel.",
+	"textdomain": "rackora",
+	"usesContext": [ "postId", "postType" ],
+	"supports": {
+		"html": false
+	},
+	"editorScript": "rackora-editor",
+	"render": "file:./render.php",
+	"style": "file:./style.css"
+}

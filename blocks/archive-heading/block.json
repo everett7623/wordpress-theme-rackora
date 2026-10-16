@@ -1,0 +1,23 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rackora/archive-heading",
+	"title": "Archive heading",
+	"category": "rackora",
+	"icon": "editor-textcolor",
+	"description": "The page H1 and a short description for archives, search results and the Rackora index pages.",
+	"textdomain": "rackora",
+	"attributes": {
+		"variant": {
+			"type": "string",
+			"enum": [ "auto", "archives", "categories", "tags", "links" ],
+			"default": "auto"
+		}
+	},
+	"supports": {
+		"html": false
+	},
+	"editorScript": "rackora-editor",
+	"render": "file:./render.php",
+	"style": "file:./style.css"
+}

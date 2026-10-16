@@ -1,0 +1,54 @@
+name: Release theme
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # 发布只调用 gh 接口，不需要 git 推送凭据
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Validate theme
+        run: node scripts/validate-theme.mjs
+
+      - name: Verify tag matches theme version
+        shell: bash
+        run: |
+          VERSION=$(sed -n 's/^Version: *//p' style.css | tr -d '\r')
+          test "${GITHUB_REF_NAME}" = "v${VERSION}"
+
+      - name: Build theme package
+        shell: bash
+        run: |
+          VERSION=$(sed -n 's/^Version: *//p' style.css | tr -d '\r')
+          mkdir -p dist
+          git archive --format=zip --prefix=rackora/ -o "dist/rackora-${VERSION}.zip" HEAD
+          sha256sum "dist/rackora-${VERSION}.zip"
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          VERSION=$(sed -n 's/^Version: *//p' style.css | tr -d '\r')
+          ASSET="dist/rackora-${VERSION}.zip"
+          if gh release view "v${VERSION}" >/dev/null 2>&1; then
+            gh release upload "v${VERSION}" "${ASSET}" --clobber
+          else
+            gh release create "v${VERSION}" "${ASSET}" --title "Rackora v${VERSION}" --generate-notes
+          fi

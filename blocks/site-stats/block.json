@@ -1,0 +1,22 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rackora/site-stats",
+	"title": "Site stats",
+	"category": "rackora",
+	"icon": "chart-bar",
+	"description": "Lightweight counts of visits, posts, comments and categories, plus days online.",
+	"textdomain": "rackora",
+	"attributes": {
+		"launchDate": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false
+	},
+	"editorScript": "rackora-editor",
+	"render": "file:./render.php",
+	"style": "file:./style.css"
+}

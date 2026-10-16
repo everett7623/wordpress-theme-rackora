@@ -1,0 +1,18 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rackora/color-scheme-toggle",
+	"title": "Color scheme toggle",
+	"category": "rackora",
+	"icon": "lightbulb",
+	"description": "Lets visitors switch between light and dark color schemes.",
+	"keywords": [ "dark mode", "theme" ],
+	"textdomain": "rackora",
+	"supports": {
+		"html": false,
+		"reusable": false
+	},
+	"editorScript": "rackora-editor",
+	"render": "file:./render.php",
+	"style": "file:./style.css"
+}

@@ -1,0 +1,27 @@
+/* 文章底部标签。 */
+
+.wp-block-post-terms.article-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.wp-block-post-terms.article-tags a {
+	padding: 4px 8px;
+	color: var(--rack-muted);
+	background: var(--rack-surface);
+	border: 1px solid var(--rack-line);
+	border-radius: 4px;
+	font-size: 0.75rem;
+	text-decoration: none;
+}
+
+.wp-block-post-terms.article-tags a:hover {
+	color: var(--rack-accent);
+	background: var(--rack-accent-soft);
+	border-color: color-mix(in srgb, var(--rack-accent) 28%, var(--rack-line));
+}
+
+.wp-block-post-terms.article-tags .wp-block-post-terms__separator {
+	display: none;
+}

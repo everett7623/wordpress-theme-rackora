@@ -1,0 +1,102 @@
+.share-bar {
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 6px;
+	max-width: 100%;
+	margin-left: auto;
+}
+
+.share-bar__label {
+	margin-right: 4px;
+	color: var(--rack-muted);
+	font-size: 0.72rem;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+
+.share-bar__button {
+	width: 36px;
+	height: 36px;
+	display: inline-grid;
+	place-items: center;
+	padding: 0;
+	color: var(--rack-muted);
+	background: var(--rack-surface);
+	border: 1px solid var(--rack-line);
+	border-radius: 4px;
+	text-decoration: none;
+	cursor: pointer;
+	transition:
+		color 160ms ease,
+		background-color 160ms ease,
+		border-color 160ms ease,
+		transform 160ms ease;
+}
+
+.share-bar__button:hover,
+.share-bar__button.is-copied {
+	color: var(--rack-accent);
+	background: var(--rack-accent-soft);
+	border-color: color-mix(in srgb, var(--rack-accent) 28%, var(--rack-line));
+	transform: translateY(-1px);
+}
+
+.share-bar__button.is-failed {
+	color: var(--rack-signal);
+	border-color: color-mix(in srgb, var(--rack-signal) 36%, var(--rack-line));
+}
+
+.share-bar__button svg {
+	width: 16px;
+	height: 16px;
+	stroke-width: 1.8;
+}
+
+.share-bar__icon {
+	display: none;
+	line-height: 0;
+}
+
+.share-bar__button .share-bar__icon--copy,
+.share-bar__button.is-copied .share-bar__icon--check,
+.share-bar__button.is-failed .share-bar__icon--failed {
+	display: block;
+}
+
+.share-bar__button.is-copied .share-bar__icon--copy,
+.share-bar__button.is-failed .share-bar__icon--copy {
+	display: none;
+}
+
+.share-bar__status {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	margin: -1px;
+	padding: 0;
+	border: 0;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+.share-bar__x-mark {
+	font-size: 0.82rem;
+	font-weight: 700;
+	line-height: 1;
+}
+
+@media (max-width: 720px) {
+	.share-bar {
+		width: 100%;
+		justify-content: flex-start;
+		margin-left: 0;
+	}
+
+	.share-bar__label {
+		flex-basis: 100%;
+		margin: 0 0 2px;
+	}
+}

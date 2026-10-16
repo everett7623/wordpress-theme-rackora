@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rackora/share-bar",
+	"title": "Share bar",
+	"category": "rackora",
+	"icon": "share",
+	"description": "Share links for X, Facebook, LinkedIn, Reddit, Telegram, WhatsApp, Weibo and email, plus a copy link button.",
+	"textdomain": "rackora",
+	"attributes": {
+		"targets": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"default": [ "twitter", "facebook", "linkedin", "reddit", "telegram", "whatsapp", "weibo", "email" ]
+		},
+		"showCopy": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"usesContext": [ "postId", "postType" ],
+	"supports": {
+		"html": false
+	},
+	"editorScript": "rackora-editor",
+	"render": "file:./render.php",
+	"style": "file:./style.css"
+}

@@ -1,0 +1,16 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rackora/friend-links",
+	"title": "Friend links",
+	"category": "rackora",
+	"icon": "admin-links",
+	"description": "Links from Links → All Links, grouped by link category.",
+	"textdomain": "rackora",
+	"supports": {
+		"html": false
+	},
+	"editorScript": "rackora-editor",
+	"render": "file:./render.php",
+	"style": "file:./style.css"
+}

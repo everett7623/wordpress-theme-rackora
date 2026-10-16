@@ -1,0 +1,1560 @@
+# Copyright (C) 2026 everettlabs
+# This file is distributed under the GNU General Public License v3 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Rackora 0.1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/everett7623/wordpress-theme-rackora/issues\n"
+"PO-Revision-Date: 2026-10-15 13:10+0800\n"
+"Last-Translator: everettlabs\n"
+"Language-Team: Rackora\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Domain: rackora\n"
+
+#. Theme Name of the theme
+#: style.css
+#: inc/blocks.php:110
+#: inc/blocks.php:145
+#: inc/settings.php:326
+#: inc/setup.php:35
+msgid "Rackora"
+msgstr "Rackora"
+
+#. Theme URI of the theme
+#: style.css
+msgid "https://github.com/everett7623/wordpress-theme-rackora"
+msgstr "https://github.com/everett7623/wordpress-theme-rackora"
+
+#. Description of the theme
+#: style.css
+msgid "A minimal, content-first block theme for independent publishing, knowledge bases, and technical writing. Quiet low-image layouts, light and dark color schemes, table of contents, code highlighting, and complete page-level SEO output."
+msgstr "面向独立出版、知识库与技术写作的极简、内容优先区块主题：安静的低图片版式、明暗配色、文章目录、代码高亮与完整的页面级 SEO 输出。"
+
+#. Author of the theme
+#: style.css
+msgid "everettlabs"
+msgstr "everettlabs"
+
+#. Author URI of the theme
+#: style.css
+msgid "https://everettlabs.dev/"
+msgstr "https://everettlabs.dev/"
+
+#. translators: %s: sponsor name.
+#: blocks/ad-card/render.php:21
+#, php-format
+msgid "%s (sponsored link)"
+msgstr "%s（推广链接）"
+
+#: blocks/ad-card/render.php:29
+msgctxt "sponsor card label"
+msgid "Sponsored"
+msgstr "推广"
+
+#: blocks/ad-slot/render.php:18
+msgid "Sponsored content"
+msgstr "推广内容"
+
+#: blocks/ad-slot/render.php:19
+msgid "The site may earn a commission from promotional links without affecting editorial judgment or your price."
+msgstr "本站可能通过推广链接获得佣金，不影响内容判断与用户价格。"
+
+#. translators: %s: number of public posts.
+#: blocks/archive-heading/render.php:31
+#: blocks/archive-heading/render.php:81
+#, php-format
+msgid "%s public post, organized by publish date."
+msgid_plural "%s public posts, organized by publish date."
+msgstr[0] "共 %s 篇公开内容，按发布时间整理。"
+
+#: blocks/archive-heading/render.php:34
+msgid "Browse posts by their primary content type."
+msgstr "按站点的主要内容类型浏览文章。"
+
+#: blocks/archive-heading/render.php:37
+msgid "Browse all tags by topic and context."
+msgstr "按主题与内容线索浏览全部标签。"
+
+#: blocks/archive-heading/render.php:40
+msgid "Independent sites and creators worth following."
+msgstr "发现值得长期阅读的独立网站与创作者。"
+
+#: blocks/archive-heading/render.php:47
+msgid "Connections"
+msgstr "站点连接"
+
+#: blocks/archive-heading/render.php:76
+msgctxt "monthly archives date format"
+msgid "F Y"
+msgstr "Y 年 n 月"
+
+#. translators: %s: search query.
+#: blocks/archive-heading/render.php:84
+#, php-format
+msgid "Search: %s"
+msgstr "搜索：%s"
+
+#. translators: %s: number of search results.
+#: blocks/archive-heading/render.php:86
+#, php-format
+msgid "%s result"
+msgid_plural "%s results"
+msgstr[0] "%s 个结果"
+
+#: blocks/archive-heading/render.php:94
+#: patterns/post-sidebar.php:18
+#: patterns/template-home.php:21
+msgid "Latest posts"
+msgstr "最新文章"
+
+#. translators: %s: number of public posts.
+#: blocks/archive-heading/render.php:117
+#, php-format
+msgid "%s public post"
+msgid_plural "%s public posts"
+msgstr[0] "发布了 %s 篇公开内容"
+
+#: blocks/archives-timeline/render.php:39
+msgid "The archive is empty"
+msgstr "归档还是空的"
+
+#: blocks/archives-timeline/render.php:39
+msgid "Published posts will be organized here by year and month."
+msgstr "公开文章发布后会按年份和月份显示。"
+
+#. translators: %s: month number.
+#: blocks/archives-timeline/render.php:64
+#, php-format
+msgid "Month %s"
+msgstr "%s 月"
+
+#: blocks/archives-timeline/render.php:76
+msgid "Uncategorized"
+msgstr "未分类"
+
+#: blocks/archives-timeline/render.php:95
+msgid "Archive pagination"
+msgstr "归档分页"
+
+#: blocks/color-scheme-toggle/render.php:10
+msgid "Toggle color scheme"
+msgstr "切换配色"
+
+#: blocks/featured-entry/render.php:20
+msgid "Featured"
+msgstr "精选内容"
+
+#: blocks/friend-links/render.php:36
+msgid "Link groups"
+msgstr "友链分组"
+
+#: blocks/friend-links/render.php:37
+#: patterns/home-sidebar.php:47
+#: patterns/home-sidebar.php:63
+msgid "All"
+msgstr "全部"
+
+#: blocks/friend-links/render.php:69
+msgid "No public links yet"
+msgstr "暂时没有公开链接"
+
+#: blocks/friend-links/render.php:69
+msgid "Add links under Links → Add New in the dashboard."
+msgstr "请在后台「链接 → 添加」中添加友情链接。"
+
+#: blocks/home-heading/render.php:17
+msgid "Independent publishing"
+msgstr "独立出版"
+
+#. translators: %s: number of published posts.
+#: blocks/home-heading/render.php:26
+#, php-format
+msgid "%s post"
+msgid_plural "%s posts"
+msgstr[0] "%s 篇内容"
+
+#: blocks/home-heading/render.php:29
+msgid "Written for clarity and longevity"
+msgstr "清晰表达，长期可读"
+
+#: blocks/post-card/render.php:44
+msgid "Pinned"
+msgstr "置顶"
+
+#. translators: %s: modified date.
+#: blocks/post-card/render.php:62
+#: blocks/post-meta/render.php:60
+#, php-format
+msgid "Updated %s"
+msgstr "更新于 %s"
+
+#: blocks/post-disclosure/render.php:14
+msgid "This post contains affiliate or referral links. The site may earn a commission without affecting your price or our editorial judgment."
+msgstr "本文包含 Affiliate / Referral 推广链接，本站可能获得佣金，不影响用户价格与编辑判断。"
+
+#: blocks/post-disclosure/render.php:15
+msgid "A vendor supplied resources for this review; the methods, results, and limitations remain independently documented."
+msgstr "本文包含商家提供的送测资源；测试方法、结果与限制仍由本站独立记录。"
+
+#: blocks/post-disclosure/render.php:16
+msgid "The product or service covered in this post was independently purchased for testing."
+msgstr "本文涉及的产品或服务由本站自购测试。"
+
+#: blocks/post-disclosure/render.php:23
+msgid "Content relationship disclosure"
+msgstr "内容关系披露"
+
+#: blocks/post-license/render.php:22
+msgid "All rights reserved"
+msgstr "保留所有权利"
+
+#: blocks/post-license/render.php:24
+msgid "Author and copyright notice"
+msgstr "作者与版权声明"
+
+#: blocks/post-license/render.php:31
+msgid "Author"
+msgstr "作者"
+
+#: blocks/post-license/render.php:35
+msgid "Published"
+msgstr "发布于"
+
+#: blocks/post-license/render.php:39
+msgid "License"
+msgstr "许可"
+
+#. translators: %s: estimated reading time in minutes.
+#: blocks/post-meta/render.php:38
+#, php-format
+msgid "%s min read"
+msgid_plural "%s min read"
+msgstr[0] "约 %s 分钟"
+
+#. translators: %s: publish date.
+#: blocks/post-meta/render.php:53
+#, php-format
+msgid "Published %s"
+msgstr "发布于 %s"
+
+#. translators: %s: content verification date.
+#: blocks/post-meta/render.php:68
+#, php-format
+msgid "Verified %s"
+msgstr "核验于 %s"
+
+#: blocks/post-recent-comments/render.php:27
+msgid "Recent comments"
+msgstr "最新评论"
+
+#: blocks/post-recent-comments/render.php:38
+msgid "No comments yet"
+msgstr "暂无评论"
+
+#: blocks/post-series/render.php:55
+#: blocks/post-series/render.php:56
+#: inc/meta.php:20
+msgid "Series"
+msgstr "系列"
+
+#: blocks/post-toc/render.php:15
+#: inc/assets.php:143
+msgid "On this page"
+msgstr "本页目录"
+
+#: blocks/post-toc/render.php:16
+msgid "Table of contents"
+msgstr "文章目录"
+
+#: blocks/related-posts/render.php:51
+msgid "In this category"
+msgstr "同分类"
+
+#: blocks/related-posts/render.php:51
+msgid "Related posts"
+msgstr "相关文章"
+
+#: blocks/share-bar/render.php:38
+msgid "Share this post"
+msgstr "分享文章"
+
+#: blocks/share-bar/render.php:39
+msgid "Share"
+msgstr "分享"
+
+#. translators: %s: share target such as X or Facebook.
+#: blocks/share-bar/render.php:44
+msgid "Share by email"
+msgstr "通过邮件分享"
+
+#. translators: %s: share target such as X or Facebook.
+#: blocks/share-bar/render.php:44
+#, php-format
+msgid "Share on %s"
+msgstr "分享到 %s"
+
+#: blocks/share-bar/render.php:56
+msgid "Copy post link"
+msgstr "复制文章链接"
+
+#: blocks/site-stats/render.php:15
+msgid "Visits"
+msgstr "访问"
+
+#: blocks/site-stats/render.php:17
+msgid "Posts"
+msgstr "文章"
+
+#: blocks/site-stats/render.php:18
+#: patterns/comments.php:15
+msgid "Comments"
+msgstr "评论"
+
+#: blocks/site-stats/render.php:19
+#: inc/blocks.php:103
+#: patterns/home-sidebar.php:42
+msgid "Categories"
+msgstr "分类"
+
+#: blocks/site-stats/render.php:30
+msgctxt "site stats: days since launch"
+msgid "Days"
+msgstr "运行天数"
+
+#: blocks/term-index/render.php:26
+msgid "No tags yet"
+msgstr "尚未创建标签"
+
+#: blocks/term-index/render.php:26
+msgid "Tags will appear after tagged posts are published."
+msgstr "发布带标签的文章后，它们会显示在这里。"
+
+#: blocks/term-index/render.php:27
+msgid "No categories yet"
+msgstr "尚未创建分类"
+
+#: blocks/term-index/render.php:27
+msgid "Categories you create will appear here."
+msgstr "在后台建立分类后，它们会显示在这里。"
+
+#: blocks/term-index/render.php:61
+msgid "View every post in this category"
+msgstr "查看该分类下的全部内容"
+
+#: inc/assets.php:137
+msgid "Switch to light mode"
+msgstr "切换为浅色"
+
+#: inc/assets.php:138
+msgid "Switch to dark mode"
+msgstr "切换为深色"
+
+#: inc/assets.php:139
+msgid "Section"
+msgstr "章节"
+
+#. translators: %s: heading text.
+#: inc/assets.php:141
+#, php-format
+msgid "Link to %s"
+msgstr "链接到 %s"
+
+#: inc/assets.php:142
+msgid "Contents"
+msgstr "目录"
+
+#: inc/assets.php:144
+msgid "Close"
+msgstr "关闭"
+
+#: inc/assets.php:145
+msgid "Copy code"
+msgstr "复制代码"
+
+#: inc/assets.php:146
+msgid "Copy"
+msgstr "复制"
+
+#: inc/assets.php:147
+msgid "Copied"
+msgstr "已复制"
+
+#: inc/assets.php:148
+msgid "Copy failed"
+msgstr "复制失败"
+
+#: inc/assets.php:149
+msgid "Link copied"
+msgstr "链接已复制"
+
+#: inc/assets.php:150
+msgid "Product comparison table"
+msgstr "产品比较表"
+
+#: inc/assets.php:151
+msgid "Data table"
+msgstr "数据表"
+
+#: inc/assets.php:152
+msgid "Sponsored"
+msgstr "合作链接"
+
+#: inc/assets.php:182
+msgid "Back to top"
+msgstr "返回顶部"
+
+#: inc/blocks.php:67
+msgid "Eyebrow"
+msgstr "眉题"
+
+#: inc/blocks.php:68
+msgid "Tagline"
+msgstr "短句"
+
+#: inc/blocks.php:69
+msgid "Launch date (YYYY-MM-DD)"
+msgstr "建站日期（YYYY-MM-DD）"
+
+#: inc/blocks.php:70
+msgid "Show featured image"
+msgstr "显示特色图片"
+
+#: inc/blocks.php:71
+msgid "Variant"
+msgstr "样式"
+
+#: inc/blocks.php:72
+msgid "Show manual excerpt as deck"
+msgstr "将手动摘要显示为导语"
+
+#: inc/blocks.php:73
+msgid "Show copy link button"
+msgstr "显示复制链接按钮"
+
+#: inc/blocks.php:74
+msgid "Share targets"
+msgstr "分享平台"
+
+#: inc/blocks.php:75
+msgid "Number of items"
+msgstr "显示数量"
+
+#: inc/blocks.php:76
+msgid "Layout"
+msgstr "布局"
+
+#: inc/blocks.php:77
+msgid "Title"
+msgstr "标题"
+
+#: inc/blocks.php:78
+msgid "Include the current post"
+msgstr "包含当前文章"
+
+#: inc/blocks.php:79
+msgid "License name"
+msgstr "内容许可名称"
+
+#: inc/blocks.php:80
+msgid "License URL"
+msgstr "内容许可地址"
+
+#: inc/blocks.php:81
+msgid "Taxonomy"
+msgstr "分类法"
+
+#: inc/blocks.php:82
+msgid "Disclosure text"
+msgstr "推广披露文案"
+
+#: inc/blocks.php:83
+msgid "Name"
+msgstr "名称"
+
+#: inc/blocks.php:84
+msgid "Short description"
+msgstr "简短说明"
+
+#: inc/blocks.php:85
+msgid "Image"
+msgstr "图片"
+
+#: inc/blocks.php:86
+msgid "Destination URL"
+msgstr "跳转地址"
+
+#: inc/blocks.php:87
+msgid "ICP filing number"
+msgstr "ICP 备案号"
+
+#: inc/blocks.php:88
+msgid "ICP filing link"
+msgstr "ICP 备案跳转链接"
+
+#: inc/blocks.php:89
+msgid "Public security filing number"
+msgstr "公网安备号"
+
+#: inc/blocks.php:90
+msgid "Public security filing link"
+msgstr "公网安备跳转链接"
+
+#: inc/blocks.php:93
+msgid "Automatic"
+msgstr "自动"
+
+#: inc/blocks.php:94
+msgid "Archives"
+msgstr "归档"
+
+#: inc/blocks.php:95
+msgid "All categories"
+msgstr "全部分类"
+
+#: inc/blocks.php:96
+msgid "All tags"
+msgstr "全部标签"
+
+#: inc/blocks.php:97
+msgid "Links"
+msgstr "友情链接"
+
+#: inc/blocks.php:98
+msgid "Article"
+msgstr "文章"
+
+#: inc/blocks.php:99
+#: patterns/template-single-docs.php:17
+msgid "Documentation"
+msgstr "文档"
+
+#: inc/blocks.php:100
+msgid "Page deck only"
+msgstr "仅页面导语"
+
+#: inc/blocks.php:101
+msgid "Below the post"
+msgstr "正文下方"
+
+#: inc/blocks.php:102
+msgid "Sidebar list"
+msgstr "侧栏列表"
+
+#: inc/blocks.php:104
+#: patterns/home-sidebar.php:58
+msgid "Tags"
+msgstr "标签"
+
+#: inc/blocks.php:109
+msgid "Settings"
+msgstr "设置"
+
+#: inc/blocks.php:111
+msgid "Rendered on the front end with live content."
+msgstr "在前台按实际内容渲染。"
+
+#: inc/blocks.php:112
+#: inc/settings.php:302
+msgid "Choose image"
+msgstr "选择图片"
+
+#: inc/blocks.php:113
+msgid "Remove image"
+msgstr "移除图片"
+
+#: inc/blocks.php:125
+msgid "X"
+msgstr "X"
+
+#: inc/blocks.php:126
+msgid "Facebook"
+msgstr "Facebook"
+
+#: inc/blocks.php:127
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#: inc/blocks.php:128
+msgid "Reddit"
+msgstr "Reddit"
+
+#: inc/blocks.php:129
+msgid "Telegram"
+msgstr "Telegram"
+
+#: inc/blocks.php:130
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+#: inc/blocks.php:131
+msgid "Weibo"
+msgstr "微博"
+
+#: inc/blocks.php:132
+msgid "Email"
+msgstr "邮件"
+
+#: inc/blocks.php:226
+msgid "Pagination"
+msgstr "分页"
+
+#: inc/blocks.php:232
+msgctxt "pagination"
+msgid "Previous"
+msgstr "上一页"
+
+#: inc/blocks.php:240
+msgctxt "pagination"
+msgid "Next"
+msgstr "下一页"
+
+#. translators: %s: number of views.
+#: inc/helpers.php:244
+#, php-format
+msgid "%s view"
+msgid_plural "%s views"
+msgstr[0] "%s 阅读"
+
+#. translators: %s: number of comments.
+#: inc/helpers.php:255
+#, php-format
+msgid "%s comment"
+msgid_plural "%s comments"
+msgstr[0] "%s 评论"
+
+#. translators: %s: number of posts.
+#: inc/helpers.php:266
+#, php-format
+msgid "%s related post"
+msgid_plural "%s related posts"
+msgstr[0] "%s 篇相关内容"
+
+#: inc/meta.php:22
+msgid "Use exactly the same name for every post in a series."
+msgstr "同一系列请填写完全相同的名称。"
+
+#: inc/meta.php:25
+msgid "Series order"
+msgstr "系列序号"
+
+#: inc/meta.php:27
+msgid "Optional. Smaller numbers come first."
+msgstr "可选；数字越小越靠前。"
+
+#: inc/meta.php:30
+msgid "Commercial relationship"
+msgstr "推广关系"
+
+#: inc/meta.php:34
+#: inc/meta.php:218
+msgid "None"
+msgstr "无"
+
+#: inc/meta.php:35
+msgid "Contains affiliate or referral links"
+msgstr "包含 Affiliate / Referral"
+
+#: inc/meta.php:36
+msgid "Vendor-supplied review resources"
+msgstr "商家送测"
+
+#: inc/meta.php:37
+msgid "Independently purchased"
+msgstr "本站自购"
+
+#: inc/meta.php:39
+msgid "Shows a matching disclosure above the post content."
+msgstr "在正文前显示对应的关系披露。"
+
+#: inc/meta.php:42
+msgid "Content verified on"
+msgstr "内容核验日期"
+
+#: inc/meta.php:44
+msgid "Shown in the post meta. Do not update a post only to change this date."
+msgstr "显示在文章信息中；不要仅为改日期而更新文章。"
+
+#: inc/meta.php:47
+msgid "Next review due"
+msgstr "下次复核日期"
+
+#: inc/meta.php:51
+msgid "Primary keyword"
+msgstr "主关键词"
+
+#: inc/meta.php:53
+msgid "For editorial review only; it is not output as meta keywords."
+msgstr "仅用于编辑审核，不输出已被搜索引擎忽略的 meta keywords。"
+
+#: inc/meta.php:56
+msgid "Search intent"
+msgstr "搜索意图"
+
+#: inc/meta.php:59
+msgid "Not set"
+msgstr "未设置"
+
+#: inc/meta.php:60
+msgid "Informational"
+msgstr "信息型"
+
+#: inc/meta.php:61
+msgid "Commercial investigation"
+msgstr "商业调查型"
+
+#: inc/meta.php:62
+msgid "Transactional"
+msgstr "交易型"
+
+#: inc/meta.php:63
+msgid "Navigational"
+msgstr "导航型"
+
+#: inc/meta.php:67
+msgid "Pillar"
+msgstr "Pillar 标识"
+
+#: inc/meta.php:69
+msgid "Only fill in an ownership that has been reviewed against your content architecture."
+msgstr "仅填写已按内容架构审核确认的归属；主题不会根据标签自动猜测。"
+
+#: inc/meta.php:152
+msgid "Follow theme setting"
+msgstr "跟随主题"
+
+#: inc/meta.php:153
+msgid "Allow indexing"
+msgstr "允许索引"
+
+#: inc/meta.php:154
+msgid "Do not index"
+msgstr "暂不索引"
+
+#: inc/meta.php:172
+msgid "\"Follow theme setting\" uses the global tag policy under Appearance → Rackora; keep selected tags indexable here."
+msgstr "“跟随主题”使用「外观 → Rackora」中的全局策略；保留的标签可在这里单独允许索引。"
+
+#: inc/meta.php:180
+#: inc/meta.php:193
+msgid "Index policy"
+msgstr "索引策略"
+
+#: inc/meta.php:216
+msgid "Featured post"
+msgstr "精选文章"
+
+#: inc/meta.php:228
+msgid "Highlighted at the top of this category archive. Leave as None to hide the entry."
+msgstr "显示在分类页顶部的精选入口；选择「无」则不显示。"
+
+#: inc/settings.php:45
+msgid "General"
+msgstr "基础"
+
+#: inc/settings.php:49
+msgid "Default color scheme"
+msgstr "默认配色"
+
+#: inc/settings.php:51
+msgid "Follow system"
+msgstr "跟随系统"
+
+#: inc/settings.php:52
+msgid "Light"
+msgstr "浅色"
+
+#: inc/settings.php:53
+msgid "Dark"
+msgstr "深色"
+
+#: inc/settings.php:55
+msgid "Visitors can still switch with the header button; their choice is remembered in the browser."
+msgstr "访客仍可使用页头按钮切换，选择会保存在浏览器中。"
+
+#: inc/settings.php:59
+msgid "Site region"
+msgstr "网站地区"
+
+#: inc/settings.php:60
+msgid "ISO 3166 region code such as CN, SG or US-CA. Leave empty to omit the region signal."
+msgstr "ISO 3166 地区代码，例如 CN、SG、US-CA；留空则不输出地区信号。"
+
+#: inc/settings.php:64
+msgid "Count post views"
+msgstr "统计阅读数"
+
+#: inc/settings.php:65
+msgid "Counts each visitor once per browser session with a lightweight request that works with page caching."
+msgstr "同一浏览器会话内每篇只计一次，使用轻量请求，开启页面缓存时同样有效。"
+
+#: inc/settings.php:70
+msgid "SEO"
+msgstr "SEO"
+
+#: inc/settings.php:74
+msgid "Output theme SEO tags"
+msgstr "输出主题 SEO 标签"
+
+#: inc/settings.php:75
+msgid "Canonical URLs, Open Graph, Twitter Cards and JSON-LD. Turned off automatically when a dedicated SEO plugin is active."
+msgstr "canonical、Open Graph、Twitter Card 与 JSON-LD；检测到专用 SEO 插件时自动停用。"
+
+#: inc/settings.php:79
+msgid "Site description"
+msgstr "站点描述"
+
+#: inc/settings.php:80
+msgid "Used as the meta description of the home page and archives. Leave empty to use the tagline."
+msgstr "用作首页与归档页的 meta description；留空则使用站点副标题。"
+
+#: inc/settings.php:84
+msgid "Do not index tag pages"
+msgstr "暂不索引标签页"
+
+#: inc/settings.php:85
+msgid "Outputs noindex,follow on tag archives and the tag index page. Each tag can override this on its edit screen."
+msgstr "标签详情页与标签汇总页输出 noindex,follow；每个标签可在编辑页单独设置。"
+
+#: inc/settings.php:89
+msgid "Do not index date archives"
+msgstr "暂不索引归档页"
+
+#: inc/settings.php:90
+msgid "Outputs noindex,follow on date archives and the Archives page. Posts and categories are not affected."
+msgstr "日期归档与归档页输出 noindex,follow；文章和分类页面不受影响。"
+
+#: inc/settings.php:94
+msgid "Google verification code"
+msgstr "Google 站点验证码"
+
+#: inc/settings.php:95
+msgid "Only the content value of google-site-verification, not the whole meta tag."
+msgstr "只填写 google-site-verification 的 content 值，不要粘贴完整 meta 标签。"
+
+#: inc/settings.php:99
+msgid "Bing verification code"
+msgstr "Bing 站点验证码"
+
+#: inc/settings.php:100
+msgid "Only the content value of msvalidate.01."
+msgstr "只填写 msvalidate.01 的 content 值。"
+
+#: inc/settings.php:104
+msgid "Baidu verification code"
+msgstr "百度站点验证码"
+
+#: inc/settings.php:105
+msgid "Only the content value of baidu-site-verification."
+msgstr "只填写 baidu-site-verification 的 content 值。"
+
+#: inc/settings.php:109
+msgid "Organization name"
+msgstr "站点组织名称"
+
+#: inc/settings.php:110
+msgid "Used in Organization and WebSite structured data. Leave empty to use the site title."
+msgstr "用于 Organization / WebSite 结构化数据；留空则使用站点标题。"
+
+#: inc/settings.php:114
+msgid "Organization logo"
+msgstr "站点组织 Logo"
+
+#: inc/settings.php:115
+msgid "A clear square image for structured data. Leave empty to use the site logo or the Rackora mark."
+msgstr "建议使用清晰的正方形图片；留空则使用站点 Logo 或主题默认图标。"
+
+#: inc/settings.php:119
+msgid "About page URL"
+msgstr "关于页面地址"
+
+#: inc/settings.php:120
+msgid "Optional, adds context to the Organization entity."
+msgstr "可选，用于补充站点实体信息。"
+
+#: inc/settings.php:124
+msgid "Social profile URLs"
+msgstr "社交主页地址"
+
+#: inc/settings.php:125
+msgid "One URL per line, output as sameAs in Organization structured data."
+msgstr "每行一个地址，作为 Organization 结构化数据的 sameAs 输出。"
+
+#: inc/settings.php:130
+msgid "Analytics"
+msgstr "分析"
+
+#: inc/settings.php:134
+msgid "Enable third-party analytics"
+msgstr "启用第三方访问分析"
+
+#: inc/settings.php:135
+msgid "Off by default. Only services with a valid ID are loaded."
+msgstr "默认关闭；启用后仅加载已填写且格式有效的分析服务。"
+
+#: inc/settings.php:139
+msgid "GA4 Measurement ID"
+msgstr "GA4 Measurement ID"
+
+#: inc/settings.php:140
+msgid "Format G-XXXXXXXXXX. Do not paste the whole script."
+msgstr "格式为 G-XXXXXXXXXX，不要填写完整脚本代码。"
+
+#: inc/settings.php:144
+msgid "Microsoft Clarity project ID"
+msgstr "Microsoft Clarity 项目 ID"
+
+#: inc/settings.php:145
+msgid "Only the project ID. Inform visitors about cookies as required in your region."
+msgstr "只填写项目 ID；使用前请按所在地区完成隐私与 Cookie 告知。"
+
+#: inc/settings.php:149
+msgid "Baidu Analytics site ID"
+msgstr "百度统计站点 ID"
+
+#: inc/settings.php:150
+msgid "The 32 hexadecimal characters after hm.js?."
+msgstr "只填写 hm.js? 后的 32 位十六进制 ID。"
+
+#: inc/settings.php:236
+msgid "The site region must be an ISO 3166 code such as CN or US-CA."
+msgstr "网站地区须为 ISO 3166 代码，例如 CN 或 US-CA。"
+
+#. translators: %s: setting label.
+#: inc/settings.php:252
+#, php-format
+msgid "%s has an invalid format and was not saved."
+msgstr "%s 格式无效，未保存。"
+
+#: inc/settings.php:325
+#: inc/settings.php:359
+msgid "Rackora settings"
+msgstr "Rackora 设置"
+
+#. translators: 1: Site Editor URL, 2: Styles URL.
+#: inc/settings.php:364
+#, php-format
+msgid "Page layouts, sidebars, the header and the footer are edited in the <a href=\"%1$s\">Site Editor</a>; colors, fonts and widths live under <a href=\"%2$s\">Styles</a>."
+msgstr "页面布局、侧栏、页头与页脚在<a href=\"%1$s\">站点编辑器</a>中编辑；配色、字体与版宽在<a href=\"%2$s\">样式</a>中调整。"
+
+#. translators: %s: SEO plugin name.
+#: inc/settings.php:375
+#, php-format
+msgid "%s is active, so Rackora leaves canonical, Open Graph, JSON-LD and robots rules to it. Verification codes and analytics still apply."
+msgstr "已检测到 %s，canonical、Open Graph、JSON-LD 与 robots 规则交由该插件输出；站点验证与访问分析设置仍然生效。"
+
+#: inc/setup.php:36
+msgid "Layouts and components provided by the Rackora theme."
+msgstr "Rackora 主题提供的布局与组件。"
+
+#: inc/views.php:126
+msgid "Views are not counted for this content."
+msgstr "该内容不参与阅读计数。"
+
+#: patterns/comments.php
+msgctxt "Pattern title"
+msgid "Comments"
+msgstr "评论"
+
+#: patterns/footer.php
+msgctxt "Pattern title"
+msgid "Footer"
+msgstr "页脚"
+
+#. translators: 1: WordPress link, 2: theme link, 3: studio link.
+#: patterns/footer.php:31
+#, php-format
+msgid "Powered by %1$s · %2$s · %3$s"
+msgstr "由 %1$s 驱动 · %2$s · %3$s"
+
+#: patterns/footer.php:42
+msgid "Footer navigation"
+msgstr "页脚导航"
+
+#: patterns/header.php
+msgctxt "Pattern title"
+msgid "Header"
+msgstr "页头"
+
+#: patterns/header.php:28
+#: patterns/template-search.php:15
+msgid "Search"
+msgstr "搜索"
+
+#: patterns/header.php:28
+#: patterns/template-search.php:15
+msgid "Search this site"
+msgstr "搜索本站"
+
+#: patterns/home-sidebar.php
+msgctxt "Pattern title"
+msgid "Home sidebar"
+msgstr "首页侧栏"
+
+#: patterns/home-sidebar.php
+msgctxt "Pattern description"
+msgid "Site profile with social links and stats, categories with post counts, and popular tags."
+msgstr "站点资料卡（社交账号与统计）、带文章数的分类与高频标签。"
+
+#: patterns/home-sidebar.php:16
+#: patterns/home-sidebar.php:17
+msgid "Site information"
+msgstr "站点信息"
+
+#: patterns/post-footer.php
+msgctxt "Pattern title"
+msgid "Post footer"
+msgstr "文章底部"
+
+#: patterns/post-footer.php
+msgctxt "Pattern description"
+msgid "Tags and share bar, series, related posts, the license notice and adjacent posts."
+msgstr "标签与分享栏、系列、相关文章、版权声明和相邻文章。"
+
+#: patterns/post-navigation.php
+msgctxt "Pattern title"
+msgid "Adjacent posts"
+msgstr "相邻文章"
+
+#: patterns/post-navigation.php:13
+#: patterns/post-navigation.php:14
+msgid "Adjacent posts"
+msgstr "相邻文章"
+
+#: patterns/post-navigation.php:14
+msgctxt "adjacent post"
+msgid "Previous"
+msgstr "上一篇"
+
+#: patterns/post-navigation.php:16
+msgctxt "adjacent post"
+msgid "Next"
+msgstr "下一篇"
+
+#: patterns/post-sidebar.php
+msgctxt "Pattern title"
+msgid "Post sidebar"
+msgstr "文章侧栏"
+
+#: patterns/post-sidebar.php
+msgctxt "Pattern description"
+msgid "Sticky table of contents and the latest posts, shown beside the article on wide screens."
+msgstr "宽屏下固定在正文旁的文章目录与最新文章。"
+
+#: patterns/post-sidebar.php:13
+#: patterns/post-sidebar.php:14
+msgid "Post navigation"
+msgstr "文章辅助导航"
+
+#: patterns/sponsor-slot.php
+msgctxt "Pattern title"
+msgid "Sponsor slot"
+msgstr "推广位"
+
+#: patterns/sponsor-slot.php
+msgctxt "Pattern description"
+msgid "A disclosed sponsor card that can be placed on the home page, in the sidebar or before and after the post content."
+msgstr "带披露说明的推广卡片，可放在首页、侧栏或正文前后。"
+
+#: patterns/template-404.php
+msgctxt "Pattern title"
+msgid "Page not found"
+msgstr "页面不存在"
+
+#: patterns/template-404.php:21
+msgid "Page not found"
+msgstr "页面不存在"
+
+#: patterns/template-404.php:25
+msgid "This address may have changed, or the content may have been consolidated."
+msgstr "这个地址可能已经变更，或者内容已被合并。"
+
+#: patterns/template-404.php:30
+msgid "Back home"
+msgstr "返回首页"
+
+#: patterns/template-404.php:35
+msgid "Browse archives"
+msgstr "浏览归档"
+
+#: patterns/template-archive.php
+msgctxt "Pattern title"
+msgid "Archive"
+msgstr "归档列表"
+
+#: patterns/template-archive.php:27
+msgid "No posts here yet"
+msgstr "这里暂时没有文章"
+
+#: patterns/template-archive.php:31
+msgid "Browse another category or return home."
+msgstr "可以先浏览其他分类或返回首页。"
+
+#: patterns/template-archives.php
+msgctxt "Pattern title"
+msgid "Archives page"
+msgstr "归档页面"
+
+#: patterns/template-categories.php
+msgctxt "Pattern title"
+msgid "All categories page"
+msgstr "全部分类页面"
+
+#: patterns/template-date.php
+msgctxt "Pattern title"
+msgid "Date archive"
+msgstr "日期归档"
+
+#: patterns/template-home.php
+msgctxt "Pattern title"
+msgid "Home"
+msgstr "首页"
+
+#: patterns/template-home.php:26
+msgid "View archives"
+msgstr "查看归档"
+
+#: patterns/template-home.php:39
+#: patterns/template-index.php:23
+msgid "No public posts yet"
+msgstr "暂时没有公开文章"
+
+#: patterns/template-home.php:43
+#: patterns/template-index.php:27
+msgid "Your first published post will appear here."
+msgstr "发布第一篇内容后，它会显示在这里。"
+
+#: patterns/template-index.php
+msgctxt "Pattern title"
+msgid "Index"
+msgstr "索引"
+
+#: patterns/template-links.php
+msgctxt "Pattern title"
+msgid "Links page"
+msgstr "友情链接页面"
+
+#: patterns/template-page-about.php
+msgctxt "Pattern title"
+msgid "About page"
+msgstr "关于页面"
+
+#: patterns/template-page.php
+msgctxt "Pattern title"
+msgid "Page"
+msgstr "页面"
+
+#: patterns/template-search.php
+msgctxt "Pattern title"
+msgid "Search results"
+msgstr "搜索结果"
+
+#: patterns/template-search.php:25
+msgid "Nothing matched your search"
+msgstr "没有找到相关内容"
+
+#: patterns/template-search.php:29
+msgid "Try different keywords, or browse the archives."
+msgstr "换个关键词试试，或浏览归档。"
+
+#: patterns/template-single-docs.php
+msgctxt "Pattern title"
+msgid "Documentation post"
+msgstr "文档文章"
+
+#: patterns/template-single-docs.php:34
+#: patterns/template-single-docs.php:35
+msgid "Documentation outline"
+msgstr "文档目录"
+
+#: patterns/template-single.php
+msgctxt "Pattern title"
+msgid "Single post"
+msgstr "文章"
+
+#: patterns/template-tags.php
+msgctxt "Pattern title"
+msgid "All tags page"
+msgstr "全部标签页面"
+
+#: blocks/ad-card/block.json
+msgctxt "block title"
+msgid "Sponsor card"
+msgstr "推广卡片"
+
+#: blocks/ad-card/block.json
+msgctxt "block description"
+msgid "A static text or image sponsor card."
+msgstr "静态的文字或图片推广卡片。"
+
+#: blocks/ad-slot/block.json
+msgctxt "block title"
+msgid "Sponsor slot"
+msgstr "推广位"
+
+#: blocks/ad-slot/block.json
+msgctxt "block description"
+msgid "A disclosed group of static sponsor cards. Links get sponsored, nofollow and safety attributes automatically; no third-party scripts are allowed."
+msgstr "带披露说明的静态推广卡片组，链接自动添加 sponsored、nofollow 与安全属性，不允许第三方脚本。"
+
+#: blocks/ad-slot/block.json
+msgctxt "block keyword"
+msgid "ad"
+msgstr "广告"
+
+#: blocks/ad-slot/block.json
+msgctxt "block keyword"
+msgid "affiliate"
+msgstr "推广"
+
+#: blocks/ad-slot/block.json
+msgctxt "block keyword"
+msgid "sponsor"
+msgstr "赞助"
+
+#: blocks/archive-heading/block.json
+msgctxt "block title"
+msgid "Archive heading"
+msgstr "归档标题"
+
+#: blocks/archive-heading/block.json
+msgctxt "block description"
+msgid "The page H1 and a short description for archives, search results and the Rackora index pages."
+msgstr "归档、搜索结果与 Rackora 索引页的页面 H1 和简介。"
+
+#: blocks/archives-timeline/block.json
+msgctxt "block title"
+msgid "Archives timeline"
+msgstr "归档时间线"
+
+#: blocks/archives-timeline/block.json
+msgctxt "block description"
+msgid "All posts grouped by year and month with pagination. On date archives it lists the posts of that period."
+msgstr "按年份与月份分组列出全部文章并分页；在日期归档中列出该时段的文章。"
+
+#: blocks/color-scheme-toggle/block.json
+msgctxt "block title"
+msgid "Color scheme toggle"
+msgstr "配色切换"
+
+#: blocks/color-scheme-toggle/block.json
+msgctxt "block description"
+msgid "Lets visitors switch between light and dark color schemes."
+msgstr "让访客在浅色与深色配色之间切换。"
+
+#: blocks/color-scheme-toggle/block.json
+msgctxt "block keyword"
+msgid "dark mode"
+msgstr "深色模式"
+
+#: blocks/color-scheme-toggle/block.json
+msgctxt "block keyword"
+msgid "theme"
+msgstr "主题"
+
+#: blocks/featured-entry/block.json
+msgctxt "block title"
+msgid "Category featured post"
+msgstr "分类精选文章"
+
+#: blocks/featured-entry/block.json
+msgctxt "block description"
+msgid "Highlights the featured post chosen on the category edit screen."
+msgstr "突出显示在分类编辑页选定的精选文章。"
+
+#: blocks/filing/block.json
+msgctxt "block title"
+msgid "ICP filing"
+msgstr "备案信息"
+
+#: blocks/filing/block.json
+msgctxt "block description"
+msgid "ICP and public security filing numbers with optional links, for sites hosted in mainland China."
+msgstr "ICP 备案号与公网安备号，可附跳转链接，适用于中国大陆站点。"
+
+#: blocks/filing/block.json
+msgctxt "block keyword"
+msgid "icp"
+msgstr "icp"
+
+#: blocks/filing/block.json
+msgctxt "block keyword"
+msgid "beian"
+msgstr "备案"
+
+#: blocks/friend-links/block.json
+msgctxt "block title"
+msgid "Friend links"
+msgstr "友情链接"
+
+#: blocks/friend-links/block.json
+msgctxt "block description"
+msgid "Links from Links → All Links, grouped by link category."
+msgstr "读取「链接 → 全部链接」中的友链，按链接分类分组。"
+
+#: blocks/home-heading/block.json
+msgctxt "block title"
+msgid "Home heading"
+msgstr "首页标题区"
+
+#: blocks/home-heading/block.json
+msgctxt "block description"
+msgid "Eyebrow, site title as the page H1, tagline, post count and a short line."
+msgstr "眉题、作为页面 H1 的站点标题、副标题、文章数与短句。"
+
+#: blocks/pagination/block.json
+msgctxt "block title"
+msgid "Page navigation"
+msgstr "分页导航"
+
+#: blocks/pagination/block.json
+msgctxt "block description"
+msgid "Previous and next links with the current page count for the main query. Place it after a Query Loop that inherits the template query."
+msgstr "主查询的上一页、下一页与当前页码；放在继承模板查询的查询循环之后。"
+
+#: blocks/post-card/block.json
+msgctxt "block title"
+msgid "Post card"
+msgstr "文章卡片"
+
+#: blocks/post-card/block.json
+msgctxt "block description"
+msgid "A quiet post entry with category, date, title, excerpt, views and comments. Place it inside a Post Template."
+msgstr "包含分类、日期、标题、摘要、阅读与评论数的文章条目；放在文章模板中使用。"
+
+#: blocks/post-disclosure/block.json
+msgctxt "block title"
+msgid "Commercial disclosure"
+msgstr "推广关系披露"
+
+#: blocks/post-disclosure/block.json
+msgctxt "block description"
+msgid "Shows the affiliate, sponsored review or self-purchase disclosure chosen in the post's Rackora panel."
+msgstr "显示文章 Rackora 面板中选择的推广、送测或自购披露。"
+
+#: blocks/post-license/block.json
+msgctxt "block title"
+msgid "Author and license notice"
+msgstr "作者与版权声明"
+
+#: blocks/post-license/block.json
+msgctxt "block description"
+msgid "Post title, permalink, author, publish date and the content license."
+msgstr "文章标题、原文地址、作者、发布日期与内容许可。"
+
+#: blocks/post-meta/block.json
+msgctxt "block title"
+msgid "Post meta"
+msgstr "文章信息"
+
+#: blocks/post-meta/block.json
+msgctxt "block description"
+msgid "Manual excerpt as a deck, then author, published and updated dates, verification date, reading time and views."
+msgstr "导语（手动摘要），以及作者、发布与更新日期、核验日期、阅读时长和阅读数。"
+
+#: blocks/post-recent-comments/block.json
+msgctxt "block title"
+msgid "Recent comments on this post"
+msgstr "本文最新评论"
+
+#: blocks/post-recent-comments/block.json
+msgctxt "block description"
+msgid "The latest approved comments on the current post, for the article sidebar."
+msgstr "当前文章最新的已审核评论，用于文章侧栏。"
+
+#: blocks/post-series/block.json
+msgctxt "block title"
+msgid "Post series"
+msgstr "文章系列"
+
+#: blocks/post-series/block.json
+msgctxt "block description"
+msgid "Lists other posts with the same series name, ordered by the series order field."
+msgstr "列出系列名称相同的其他文章，按系列序号排序。"
+
+#: blocks/post-toc/block.json
+msgctxt "block title"
+msgid "Table of contents"
+msgstr "文章目录"
+
+#: blocks/post-toc/block.json
+msgctxt "block description"
+msgid "Builds a table of contents from the H2 and H3 headings of the post, highlights the current section and opens as a drawer on small screens."
+msgstr "根据正文 H2、H3 生成目录并高亮当前章节，小屏幕下以抽屉形式展开。"
+
+#: blocks/related-posts/block.json
+msgctxt "block title"
+msgid "Related posts"
+msgstr "相关文章"
+
+#: blocks/related-posts/block.json
+msgctxt "block description"
+msgid "Posts from the same primary category, falling back to the first tag."
+msgstr "同一主分类下的文章，无分类时回退到第一个标签。"
+
+#: blocks/share-bar/block.json
+msgctxt "block title"
+msgid "Share bar"
+msgstr "分享栏"
+
+#: blocks/share-bar/block.json
+msgctxt "block description"
+msgid "Share links for X, Facebook, LinkedIn, Reddit, Telegram, WhatsApp, Weibo and email, plus a copy link button."
+msgstr "X、Facebook、LinkedIn、Reddit、Telegram、WhatsApp、微博和邮件分享链接，以及复制链接按钮。"
+
+#: blocks/site-stats/block.json
+msgctxt "block title"
+msgid "Site stats"
+msgstr "站点统计"
+
+#: blocks/site-stats/block.json
+msgctxt "block description"
+msgid "Lightweight counts of visits, posts, comments and categories, plus days online."
+msgstr "访问、文章、评论、分类数量与运行天数的轻量统计。"
+
+#: blocks/term-index/block.json
+msgctxt "block title"
+msgid "Category or tag index"
+msgstr "分类 / 标签汇总"
+
+#: blocks/term-index/block.json
+msgctxt "block description"
+msgid "A grid of every category with descriptions and subcategories, or of every tag with post counts."
+msgstr "全部分类（含简介与子分类）或全部标签（含文章数）的网格。"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Paper"
+msgstr "纸面"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Surface"
+msgstr "卡片"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Ink"
+msgstr "墨色"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Ink soft"
+msgstr "次要墨色"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Muted"
+msgstr "弱化"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Line"
+msgstr "分隔线"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Line strong"
+msgstr "强分隔线"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Accent"
+msgstr "强调色"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Signal"
+msgstr "警示色"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Amber"
+msgstr "琥珀色"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "IBM Plex Sans"
+msgstr "IBM Plex Sans"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Source Serif 4"
+msgstr "Source Serif 4"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Monospace"
+msgstr "等宽字体"
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Extra small"
+msgstr "特小"
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Small"
+msgstr "小"
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Medium"
+msgstr "中"
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Large"
+msgstr "大"
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Extra large"
+msgstr "特大"
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Huge"
+msgstr "超大"
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Documentation"
+msgstr "文档（Documentation）"
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "About"
+msgstr "关于页（About）"
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Archives"
+msgstr "归档"
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "All categories"
+msgstr "全部分类"
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "All tags"
+msgstr "全部标签"
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Links"
+msgstr "友情链接"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Header"
+msgstr "页头"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Footer"
+msgstr "页脚"

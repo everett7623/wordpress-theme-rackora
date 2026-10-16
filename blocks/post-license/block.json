@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rackora/post-license",
+	"title": "Author and license notice",
+	"category": "rackora",
+	"icon": "media-text",
+	"description": "Post title, permalink, author, publish date and the content license.",
+	"textdomain": "rackora",
+	"attributes": {
+		"licenseName": {
+			"type": "string",
+			"default": "CC BY-NC-SA 4.0"
+		},
+		"licenseUrl": {
+			"type": "string",
+			"default": "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+		}
+	},
+	"usesContext": [ "postId", "postType" ],
+	"supports": {
+		"html": false
+	},
+	"editorScript": "rackora-editor",
+	"render": "file:./render.php",
+	"style": "file:./style.css"
+}
