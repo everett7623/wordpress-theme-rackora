@@ -3,7 +3,7 @@
  * 主题设置页（外观 → Rackora）。
  *
  * 配色、字体与版宽属于「样式」，页面结构属于站点编辑器；
- * 这里只放 WordPress 没有原生位置的站点级选项：默认配色、SEO、统计与阅读计数。
+ * 这里只放 WordPress 没有原生位置的站点级选项：默认配色、备案、内容默认值、SEO 与统计。
  *
  * @package Rackora
  */
@@ -17,13 +17,13 @@ defined( 'ABSPATH' ) || exit;
  */
 function rackora_detected_seo_plugin() {
 	$plugins = array(
-		'WPSEO_VERSION'              => 'Yoast SEO',
-		'RANK_MATH_VERSION'          => 'Rank Math',
-		'AIOSEO_VERSION'             => 'All in One SEO',
-		'SEOPRESS_VERSION'           => 'SEOPress',
-		'THE_SEO_FRAMEWORK_VERSION'  => 'The SEO Framework',
-		'SLIM_SEO_VER'               => 'Slim SEO',
-		'SQ_VERSION'                 => 'Squirrly SEO',
+		'WPSEO_VERSION'             => 'Yoast SEO',
+		'RANK_MATH_VERSION'         => 'Rank Math',
+		'AIOSEO_VERSION'            => 'All in One SEO',
+		'SEOPRESS_VERSION'          => 'SEOPress',
+		'THE_SEO_FRAMEWORK_VERSION' => 'The SEO Framework',
+		'SLIM_SEO_VER'              => 'Slim SEO',
+		'SQ_VERSION'                => 'Squirrly SEO',
 	);
 
 	foreach ( $plugins as $constant => $name ) {
@@ -41,7 +41,7 @@ function rackora_detected_seo_plugin() {
  */
 function rackora_settings_fields() {
 	return array(
-		'general'   => array(
+		'general'    => array(
 			'title'  => __( 'General', 'rackora' ),
 			'fields' => array(
 				'color_scheme'  => array(
@@ -54,19 +54,75 @@ function rackora_settings_fields() {
 					),
 					'description' => __( 'Visitors can still switch with the header button; their choice is remembered in the browser.', 'rackora' ),
 				),
-				'site_region'   => array(
-					'type'        => 'text',
-					'label'       => __( 'Site region', 'rackora' ),
-					'description' => __( 'ISO 3166 region code such as CN, SG or US-CA. Leave empty to omit the region signal.', 'rackora' ),
-				),
 				'views_enabled' => array(
 					'type'        => 'checkbox',
 					'label'       => __( 'Count post views', 'rackora' ),
 					'description' => __( 'Counts each visitor once per browser session with a lightweight request that works with page caching.', 'rackora' ),
 				),
+				'launch_date'   => array(
+					'type'        => 'date',
+					'label'       => __( 'Site launch date', 'rackora' ),
+					'description' => __( 'Used by the Site stats block to show days online when the block itself has no date.', 'rackora' ),
+				),
 			),
 		),
-		'seo'       => array(
+		'compliance' => array(
+			'title'  => __( 'Filing', 'rackora' ),
+			'fields' => array(
+				'icp_number' => array(
+					'type'        => 'text',
+					'label'       => __( 'ICP filing number', 'rackora' ),
+					'description' => __( 'Shown in the footer filing block when the block fields are empty.', 'rackora' ),
+				),
+				'icp_url'    => array(
+					'type'        => 'url',
+					'label'       => __( 'ICP filing URL', 'rackora' ),
+					'description' => __( 'Defaults to the MIIT filing site.', 'rackora' ),
+				),
+				'psb_number' => array(
+					'type'        => 'text',
+					'label'       => __( 'Public security filing number', 'rackora' ),
+					'description' => __( 'Optional 公网安备 number for mainland China hosts.', 'rackora' ),
+				),
+				'psb_url'    => array(
+					'type'        => 'url',
+					'label'       => __( 'Public security filing URL', 'rackora' ),
+					'description' => __( 'Link target for the public security filing number.', 'rackora' ),
+				),
+			),
+		),
+		'content'    => array(
+			'title'  => __( 'Content defaults', 'rackora' ),
+			'fields' => array(
+				'license_name'  => array(
+					'type'        => 'text',
+					'label'       => __( 'Default license name', 'rackora' ),
+					'description' => __( 'Used by the author and license notice when the block leaves the name blank.', 'rackora' ),
+				),
+				'license_url'   => array(
+					'type'        => 'url',
+					'label'       => __( 'Default license URL', 'rackora' ),
+					'description' => __( 'Optional link for the default license name.', 'rackora' ),
+				),
+				'share_targets' => array(
+					'type'        => 'checkboxes',
+					'label'       => __( 'Default share targets', 'rackora' ),
+					'options'     => rackora_share_targets(),
+					'description' => __( 'Applied when a share bar block has no platforms selected. Individual blocks can still override this.', 'rackora' ),
+				),
+				'share_copy'    => array(
+					'type'        => 'checkbox',
+					'label'       => __( 'Show copy link by default', 'rackora' ),
+					'description' => __( 'Used together with the default share targets when a share bar has no platforms selected.', 'rackora' ),
+				),
+				'ad_disclosure' => array(
+					'type'        => 'textarea',
+					'label'       => __( 'Default sponsor disclosure', 'rackora' ),
+					'description' => __( 'Shown above sponsor cards when a slot leaves its disclosure empty. Leave blank to use the built-in wording.', 'rackora' ),
+				),
+			),
+		),
+		'seo'        => array(
 			'title'  => __( 'SEO', 'rackora' ),
 			'fields' => array(
 				'seo_enabled'         => array(
@@ -119,14 +175,19 @@ function rackora_settings_fields() {
 					'label'       => __( 'About page URL', 'rackora' ),
 					'description' => __( 'Optional, adds context to the Organization entity.', 'rackora' ),
 				),
-				'same_as'             => array(
-					'type'        => 'textarea',
+				'social_profiles'     => array(
+					'type'        => 'social_profiles',
 					'label'       => __( 'Social profile URLs', 'rackora' ),
-					'description' => __( 'One URL per line, output as sameAs in Organization structured data.', 'rackora' ),
+					'description' => __( 'Filled platforms are output as Organization sameAs. Front-end icons are still edited in the Site Editor social links block.', 'rackora' ),
+				),
+				'social_other'        => array(
+					'type'        => 'textarea',
+					'label'       => __( 'Other profile URLs', 'rackora' ),
+					'description' => __( 'One URL per line for profiles that are not in the list above.', 'rackora' ),
 				),
 			),
 		),
-		'analytics' => array(
+		'analytics'  => array(
 			'title'  => __( 'Analytics', 'rackora' ),
 			'fields' => array(
 				'analytics_enabled'  => array(
@@ -182,7 +243,7 @@ function rackora_register_settings() {
 					$field,
 					array(
 						'key'       => $key,
-						'label_for' => 'checkbox' === $field['type'] ? null : 'rackora-' . $key,
+						'label_for' => in_array( $field['type'], array( 'checkbox', 'checkboxes', 'social_profiles' ), true ) ? null : 'rackora-' . $key,
 					)
 				)
 			);
@@ -210,37 +271,70 @@ function rackora_sanitize_settings( $input ) {
 				case 'checkbox':
 					$clean[ $key ] = ! empty( $value );
 					break;
+				case 'checkboxes':
+					$selected = is_array( $value ) ? $value : array();
+					$clean[ $key ] = array_values(
+						array_filter(
+							$selected,
+							static function ( $item ) use ( $field ) {
+								return array_key_exists( $item, $field['options'] );
+							}
+						)
+					);
+					break;
 				case 'select':
 					$clean[ $key ] = array_key_exists( $value, $field['options'] ) ? $value : $defaults[ $key ];
 					break;
 				case 'url':
 				case 'image':
-					$clean[ $key ] = esc_url_raw( trim( $value ) );
+					$clean[ $key ] = esc_url_raw( trim( (string) $value ) );
 					break;
 				case 'textarea':
-					$clean[ $key ] = sanitize_textarea_field( $value );
+					$clean[ $key ] = sanitize_textarea_field( (string) $value );
+					break;
+				case 'date':
+					$value = trim( (string) $value );
+					if ( '' !== $value && ! preg_match( '/^\d{4}-\d{2}-\d{2}$/', $value ) ) {
+						add_settings_error( 'rackora_settings', $key, __( 'The site launch date must use YYYY-MM-DD.', 'rackora' ) );
+						$value = '';
+					}
+					$clean[ $key ] = $value;
+					break;
+				case 'social_profiles':
+					$profiles = is_array( $value ) ? $value : array();
+					$clean[ $key ] = array();
+					foreach ( array_keys( rackora_social_platforms() ) as $platform ) {
+						$url = isset( $profiles[ $platform ] ) ? trim( (string) $profiles[ $platform ] ) : '';
+						$clean[ $key ][ $platform ] = '' !== $url ? esc_url_raw( $url ) : '';
+					}
 					break;
 				default:
-					$clean[ $key ] = sanitize_text_field( $value );
+					$clean[ $key ] = sanitize_text_field( (string) $value );
 			}
 		}
 	}
 
 	// 只保留完整的 http(s) 地址；esc_url_raw 会给普通文本补上 http://，不能单独用来判断有效性。
-	$profiles = array_filter(
-		array_map( 'trim', explode( "\n", $clean['same_as'] ) ),
+	$other_lines = array_filter(
+		array_map( 'trim', preg_split( '/\r\n|\r|\n/', $clean['social_other'] ) ),
 		static function ( $line ) {
 			return (bool) preg_match( '#^https?://[^\s/]+#i', $line );
 		}
 	);
-	$clean['same_as'] = implode( "\n", array_filter( array_map( 'esc_url_raw', $profiles ) ) );
+	$clean['social_other'] = implode( "\n", array_filter( array_map( 'esc_url_raw', $other_lines ) ) );
 
-	$region = strtoupper( $clean['site_region'] );
-	if ( '' !== $region && ! preg_match( '/^[A-Z]{2}(-[A-Z0-9]{1,3})?$/', $region ) ) {
-		add_settings_error( 'rackora_settings', 'site_region', __( 'The site region must be an ISO 3166 code such as CN or US-CA.', 'rackora' ) );
-		$region = '';
+	foreach ( $clean['social_profiles'] as $platform => $url ) {
+		if ( '' === $url ) {
+			continue;
+		}
+		if ( 'email' === $platform && 0 === stripos( $url, 'mailto:' ) ) {
+			$clean['social_profiles'][ $platform ] = '';
+			continue;
+		}
+		if ( ! preg_match( '#^https?://#i', $url ) ) {
+			$clean['social_profiles'][ $platform ] = '';
+		}
 	}
-	$clean['site_region'] = $region;
 
 	$patterns = array(
 		'ga4_id'             => '/^G-[A-Z0-9]+$/',
@@ -259,6 +353,83 @@ function rackora_sanitize_settings( $input ) {
 	}
 
 	return $clean;
+}
+
+/**
+ * 读取社交预设槽的当前值，必要时从旧版 same_as 迁移展示。
+ *
+ * @return array<string, string>
+ */
+function rackora_social_profiles_for_form() {
+	$profiles = rackora_option( 'social_profiles' );
+	if ( ! is_array( $profiles ) ) {
+		$profiles = array();
+	}
+
+	$result = array();
+	foreach ( array_keys( rackora_social_platforms() ) as $key ) {
+		$result[ $key ] = isset( $profiles[ $key ] ) ? (string) $profiles[ $key ] : '';
+	}
+
+	$has_any = (bool) array_filter( $result );
+	$other   = trim( (string) rackora_option( 'social_other' ) );
+	if ( $has_any || '' !== $other ) {
+		return $result;
+	}
+
+	$saved = get_option( 'rackora_settings', array() );
+	if ( ! is_array( $saved ) || empty( $saved['same_as'] ) ) {
+		return $result;
+	}
+
+	foreach ( preg_split( '/\r\n|\r|\n/', (string) $saved['same_as'] ) as $line ) {
+		$line = trim( $line );
+		if ( '' === $line ) {
+			continue;
+		}
+		$platform = rackora_guess_social_platform( $line );
+		if ( '' !== $platform && '' === $result[ $platform ] ) {
+			$result[ $platform ] = $line;
+		}
+	}
+
+	return $result;
+}
+
+/**
+ * 旧版 same_as 中未能归入预设平台的地址，供「其他」框展示。
+ *
+ * @return string
+ */
+function rackora_social_other_for_form() {
+	$other = trim( (string) rackora_option( 'social_other' ) );
+	if ( '' !== $other ) {
+		return $other;
+	}
+
+	$profiles = rackora_option( 'social_profiles' );
+	$has_any  = is_array( $profiles ) && (bool) array_filter( $profiles );
+	if ( $has_any ) {
+		return '';
+	}
+
+	$saved = get_option( 'rackora_settings', array() );
+	if ( ! is_array( $saved ) || empty( $saved['same_as'] ) ) {
+		return '';
+	}
+
+	$leftover = array();
+	foreach ( preg_split( '/\r\n|\r|\n/', (string) $saved['same_as'] ) as $line ) {
+		$line = trim( $line );
+		if ( '' === $line ) {
+			continue;
+		}
+		if ( '' === rackora_guess_social_platform( $line ) ) {
+			$leftover[] = $line;
+		}
+	}
+
+	return implode( "\n", $leftover );
 }
 
 /**
@@ -282,6 +453,22 @@ function rackora_render_settings_field( $args ) {
 				esc_html( $args['label'] )
 			);
 			break;
+		case 'checkboxes':
+			$selected = is_array( $value ) ? $value : array();
+			echo '<fieldset class="rackora-checkboxes"><legend class="screen-reader-text">' . esc_html( $args['label'] ) . '</legend>';
+			foreach ( $args['options'] as $option => $label ) {
+				$option_id = $id . '-' . $option;
+				printf(
+					'<label for="%1$s" style="display:inline-block;margin:0 1em 0.5em 0;"><input type="checkbox" id="%1$s" name="%2$s[]" value="%3$s" %4$s /> %5$s</label>',
+					esc_attr( $option_id ),
+					esc_attr( $name ),
+					esc_attr( $option ),
+					checked( in_array( $option, $selected, true ), true, false ),
+					esc_html( $label )
+				);
+			}
+			echo '</fieldset>';
+			break;
 		case 'select':
 			printf( '<select id="%1$s" name="%2$s">', esc_attr( $id ), esc_attr( $name ) );
 			foreach ( $args['options'] as $option => $label ) {
@@ -290,12 +477,31 @@ function rackora_render_settings_field( $args ) {
 			echo '</select>';
 			break;
 		case 'textarea':
+			if ( 'social_other' === $key ) {
+				$value = rackora_social_other_for_form();
+			}
 			printf(
 				'<textarea id="%1$s" name="%2$s" rows="3" class="large-text">%3$s</textarea>',
 				esc_attr( $id ),
 				esc_attr( $name ),
 				esc_textarea( (string) $value )
 			);
+			break;
+		case 'social_profiles':
+			$profiles = rackora_social_profiles_for_form();
+			echo '<div class="rackora-social-profiles" style="display:grid;gap:0.5em;max-width:36rem;">';
+			foreach ( rackora_social_platforms() as $platform => $label ) {
+				$field_id = $id . '-' . $platform;
+				printf(
+					'<label for="%1$s" style="display:grid;grid-template-columns:7rem 1fr;gap:0.75rem;align-items:center;"><span>%2$s</span><input type="url" id="%1$s" name="%3$s[%4$s]" value="%5$s" class="regular-text code" placeholder="https://" /></label>',
+					esc_attr( $field_id ),
+					esc_html( $label ),
+					esc_attr( $name ),
+					esc_attr( $platform ),
+					esc_attr( $profiles[ $platform ] )
+				);
+			}
+			echo '</div>';
 			break;
 		case 'image':
 			printf(
@@ -307,9 +513,15 @@ function rackora_render_settings_field( $args ) {
 			);
 			break;
 		default:
+			$input_type = 'text';
+			if ( 'url' === $args['type'] ) {
+				$input_type = 'url';
+			} elseif ( 'date' === $args['type'] ) {
+				$input_type = 'date';
+			}
 			printf(
 				'<input type="%1$s" id="%2$s" name="%3$s" value="%4$s" class="regular-text" />',
-				'url' === $args['type'] ? 'url' : 'text',
+				esc_attr( $input_type ),
 				esc_attr( $id ),
 				esc_attr( $name ),
 				esc_attr( (string) $value )

@@ -9,11 +9,20 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$rackora_post_id = isset( $block->context['postId'] ) ? (int) $block->context['postId'] : get_the_ID();
-$rackora_post    = get_post( $rackora_post_id );
-$rackora_targets = array_intersect( (array) $attributes['targets'], array_keys( rackora_share_targets() ) );
+$rackora_post_id      = isset( $block->context['postId'] ) ? (int) $block->context['postId'] : get_the_ID();
+$rackora_post         = get_post( $rackora_post_id );
+$rackora_targets_attr = array_values( array_intersect( (array) $attributes['targets'], array_keys( rackora_share_targets() ) ) );
+$rackora_use_defaults = array() === $rackora_targets_attr;
 
-if ( ! $rackora_post || ( ! $rackora_targets && ! $attributes['showCopy'] ) ) {
+if ( $rackora_use_defaults ) {
+	$rackora_targets   = array_values( array_intersect( (array) rackora_option( 'share_targets' ), array_keys( rackora_share_targets() ) ) );
+	$rackora_show_copy = (bool) rackora_option( 'share_copy' );
+} else {
+	$rackora_targets   = $rackora_targets_attr;
+	$rackora_show_copy = ! empty( $attributes['showCopy'] );
+}
+
+if ( ! $rackora_post || ( ! $rackora_targets && ! $rackora_show_copy ) ) {
 	return;
 }
 
@@ -52,7 +61,7 @@ $rackora_links = array(
 			<?php endif; ?>
 		</a>
 	<?php endforeach; ?>
-	<?php if ( $attributes['showCopy'] ) : ?>
+	<?php if ( $rackora_show_copy ) : ?>
 		<button class="share-bar__button" type="button" data-share-link data-share-url="<?php echo esc_url( $rackora_url ); ?>" aria-label="<?php esc_attr_e( 'Copy post link', 'rackora' ); ?>" title="<?php esc_attr_e( 'Copy post link', 'rackora' ); ?>">
 			<span class="share-bar__icon share-bar__icon--copy"><?php echo rackora_icon( 'copy', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 			<span class="share-bar__icon share-bar__icon--check"><?php echo rackora_icon( 'check', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>

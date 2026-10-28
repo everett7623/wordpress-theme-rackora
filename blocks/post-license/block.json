@@ -10,11 +10,11 @@
 	"attributes": {
 		"licenseName": {
 			"type": "string",
-			"default": "CC BY-NC-SA 4.0"
+			"default": ""
 		},
 		"licenseUrl": {
 			"type": "string",
-			"default": "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+			"default": ""
 		}
 	},
 	"usesContext": [ "postId", "postType" ],

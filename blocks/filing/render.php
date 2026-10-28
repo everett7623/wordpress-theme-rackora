@@ -8,9 +8,27 @@
 
 defined( 'ABSPATH' ) || exit;
 
+$rackora_icp_number = trim( (string) $attributes['icpNumber'] );
+$rackora_icp_url    = trim( (string) $attributes['icpUrl'] );
+$rackora_psb_number = trim( (string) $attributes['psbNumber'] );
+$rackora_psb_url    = trim( (string) $attributes['psbUrl'] );
+
+if ( '' === $rackora_icp_number ) {
+	$rackora_icp_number = trim( (string) rackora_option( 'icp_number' ) );
+	if ( '' === $rackora_icp_url || 'https://beian.miit.gov.cn/' === $rackora_icp_url ) {
+		$rackora_icp_url = trim( (string) rackora_option( 'icp_url' ) );
+	}
+}
+if ( '' === $rackora_psb_number ) {
+	$rackora_psb_number = trim( (string) rackora_option( 'psb_number' ) );
+	if ( '' === $rackora_psb_url ) {
+		$rackora_psb_url = trim( (string) rackora_option( 'psb_url' ) );
+	}
+}
+
 $rackora_entries = array(
-	array( trim( (string) $attributes['icpNumber'] ), trim( (string) $attributes['icpUrl'] ) ),
-	array( trim( (string) $attributes['psbNumber'] ), trim( (string) $attributes['psbUrl'] ) ),
+	array( $rackora_icp_number, $rackora_icp_url ),
+	array( $rackora_psb_number, $rackora_psb_url ),
 );
 $rackora_items   = array();
 

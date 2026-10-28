@@ -13,7 +13,7 @@
 			"items": {
 				"type": "string"
 			},
-			"default": [ "twitter", "facebook", "linkedin", "reddit", "telegram", "whatsapp", "weibo", "email" ]
+			"default": []
 		},
 		"showCopy": {
 			"type": "boolean",

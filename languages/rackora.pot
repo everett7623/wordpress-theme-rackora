@@ -2,7 +2,7 @@
 # This file is distributed under the GNU General Public License v3 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Rackora 0.1.0\n"
+"Project-Id-Version: Rackora 0.2.0\n"
 "Report-Msgid-Bugs-To: https://github.com/everett7623/wordpress-theme-rackora/issues\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Rackora\n"
@@ -492,6 +492,7 @@ msgid "Destination URL"
 msgstr ""
 
 #: inc/blocks.php:87
+#: inc/settings.php
 msgid "ICP filing number"
 msgstr ""
 
@@ -500,6 +501,7 @@ msgid "ICP filing link"
 msgstr ""
 
 #: inc/blocks.php:89
+#: inc/settings.php
 msgid "Public security filing number"
 msgstr ""
 
@@ -782,20 +784,100 @@ msgstr ""
 msgid "Visitors can still switch with the header button; their choice is remembered in the browser."
 msgstr ""
 
-#: inc/settings.php:59
-msgid "Site region"
-msgstr ""
-
-#: inc/settings.php:60
-msgid "ISO 3166 region code such as CN, SG or US-CA. Leave empty to omit the region signal."
-msgstr ""
-
 #: inc/settings.php:64
 msgid "Count post views"
 msgstr ""
 
 #: inc/settings.php:65
 msgid "Counts each visitor once per browser session with a lightweight request that works with page caching."
+msgstr ""
+
+#: inc/settings.php
+msgid "Site launch date"
+msgstr ""
+
+#: inc/settings.php
+msgid "Used by the Site stats block to show days online when the block itself has no date."
+msgstr ""
+
+#: inc/settings.php
+msgid "Filing"
+msgstr ""
+
+#: inc/settings.php
+msgid "Shown in the footer filing block when the block fields are empty."
+msgstr ""
+
+#: inc/settings.php
+msgid "ICP filing URL"
+msgstr ""
+
+#: inc/settings.php
+msgid "Defaults to the MIIT filing site."
+msgstr ""
+
+#: inc/settings.php
+msgid "Optional 公网安备 number for mainland China hosts."
+msgstr ""
+
+#: inc/settings.php
+msgid "Public security filing URL"
+msgstr ""
+
+#: inc/settings.php
+msgid "Link target for the public security filing number."
+msgstr ""
+
+#: inc/settings.php
+msgid "Content defaults"
+msgstr ""
+
+#: inc/settings.php
+msgid "Default license name"
+msgstr ""
+
+#: inc/settings.php
+msgid "Used by the author and license notice when the block leaves the name blank."
+msgstr ""
+
+#: inc/settings.php
+msgid "Default license URL"
+msgstr ""
+
+#: inc/settings.php
+msgid "Optional link for the default license name."
+msgstr ""
+
+#: inc/settings.php
+msgid "Default share targets"
+msgstr ""
+
+#: inc/settings.php
+msgid "Applied when a share bar block has no platforms selected. Individual blocks can still override this."
+msgstr ""
+
+#: inc/settings.php
+msgid "Show copy link by default"
+msgstr ""
+
+#: inc/settings.php
+msgid "Used together with the default share targets when a share bar has no platforms selected."
+msgstr ""
+
+#: inc/settings.php
+msgid "Default sponsor disclosure"
+msgstr ""
+
+#: inc/settings.php
+msgid "Shown above sponsor cards when a slot leaves its disclosure empty. Leave blank to use the built-in wording."
+msgstr ""
+
+#: inc/settings.php
+msgid "The site launch date must use YYYY-MM-DD."
+msgstr ""
+
+#: inc/helpers.php
+msgid "Zhihu"
 msgstr ""
 
 #: inc/settings.php:70
@@ -887,7 +969,15 @@ msgid "Social profile URLs"
 msgstr ""
 
 #: inc/settings.php:125
-msgid "One URL per line, output as sameAs in Organization structured data."
+msgid "Filled platforms are output as Organization sameAs. Front-end icons are still edited in the Site Editor social links block."
+msgstr ""
+
+#: inc/settings.php
+msgid "Other profile URLs"
+msgstr ""
+
+#: inc/settings.php
+msgid "One URL per line for profiles that are not in the list above."
 msgstr ""
 
 #: inc/settings.php:130
@@ -924,10 +1014,6 @@ msgstr ""
 
 #: inc/settings.php:150
 msgid "The 32 hexadecimal characters after hm.js?."
-msgstr ""
-
-#: inc/settings.php:236
-msgid "The site region must be an ISO 3166 code such as CN or US-CA."
 msgstr ""
 
 #. translators: %s: setting label.

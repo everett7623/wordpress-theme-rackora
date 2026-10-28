@@ -2,7 +2,7 @@
 # This file is distributed under the GNU General Public License v3 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Rackora 0.1.0\n"
+"Project-Id-Version: Rackora 0.2.0\n"
 "Report-Msgid-Bugs-To: https://github.com/everett7623/wordpress-theme-rackora/issues\n"
 "PO-Revision-Date: 2026-10-15 13:10+0800\n"
 "Last-Translator: everettlabs\n"
@@ -487,6 +487,7 @@ msgid "Destination URL"
 msgstr "跳转地址"
 
 #: inc/blocks.php:87
+#: inc/settings.php
 msgid "ICP filing number"
 msgstr "ICP 备案号"
 
@@ -495,6 +496,7 @@ msgid "ICP filing link"
 msgstr "ICP 备案跳转链接"
 
 #: inc/blocks.php:89
+#: inc/settings.php
 msgid "Public security filing number"
 msgstr "公网安备号"
 
@@ -774,14 +776,6 @@ msgstr "深色"
 msgid "Visitors can still switch with the header button; their choice is remembered in the browser."
 msgstr "访客仍可使用页头按钮切换，选择会保存在浏览器中。"
 
-#: inc/settings.php:59
-msgid "Site region"
-msgstr "网站地区"
-
-#: inc/settings.php:60
-msgid "ISO 3166 region code such as CN, SG or US-CA. Leave empty to omit the region signal."
-msgstr "ISO 3166 地区代码，例如 CN、SG、US-CA；留空则不输出地区信号。"
-
 #: inc/settings.php:64
 msgid "Count post views"
 msgstr "统计阅读数"
@@ -789,6 +783,94 @@ msgstr "统计阅读数"
 #: inc/settings.php:65
 msgid "Counts each visitor once per browser session with a lightweight request that works with page caching."
 msgstr "同一浏览器会话内每篇只计一次，使用轻量请求，开启页面缓存时同样有效。"
+
+#: inc/settings.php
+msgid "Site launch date"
+msgstr "建站日期"
+
+#: inc/settings.php
+msgid "Used by the Site stats block to show days online when the block itself has no date."
+msgstr "当「站点统计」区块未填写日期时，用于显示站点运行天数。"
+
+#: inc/settings.php
+msgid "Filing"
+msgstr "备案"
+
+#: inc/settings.php
+msgid "Shown in the footer filing block when the block fields are empty."
+msgstr "页脚备案区块字段为空时使用此处填写的内容。"
+
+#: inc/settings.php
+msgid "ICP filing URL"
+msgstr "ICP 备案跳转链接"
+
+#: inc/settings.php
+msgid "Defaults to the MIIT filing site."
+msgstr "默认指向工信部备案查询网站。"
+
+#: inc/settings.php
+msgid "Optional 公网安备 number for mainland China hosts."
+msgstr "中国大陆主机可选填写的公网安备号。"
+
+#: inc/settings.php
+msgid "Public security filing URL"
+msgstr "公网安备跳转链接"
+
+#: inc/settings.php
+msgid "Link target for the public security filing number."
+msgstr "公网安备号的跳转地址。"
+
+#: inc/settings.php
+msgid "Content defaults"
+msgstr "内容默认值"
+
+#: inc/settings.php
+msgid "Default license name"
+msgstr "默认许可名称"
+
+#: inc/settings.php
+msgid "Used by the author and license notice when the block leaves the name blank."
+msgstr "「作者与版权声明」区块未填写许可名称时使用。"
+
+#: inc/settings.php
+msgid "Default license URL"
+msgstr "默认许可链接"
+
+#: inc/settings.php
+msgid "Optional link for the default license name."
+msgstr "默认许可名称的可选跳转链接。"
+
+#: inc/settings.php
+msgid "Default share targets"
+msgstr "默认分享平台"
+
+#: inc/settings.php
+msgid "Applied when a share bar block has no platforms selected. Individual blocks can still override this."
+msgstr "分享栏未选择平台时使用；单个区块仍可覆盖。"
+
+#: inc/settings.php
+msgid "Show copy link by default"
+msgstr "默认显示复制链接"
+
+#: inc/settings.php
+msgid "Used together with the default share targets when a share bar has no platforms selected."
+msgstr "与默认分享平台一并用于未选择平台的分享栏。"
+
+#: inc/settings.php
+msgid "Default sponsor disclosure"
+msgstr "默认推广披露文案"
+
+#: inc/settings.php
+msgid "Shown above sponsor cards when a slot leaves its disclosure empty. Leave blank to use the built-in wording."
+msgstr "推广位未填写披露文案时显示；留空则使用主题内置文案。"
+
+#: inc/settings.php
+msgid "The site launch date must use YYYY-MM-DD."
+msgstr "建站日期须为 YYYY-MM-DD 格式。"
+
+#: inc/helpers.php
+msgid "Zhihu"
+msgstr "知乎"
 
 #: inc/settings.php:70
 msgid "SEO"
@@ -879,8 +961,16 @@ msgid "Social profile URLs"
 msgstr "社交主页地址"
 
 #: inc/settings.php:125
-msgid "One URL per line, output as sameAs in Organization structured data."
-msgstr "每行一个地址，作为 Organization 结构化数据的 sameAs 输出。"
+msgid "Filled platforms are output as Organization sameAs. Front-end icons are still edited in the Site Editor social links block."
+msgstr "已填写的平台会作为 Organization sameAs 输出；前台图标仍在站点编辑器的「社交图标」区块中编辑。"
+
+#: inc/settings.php
+msgid "Other profile URLs"
+msgstr "其他主页地址"
+
+#: inc/settings.php
+msgid "One URL per line for profiles that are not in the list above."
+msgstr "不在上方列表中的地址，每行一个。"
 
 #: inc/settings.php:130
 msgid "Analytics"
@@ -917,10 +1007,6 @@ msgstr "百度统计站点 ID"
 #: inc/settings.php:150
 msgid "The 32 hexadecimal characters after hm.js?."
 msgstr "只填写 hm.js? 后的 32 位十六进制 ID。"
-
-#: inc/settings.php:236
-msgid "The site region must be an ISO 3166 code such as CN or US-CA."
-msgstr "网站地区须为 ISO 3166 代码，例如 CN 或 US-CA。"
 
 #. translators: %s: setting label.
 #: inc/settings.php:252

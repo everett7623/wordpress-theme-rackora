@@ -14,9 +14,15 @@ if ( '' === trim( $content ) ) {
 }
 
 $rackora_disclosure = trim( (string) $attributes['disclosure'] );
+if ( '' === $rackora_disclosure ) {
+	$rackora_disclosure = trim( (string) rackora_option( 'ad_disclosure' ) );
+}
+if ( '' === $rackora_disclosure ) {
+	$rackora_disclosure = __( 'The site may earn a commission from promotional links without affecting editorial judgment or your price.', 'rackora' );
+}
 ?>
 <section <?php echo get_block_wrapper_attributes( array( 'class' => 'ad-slot', 'aria-label' => __( 'Sponsored content', 'rackora' ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-	<p class="ad-disclosure"><?php echo esc_html( '' !== $rackora_disclosure ? $rackora_disclosure : __( 'The site may earn a commission from promotional links without affecting editorial judgment or your price.', 'rackora' ) ); ?></p>
+	<p class="ad-disclosure"><?php echo esc_html( $rackora_disclosure ); ?></p>
 	<ul class="ad-list">
 		<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- 子区块已在各自的 render.php 中转义。 ?>
 	</ul>

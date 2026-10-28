@@ -9,6 +9,9 @@
 defined( 'ABSPATH' ) || exit;
 
 $rackora_launch = trim( (string) $attributes['launchDate'] );
+if ( '' === $rackora_launch ) {
+	$rackora_launch = trim( (string) rackora_option( 'launch_date' ) );
+}
 $rackora_stats  = array();
 
 if ( rackora_option( 'views_enabled' ) ) {

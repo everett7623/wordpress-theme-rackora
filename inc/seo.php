@@ -190,11 +190,6 @@ function rackora_render_seo_head() {
 		}
 	}
 
-	$region = (string) rackora_option( 'site_region' );
-	if ( '' !== $region ) {
-		printf( '<meta name="geo.region" content="%s" />' . "\n", esc_attr( $region ) );
-	}
-
 	if ( ! rackora_seo_active() || is_404() || is_search() ) {
 		return;
 	}
@@ -313,7 +308,7 @@ function rackora_render_json_ld() {
 			'mainEntityOfPage' => '' !== $about ? $about : $site_url,
 			'logo'             => $logo,
 		);
-		$same_as      = array_values( array_filter( explode( "\n", (string) rackora_option( 'same_as' ) ) ) );
+		$same_as = rackora_same_as_urls();
 		if ( $same_as ) {
 			$organization['sameAs'] = $same_as;
 		}

@@ -16,10 +16,24 @@ defined( 'ABSPATH' ) || exit;
  * @return array<string, mixed>
  */
 function rackora_settings_defaults() {
+	$social = array();
+	foreach ( array_keys( rackora_social_platforms() ) as $key ) {
+		$social[ $key ] = '';
+	}
+
 	return array(
 		'color_scheme'        => 'auto',
-		'site_region'         => '',
 		'views_enabled'       => true,
+		'launch_date'         => '',
+		'icp_number'          => '',
+		'icp_url'             => 'https://beian.miit.gov.cn/',
+		'psb_number'          => '',
+		'psb_url'             => '',
+		'license_name'        => 'CC BY-NC-SA 4.0',
+		'license_url'         => 'https://creativecommons.org/licenses/by-nc-sa/4.0/',
+		'share_targets'       => array( 'twitter', 'facebook', 'linkedin', 'reddit', 'telegram', 'whatsapp', 'weibo', 'email' ),
+		'share_copy'          => true,
+		'ad_disclosure'       => '',
 		'seo_enabled'         => true,
 		'seo_description'     => '',
 		'noindex_tags'        => true,
@@ -30,12 +44,123 @@ function rackora_settings_defaults() {
 		'organization_name'   => '',
 		'organization_logo'   => '',
 		'about_url'           => '',
-		'same_as'             => '',
+		'social_profiles'     => $social,
+		'social_other'        => '',
 		'analytics_enabled'   => false,
 		'ga4_id'              => '',
 		'clarity_id'          => '',
 		'baidu_analytics_id'  => '',
 	);
+}
+
+/**
+ * 社交主页预设平台（用于设置页与 Organization sameAs）。
+ *
+ * @return array<string, string> 平台键 => 显示名。
+ */
+function rackora_social_platforms() {
+	return array(
+		'github'    => 'GitHub',
+		'x'         => 'X',
+		'weibo'     => __( 'Weibo', 'rackora' ),
+		'bilibili'  => 'Bilibili',
+		'zhihu'     => __( 'Zhihu', 'rackora' ),
+		'telegram'  => 'Telegram',
+		'youtube'   => 'YouTube',
+		'mastodon'  => 'Mastodon',
+		'linkedin'  => 'LinkedIn',
+		'email'     => __( 'Email', 'rackora' ),
+	);
+}
+
+/**
+ * 根据 URL 猜测社交平台键，无法识别时返回空字符串。
+ *
+ * @param string $url 完整地址。
+ * @return string
+ */
+function rackora_guess_social_platform( $url ) {
+	$host = strtolower( (string) wp_parse_url( $url, PHP_URL_HOST ) );
+	$host = preg_replace( '/^www\./', '', $host );
+
+	$map = array(
+		'github.com'        => 'github',
+		'x.com'             => 'x',
+		'twitter.com'       => 'x',
+		'weibo.com'         => 'weibo',
+		'bilibili.com'      => 'bilibili',
+		'space.bilibili.com'=> 'bilibili',
+		'zhihu.com'         => 'zhihu',
+		't.me'              => 'telegram',
+		'telegram.me'       => 'telegram',
+		'youtube.com'       => 'youtube',
+		'youtu.be'          => 'youtube',
+		'linkedin.com'      => 'linkedin',
+	);
+
+	if ( isset( $map[ $host ] ) ) {
+		return $map[ $host ];
+	}
+
+	if ( false !== strpos( $host, 'mastodon.' ) || preg_match( '/^mastodon\./', $host ) ) {
+		return 'mastodon';
+	}
+
+	return '';
+}
+
+/**
+ * Organization sameAs 地址列表：预设平台 + 其他 + 旧版 same_as 兼容。
+ *
+ * @return string[]
+ */
+function rackora_same_as_urls() {
+	$urls     = array();
+	$profiles = rackora_option( 'social_profiles' );
+	if ( ! is_array( $profiles ) ) {
+		$profiles = array();
+	}
+
+	foreach ( array_keys( rackora_social_platforms() ) as $key ) {
+		$url = isset( $profiles[ $key ] ) ? trim( (string) $profiles[ $key ] ) : '';
+		if ( '' !== $url ) {
+			$urls[] = $url;
+		}
+	}
+
+	$other = (string) rackora_option( 'social_other' );
+	foreach ( preg_split( '/\r\n|\r|\n/', $other ) as $line ) {
+		$line = trim( $line );
+		if ( '' !== $line ) {
+			$urls[] = $line;
+		}
+	}
+
+	// 旧版「每行一个」文本框：尚未迁移到预设槽时继续输出。
+	if ( ! $urls ) {
+		$saved = get_option( 'rackora_settings', array() );
+		if ( is_array( $saved ) && ! empty( $saved['same_as'] ) ) {
+			foreach ( preg_split( '/\r\n|\r|\n/', (string) $saved['same_as'] ) as $line ) {
+				$line = trim( $line );
+				if ( '' !== $line ) {
+					$urls[] = $line;
+				}
+			}
+		}
+	}
+
+	$urls = array_values(
+		array_unique(
+			array_filter(
+				array_map( 'esc_url_raw', $urls ),
+				static function ( $url ) {
+					return (bool) preg_match( '#^https?://#i', $url );
+				}
+			)
+		)
+	);
+
+	return $urls;
 }
 
 /**

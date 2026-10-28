@@ -16,9 +16,15 @@ if ( ! $rackora_post ) {
 	return;
 }
 
-$rackora_link         = (string) get_permalink( $rackora_post );
-$rackora_license      = trim( (string) $attributes['licenseName'] );
-$rackora_license_url  = trim( (string) $attributes['licenseUrl'] );
+$rackora_link        = (string) get_permalink( $rackora_post );
+$rackora_license     = trim( (string) $attributes['licenseName'] );
+$rackora_license_url = trim( (string) $attributes['licenseUrl'] );
+if ( '' === $rackora_license ) {
+	$rackora_license = trim( (string) rackora_option( 'license_name' ) );
+}
+if ( '' === $rackora_license_url ) {
+	$rackora_license_url = trim( (string) rackora_option( 'license_url' ) );
+}
 $rackora_license_text = '' !== $rackora_license ? $rackora_license : __( 'All rights reserved', 'rackora' );
 ?>
 <aside <?php echo get_block_wrapper_attributes( array( 'class' => 'article-license', 'aria-label' => __( 'Author and copyright notice', 'rackora' ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
