@@ -16,7 +16,29 @@ defined( 'ABSPATH' ) || exit;
  * @return string 插件名称，未检测到时为空字符串。
  */
 function rackora_detected_seo_plugin() {
-	$plugins = array(
+	$by_file = array(
+		'wordpress-seo/wp-seo.php'             => 'Yoast SEO',
+		'seo-by-rank-math/rank-math.php'       => 'Rank Math',
+		'all-in-one-seo-pack/all_in_one_seo_pack.php' => 'All in One SEO',
+		'all-in-one-seo-pack-pro/all_in_one_seo_pack.php' => 'All in One SEO',
+		'wp-seopress/seopress.php'             => 'SEOPress',
+		'autodescription/autodescription.php'  => 'The SEO Framework',
+		'slim-seo/slim-seo.php'                => 'Slim SEO',
+		'squirrly-seo/squirrly.php'            => 'Squirrly SEO',
+	);
+
+	if ( ! function_exists( 'is_plugin_active' ) ) {
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+	}
+
+	foreach ( $by_file as $file => $name ) {
+		if ( is_plugin_active( $file ) ) {
+			return $name;
+		}
+	}
+
+	// 兼容必须插件 / 非常规加载路径：仅在对应运行时常量已定义时认定。
+	$by_constant = array(
 		'WPSEO_VERSION'             => 'Yoast SEO',
 		'RANK_MATH_VERSION'         => 'Rank Math',
 		'AIOSEO_VERSION'            => 'All in One SEO',
@@ -26,7 +48,7 @@ function rackora_detected_seo_plugin() {
 		'SQ_VERSION'                => 'Squirrly SEO',
 	);
 
-	foreach ( $plugins as $constant => $name ) {
+	foreach ( $by_constant as $constant => $name ) {
 		if ( defined( $constant ) ) {
 			return $name;
 		}
@@ -54,12 +76,17 @@ function rackora_settings_fields() {
 					),
 					'description' => __( 'Visitors can still switch with the header button; their choice is remembered in the browser.', 'rackora' ),
 				),
-				'views_enabled' => array(
+				'views_enabled'    => array(
 					'type'        => 'checkbox',
 					'label'       => __( 'Count post views', 'rackora' ),
 					'description' => __( 'Counts each visitor once per browser session with a lightweight request that works with page caching.', 'rackora' ),
 				),
-				'launch_date'   => array(
+				'views_posts_only' => array(
+					'type'        => 'checkbox',
+					'label'       => __( 'Count views on posts only', 'rackora' ),
+					'description' => __( 'When enabled, pages and other content types are excluded from view counts and the site total.', 'rackora' ),
+				),
+				'launch_date'      => array(
 					'type'        => 'date',
 					'label'       => __( 'Site launch date', 'rackora' ),
 					'description' => __( 'Used by the Site stats block to show days online when the block itself has no date.', 'rackora' ),
@@ -272,7 +299,13 @@ function rackora_sanitize_settings( $input ) {
 					$clean[ $key ] = ! empty( $value );
 					break;
 				case 'checkboxes':
-					$selected = is_array( $value ) ? $value : array();
+					// share_targets：用 hidden 标记区分「未出现在表单」与「显式全不选」。
+					if ( 'share_targets' === $key && empty( $input['share_targets_submitted'] ) ) {
+						$previous      = rackora_option( $key );
+						$clean[ $key ] = is_array( $previous ) ? $previous : $defaults[ $key ];
+						break;
+					}
+					$selected      = is_array( $value ) ? $value : array();
 					$clean[ $key ] = array_values(
 						array_filter(
 							$selected,
@@ -455,6 +488,9 @@ function rackora_render_settings_field( $args ) {
 			break;
 		case 'checkboxes':
 			$selected = is_array( $value ) ? $value : array();
+			if ( 'share_targets' === $key ) {
+				echo '<input type="hidden" name="rackora_settings[share_targets_submitted]" value="1" />';
+			}
 			echo '<fieldset class="rackora-checkboxes"><legend class="screen-reader-text">' . esc_html( $args['label'] ) . '</legend>';
 			foreach ( $args['options'] as $option => $label ) {
 				$option_id = $id . '-' . $option;

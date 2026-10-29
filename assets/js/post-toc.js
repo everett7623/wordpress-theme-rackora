@@ -1,6 +1,6 @@
 /**
- * 文章目录（Script Module）：从正文 H2 / H3 生成目录与标题锚点，滚动时高亮当前章节，
- * 窄屏下提供底部目录抽屉。
+ * 文章目录（Script Module）：为标题补锚点按钮，滚动时高亮当前章节，
+ * 窄屏下提供底部目录抽屉。优先使用服务端已输出的目录链接。
  */
 
 import { icon, t } from "rackora/shared";
@@ -86,7 +86,7 @@ function initMobileToc(section, navigation) {
 }
 
 /**
- * 生成目录。少于两个标题时保持目录隐藏。
+ * 生成或增强目录。少于两个标题时保持目录隐藏。
  *
  * @param {HTMLElement} content 正文容器。
  */
@@ -96,19 +96,23 @@ export function initTableOfContents(content) {
 	const headings = Array.from(content.querySelectorAll("h2, h3"));
 	if (headings.length < 2) return;
 
+	const serverToc = Boolean(navigation && navigation.children.length);
 	const usedIds = new Set();
+
 	for (const heading of headings) {
 		const label = heading.textContent?.trim() || t("section", "Section");
 		heading.id = ensureUniqueId(heading.id || slugify(label), usedIds, heading);
 
-		const anchor = document.createElement("a");
-		anchor.className = "heading-anchor";
-		anchor.href = `#${heading.id}`;
-		anchor.textContent = "#";
-		anchor.setAttribute("aria-label", t("linkTo", "Link to %s").replace("%s", label));
-		heading.prepend(anchor);
+		if (!heading.querySelector(":scope > .heading-anchor")) {
+			const anchor = document.createElement("a");
+			anchor.className = "heading-anchor";
+			anchor.href = `#${heading.id}`;
+			anchor.textContent = "#";
+			anchor.setAttribute("aria-label", t("linkTo", "Link to %s").replace("%s", label));
+			heading.prepend(anchor);
+		}
 
-		if (navigation) {
+		if (navigation && !serverToc) {
 			const link = document.createElement("a");
 			link.href = `#${heading.id}`;
 			link.dataset.level = heading.tagName.slice(1);

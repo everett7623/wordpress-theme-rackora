@@ -68,6 +68,16 @@ function rackora_post_meta_fields() {
 			'type'  => 'text',
 			'help'  => __( 'Only fill in an ownership that has been reviewed against your content architecture.', 'rackora' ),
 		),
+		'_rackora_robots'             => array(
+			'label'   => __( 'Search indexing', 'rackora' ),
+			'type'    => 'select',
+			'default' => '',
+			'options' => array(
+				''        => __( 'Allow indexing', 'rackora' ),
+				'noindex' => __( 'Do not index this post', 'rackora' ),
+			),
+			'help'    => __( 'Outputs noindex,follow when search engines should skip this post.', 'rackora' ),
+		),
 	);
 }
 
@@ -116,18 +126,17 @@ function rackora_register_meta() {
 		);
 	}
 
-	register_term_meta(
-		'post_tag',
-		'rackora_index_policy',
-		array(
-			'type'              => 'string',
-			'single'            => true,
-			'default'           => 'inherit',
-			'sanitize_callback' => static function ( $value ) {
-				return in_array( $value, array( 'inherit', 'index', 'noindex' ), true ) ? $value : 'inherit';
-			},
-		)
+	$index_policy_args = array(
+		'type'              => 'string',
+		'single'            => true,
+		'default'           => 'inherit',
+		'sanitize_callback' => static function ( $value ) {
+			return in_array( $value, array( 'inherit', 'index', 'noindex' ), true ) ? $value : 'inherit';
+		},
 	);
+
+	register_term_meta( 'post_tag', 'rackora_index_policy', $index_policy_args );
+	register_term_meta( 'category', 'rackora_index_policy', $index_policy_args );
 
 	register_term_meta(
 		'category',
@@ -169,7 +178,7 @@ function rackora_render_index_policy_select( $current ) {
 	echo '</select>';
 	printf(
 		'<p class="description">%s</p>',
-		esc_html__( '"Follow theme setting" uses the global tag policy under Appearance → Rackora; keep selected tags indexable here.', 'rackora' )
+		esc_html__( 'For tags, "Follow theme setting" uses Appearance → Rackora. For categories, inherit means allow indexing unless overridden here.', 'rackora' )
 	);
 }
 
@@ -202,6 +211,7 @@ add_action( 'post_tag_edit_form_fields', 'rackora_tag_edit_fields' );
  * @param WP_Term $term 当前分类。
  */
 function rackora_category_edit_fields( $term ) {
+	$policy  = (string) get_term_meta( $term->term_id, 'rackora_index_policy', true );
 	$current = (int) get_term_meta( $term->term_id, 'rackora_featured_post', true );
 	$posts   = get_posts(
 		array(
@@ -213,8 +223,11 @@ function rackora_category_edit_fields( $term ) {
 		)
 	);
 
+	echo '<tr class="form-field"><th scope="row"><label for="rackora-index-policy">' . esc_html__( 'Index policy', 'rackora' ) . '</label></th><td>';
+	rackora_render_index_policy_select( '' !== $policy ? $policy : 'inherit' );
+	echo '</td></tr>';
+
 	echo '<tr class="form-field"><th scope="row"><label for="rackora-featured-post">' . esc_html__( 'Featured post', 'rackora' ) . '</label></th><td>';
-	wp_nonce_field( 'rackora_term_meta', 'rackora_term_meta_nonce' );
 	echo '<select name="rackora_featured_post" id="rackora-featured-post"><option value="0">' . esc_html__( 'None', 'rackora' ) . '</option>';
 	foreach ( $posts as $post ) {
 		printf(

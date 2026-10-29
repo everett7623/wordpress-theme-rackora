@@ -70,6 +70,7 @@ function rackora_editor_data( $inspector ) {
 			'showCover'      => __( 'Show featured image', 'rackora' ),
 			'variant'        => __( 'Variant', 'rackora' ),
 			'showDeck'       => __( 'Show manual excerpt as deck', 'rackora' ),
+			'useThemeShare'  => __( 'Use theme share defaults', 'rackora' ),
 			'showCopy'       => __( 'Show copy link button', 'rackora' ),
 			'targets'        => __( 'Share targets', 'rackora' ),
 			'count'          => __( 'Number of items', 'rackora' ),

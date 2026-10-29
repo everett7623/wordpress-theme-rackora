@@ -12,9 +12,10 @@ defined( 'ABSPATH' ) || exit;
 $rackora_post_id      = isset( $block->context['postId'] ) ? (int) $block->context['postId'] : get_the_ID();
 $rackora_post         = get_post( $rackora_post_id );
 $rackora_targets_attr = array_values( array_intersect( (array) $attributes['targets'], array_keys( rackora_share_targets() ) ) );
-$rackora_use_defaults = array() === $rackora_targets_attr;
+// useThemeShare 为真时用主题默认；为假时尊重区块配置（含空平台列表）。
+$rackora_use_theme    = ! empty( $attributes['useThemeShare'] );
 
-if ( $rackora_use_defaults ) {
+if ( $rackora_use_theme ) {
 	$rackora_targets   = array_values( array_intersect( (array) rackora_option( 'share_targets' ), array_keys( rackora_share_targets() ) ) );
 	$rackora_show_copy = (bool) rackora_option( 'share_copy' );
 } else {

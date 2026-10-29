@@ -42,6 +42,10 @@ add_action( 'wp', 'rackora_seo_replace_core_canonical' );
  * @return array
  */
 function rackora_document_title_parts( $parts ) {
+	if ( ! rackora_seo_active() ) {
+		return $parts;
+	}
+
 	unset( $parts['tagline'] );
 
 	if ( isset( $parts['page'] ) ) {
@@ -112,8 +116,21 @@ function rackora_seo_context() {
 		'type'        => 'website',
 	);
 
-	if ( is_front_page() && is_home() ) {
+	if ( is_front_page() ) {
+		// 博客首页与静态首页都是 website；静态首页同时满足 is_singular()，必须先判断。
 		$context['base'] = home_url( '/' );
+		$context['type'] = 'website';
+		if ( ! is_home() ) {
+			$post = get_queried_object();
+			if ( $post instanceof WP_Post ) {
+				$context['title']       = wp_strip_all_tags( get_the_title( $post ) );
+				$context['description'] = rackora_post_description( $post );
+				$thumbnail              = get_the_post_thumbnail_url( $post, 'full' );
+				if ( $thumbnail ) {
+					$context['image'] = $thumbnail;
+				}
+			}
+		}
 	} elseif ( is_home() ) {
 		$context['base'] = (string) get_permalink( (int) get_option( 'page_for_posts' ) );
 	} elseif ( is_singular() ) {
@@ -175,7 +192,7 @@ function rackora_seo_context() {
 }
 
 /**
- * 输出站点验证、地区信号与页面级 SEO 标签。
+ * 输出站点验证与页面级 SEO 标签。
  */
 function rackora_render_seo_head() {
 	$verifications = array(
@@ -288,7 +305,7 @@ function rackora_render_json_ld() {
 	$graphs   = array();
 
 	if ( is_front_page() || is_home() ) {
-		$graphs[] = array(
+		$website = array(
 			'@context'    => 'https://schema.org',
 			'@type'       => 'WebSite',
 			'name'        => get_bloginfo( 'name' ),
@@ -296,7 +313,16 @@ function rackora_render_json_ld() {
 			'description' => rackora_site_description(),
 			'inLanguage'  => $language,
 			'publisher'   => array( '@id' => $org_id ),
+			'potentialAction' => array(
+				'@type'       => 'SearchAction',
+				'target'      => array(
+					'@type'       => 'EntryPoint',
+					'urlTemplate' => $site_url . '?s={search_term_string}',
+				),
+				'query-input' => 'required name=search_term_string',
+			),
 		);
+		$graphs[] = $website;
 
 		$about        = (string) rackora_option( 'about_url' );
 		$organization = array(
@@ -431,12 +457,19 @@ function rackora_should_noindex() {
 		return true;
 	}
 
-	if ( is_tag() ) {
+	if ( is_singular( 'post' ) ) {
+		return 'noindex' === (string) get_post_meta( get_queried_object_id(), '_rackora_robots', true );
+	}
+
+	if ( is_tag() || is_category() ) {
 		$policy = (string) get_term_meta( get_queried_object_id(), 'rackora_index_policy', true );
 		if ( 'index' === $policy || 'noindex' === $policy ) {
 			return 'noindex' === $policy;
 		}
-		return (bool) rackora_option( 'noindex_tags' );
+		if ( is_tag() ) {
+			return (bool) rackora_option( 'noindex_tags' );
+		}
+		return false;
 	}
 
 	if ( rackora_is_template_page( 'tags' ) ) {

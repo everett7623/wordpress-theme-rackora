@@ -8,6 +8,10 @@
 	"description": "Share links for X, Facebook, LinkedIn, Reddit, Telegram, WhatsApp, Weibo and email, plus a copy link button.",
 	"textdomain": "rackora",
 	"attributes": {
+		"useThemeShare": {
+			"type": "boolean",
+			"default": true
+		},
 		"targets": {
 			"type": "array",
 			"items": {

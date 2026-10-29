@@ -3,7 +3,7 @@ return array(
   'domain' => 'rackora',
   'plural-forms' => 'nplurals=1; plural=0;',
   'language' => 'zh_CN',
-  'project-id-version' => 'Rackora 0.2.0',
+  'project-id-version' => 'Rackora 0.3.0',
   'pot-creation-date' => '2026-10-15T13:10:27+08:00',
   'po-revision-date' => '2026-10-15 13:10+0800',
   'messages' => 
@@ -367,5 +367,12 @@ return array(
     'Filled platforms are output as Organization sameAs. Front-end icons are still edited in the Site Editor social links block.' => '已填写的平台会作为 Organization sameAs 输出；前台图标仍在站点编辑器的「社交图标」区块中编辑。',
     'Other profile URLs' => '其他主页地址',
     'One URL per line for profiles that are not in the list above.' => '不在上方列表中的地址，每行一个。',
+    'Count views on posts only' => '仅统计文章阅读数',
+    'When enabled, pages and other content types are excluded from view counts and the site total.' => '开启后，页面及其他内容类型不计入阅读数与站点总计。',
+    'Use theme share defaults' => '使用主题默认分享设置',
+    'Search indexing' => '搜索引擎索引',
+    'Do not index this post' => '暂不索引本文',
+    'Outputs noindex,follow when search engines should skip this post.' => '需要搜索引擎跳过本文时输出 noindex,follow。',
+    'For tags, "Follow theme setting" uses Appearance → Rackora. For categories, inherit means allow indexing unless overridden here.' => '标签的「跟随主题设置」读取「外观 → Rackora」；分类选择跟随时默认允许索引，可在此覆盖。',
   ),
 );

@@ -46,7 +46,8 @@ function rackora_enqueue_assets() {
 	wp_register_script_module( 'rackora/shared', get_theme_file_uri( 'assets/js/shared.js' ), array(), $version );
 	wp_enqueue_script_module( 'rackora/theme', get_theme_file_uri( 'assets/js/theme.js' ), array( 'rackora/shared' ), $version );
 
-	if ( ! is_singular() ) {
+	// 目录、代码高亮与阅读进度脚本仅加载于文章（含文档模板），避免关于页等静态页白付代价。
+	if ( ! is_singular( 'post' ) ) {
 		return;
 	}
 
@@ -167,7 +168,7 @@ add_action( 'wp_head', 'rackora_print_script_config', 4 );
  * 文章与页面顶部的阅读进度条。
  */
 function rackora_render_reading_progress() {
-	if ( is_singular() ) {
+	if ( is_singular( 'post' ) ) {
 		echo '<div class="reading-progress" aria-hidden="true"><span data-reading-progress></span></div>';
 	}
 }

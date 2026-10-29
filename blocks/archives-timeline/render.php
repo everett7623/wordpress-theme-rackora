@@ -41,6 +41,12 @@ if ( ! $rackora_posts ) {
 	return;
 }
 
+// 一次预热本页文章的分类缓存，避免时间线每行单独 get_the_category。
+$rackora_post_ids = wp_list_pluck( $rackora_posts, 'ID' );
+if ( $rackora_post_ids ) {
+	update_object_term_cache( $rackora_post_ids, 'post' );
+}
+
 // 按年 → 月分组，保持查询的发布时间倒序。
 $rackora_groups = array();
 foreach ( $rackora_posts as $rackora_item ) {

@@ -94,6 +94,12 @@
 		const keys = data.inspector[name] || [];
 		if (!keys.length) return null;
 		const schema = getBlockType(name).attributes;
+		const shareKeys =
+			name === "rackora/share-bar"
+				? attributes.useThemeShare
+					? keys.filter((key) => key === "useThemeShare")
+					: keys
+				: keys;
 
 		return el(
 			InspectorControls,
@@ -101,13 +107,19 @@
 			el(
 				PanelBody,
 				{ title: data.i18n.settings },
-				keys.map((key) =>
+				shareKeys.map((key) =>
 					el(Field, {
 						key,
 						name: key,
 						schema: schema[key] || {},
 						value: attributes[key],
-						onChange: (next) => setAttributes({ [key]: next }),
+						onChange: (next) => {
+							if (name === "rackora/share-bar" && key === "targets") {
+								setAttributes({ targets: next, useThemeShare: false });
+								return;
+							}
+							setAttributes({ [key]: next });
+						},
 					}),
 				),
 			),

@@ -9,14 +9,37 @@
 defined( 'ABSPATH' ) || exit;
 
 $rackora_is_tags = 'post_tag' === $attributes['taxonomy'];
-$rackora_terms   = get_terms(
-	array(
-		'taxonomy'   => $rackora_is_tags ? 'post_tag' : 'category',
-		'hide_empty' => $rackora_is_tags,
-		'parent'     => $rackora_is_tags ? '' : 0,
-		'orderby'    => 'name',
-	)
-);
+
+$rackora_terms    = array();
+$rackora_children = array();
+
+if ( $rackora_is_tags ) {
+	$rackora_terms = get_terms(
+		array(
+			'taxonomy'   => 'post_tag',
+			'hide_empty' => true,
+			'orderby'    => 'name',
+		)
+	);
+} else {
+	// 一次取回全部分类，在 PHP 中按父子分组，避免每个顶级分类再查一次库。
+	$rackora_all = get_terms(
+		array(
+			'taxonomy'   => 'category',
+			'hide_empty' => false,
+			'orderby'    => 'name',
+		)
+	);
+	if ( ! is_wp_error( $rackora_all ) && $rackora_all ) {
+		foreach ( $rackora_all as $rackora_term ) {
+			if ( 0 === (int) $rackora_term->parent ) {
+				$rackora_terms[] = $rackora_term;
+			} else {
+				$rackora_children[ (int) $rackora_term->parent ][] = $rackora_term;
+			}
+		}
+	}
+}
 
 if ( is_wp_error( $rackora_terms ) || ! $rackora_terms ) {
 	printf(
@@ -46,13 +69,7 @@ if ( is_wp_error( $rackora_terms ) || ! $rackora_terms ) {
 			<?php foreach ( $rackora_terms as $rackora_term ) : ?>
 				<?php
 				$rackora_description = trim( wp_strip_all_tags( $rackora_term->description ) );
-				$rackora_children    = get_terms(
-					array(
-						'taxonomy'   => 'category',
-						'parent'     => $rackora_term->term_id,
-						'hide_empty' => false,
-					)
-				);
+				$rackora_kids        = isset( $rackora_children[ (int) $rackora_term->term_id ] ) ? $rackora_children[ (int) $rackora_term->term_id ] : array();
 				?>
 				<li>
 					<a href="<?php echo esc_url( get_term_link( $rackora_term ) ); ?>">
@@ -60,9 +77,9 @@ if ( is_wp_error( $rackora_terms ) || ! $rackora_terms ) {
 						<span class="taxonomy-grid__count"><?php echo esc_html( number_format_i18n( $rackora_term->count ) ); ?></span>
 						<span><?php echo esc_html( '' !== $rackora_description ? $rackora_description : __( 'View every post in this category', 'rackora' ) ); ?></span>
 					</a>
-					<?php if ( ! is_wp_error( $rackora_children ) && $rackora_children ) : ?>
+					<?php if ( $rackora_kids ) : ?>
 						<ul class="taxonomy-children">
-							<?php foreach ( $rackora_children as $rackora_child ) : ?>
+							<?php foreach ( $rackora_kids as $rackora_child ) : ?>
 								<li><a href="<?php echo esc_url( get_term_link( $rackora_child ) ); ?>"><?php echo esc_html( $rackora_child->name ); ?></a></li>
 							<?php endforeach; ?>
 						</ul>

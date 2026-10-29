@@ -10,8 +10,9 @@
 
 Rackora 是一个面向独立博客、知识库与技术写作的内容优先主题，由 [Halo 版 Rackora](https://github.com/everett7623/halo-theme-rackora) 移植而来。前台保持 Halo 版安静、低图片的出版式版式；底层完全按 WordPress 区块主题（全站编辑）实现：`theme.json` 设计令牌、区块模板与模式、核心区块优先，Rackora 特有的组件以服务端渲染的自定义区块提供。
 
-- 当前版本：`v0.2.0`
+- 当前版本：`v0.3.0`
 - 环境要求：WordPress `>= 6.6`（已在 7.1 测试），PHP `>= 7.4`
+- 更新日志：[CHANGELOG.md](CHANGELOG.md)
 - 许可证：[GPL-3.0-or-later](LICENSE)
 - 问题反馈：[GitHub Issues](https://github.com/everett7623/wordpress-theme-rackora/issues)
 
@@ -32,7 +33,8 @@ Rackora 是一个面向独立博客、知识库与技术写作的内容优先主
 - 文档模板：目录常驻侧栏，同分类文章列表高亮当前篇。
 - 归档时间线、全部分类、全部标签、友情链接与关于页模板；日期归档同样使用时间线。
 - 浅色、深色与跟随系统三种配色，访客的选择保存在浏览器中且首屏无闪烁；打印样式与减少动态效果。
-- 页面级 SEO：自指 canonical（含列表分页）、`rel="prev/next"`、Open Graph、Twitter Card，以及 WebSite、Organization、BlogPosting / TechArticle、BreadcrumbList、WebPage / AboutPage 结构化数据；检测到 SEO 插件时自动让位。
+- 页面级 SEO：自指 canonical（含列表分页）、`rel="prev/next"`、Open Graph、Twitter Card，以及 WebSite（含 SearchAction）、Organization、BlogPosting / TechArticle、BreadcrumbList、WebPage / AboutPage 结构化数据；检测到 SEO 插件时自动让位。
+- 文章目录服务端渲染大纲；单篇 / 分类 / 标签可控制索引；阅读数可限「仅文章」并带服务端限流。
 - 可选的 GA4、Microsoft Clarity、百度统计，ICP / 公网安备信息与带披露的推广位，默认均不启用或不显示。
 - 自带简体中文翻译，界面语言跟随「设置 → 常规 → 站点语言」。
 
@@ -60,7 +62,7 @@ Rackora 是一个面向独立博客、知识库与技术写作的内容优先主
 
 3. **导航**：在「外观 → 编辑器 → 导航」创建菜单，页头与页脚的导航区块都可以选择菜单。
 4. **样式**：配色、字体、字号与全站宽度在「外观 → 编辑器 → 样式」中调整；深色模式会根据强调色自动推导亮色版本。
-5. **主题设置**：「外观 → Rackora」只放 WordPress 没有原生位置的选项：默认配色、建站日期、备案、默认许可与分享、推广披露、SEO（含社交主页预设）与访问分析。
+5. **主题设置**：「外观 → Rackora」只放 WordPress 没有原生位置的选项：默认配色、建站日期、备案、默认许可与分享、推广披露、SEO（含社交主页预设）、阅读数范围与访问分析。
 6. **文档模板**：编辑文章时在「模板」中选择「文档（Documentation）」。
 
 ## Halo 版设置对照

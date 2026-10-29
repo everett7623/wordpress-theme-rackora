@@ -22,7 +22,8 @@ function rackora_views_trackable( $post_id ) {
 		&& $post
 		&& 'publish' === $post->post_status
 		&& '' === $post->post_password
-		&& is_post_type_viewable( $post->post_type );
+		&& is_post_type_viewable( $post->post_type )
+		&& ( ! rackora_option( 'views_posts_only' ) || 'post' === $post->post_type );
 }
 
 /**
@@ -92,6 +93,31 @@ function rackora_should_count_view( $post, $request ) {
 }
 
 /**
+ * 同一访客对同一篇文章的服务端限流（按 IP，一小时内只计一次）。
+ *
+ * @param int             $post_id 文章 ID。
+ * @param WP_REST_Request $request 请求。
+ * @return bool 为 true 表示应跳过计数。
+ */
+function rackora_view_rate_limited( $post_id, $request ) {
+	$ip = '';
+	if ( ! empty( $_SERVER['REMOTE_ADDR'] ) ) {
+		$ip = (string) wp_unslash( $_SERVER['REMOTE_ADDR'] );
+	}
+	if ( '' === $ip ) {
+		$ip = 'unknown';
+	}
+
+	$key = 'rackora_vr_' . md5( $ip . '|' . (int) $post_id );
+	if ( get_transient( $key ) ) {
+		return true;
+	}
+
+	set_transient( $key, 1, HOUR_IN_SECONDS );
+	return false;
+}
+
+/**
  * 注册计数接口：POST /wp-json/rackora/v1/views/{id}。
  */
 function rackora_register_views_route() {
@@ -127,6 +153,15 @@ function rackora_rest_count_view( $request ) {
 	}
 
 	if ( ! rackora_should_count_view( $post, $request ) ) {
+		return rest_ensure_response(
+			array(
+				'counted' => false,
+				'views'   => rackora_get_views( $post->ID ),
+			)
+		);
+	}
+
+	if ( rackora_view_rate_limited( $post->ID, $request ) ) {
 		return rest_ensure_response(
 			array(
 				'counted' => false,

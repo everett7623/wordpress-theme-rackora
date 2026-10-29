@@ -24,6 +24,7 @@ function rackora_settings_defaults() {
 	return array(
 		'color_scheme'        => 'auto',
 		'views_enabled'       => true,
+		'views_posts_only'    => false,
 		'launch_date'         => '',
 		'icp_number'          => '',
 		'icp_url'             => 'https://beian.miit.gov.cn/',
@@ -414,3 +415,168 @@ function rackora_empty_state( $title, $description ) {
 function rackora_is_editor_preview() {
 	return defined( 'REST_REQUEST' ) && REST_REQUEST;
 }
+
+/**
+ * 将标题文本转为 URL 锚点片段。
+ *
+ * @param string $text 标题文本。
+ * @return string
+ */
+function rackora_slugify_heading( $text ) {
+	$text = strtolower( trim( wp_strip_all_tags( $text ) ) );
+	$text = preg_replace( '/[^\p{L}\p{N}\s-]+/u', '', $text );
+	$text = preg_replace( '/[\s_]+/u', '-', $text );
+	$text = preg_replace( '/-+/', '-', $text );
+	$text = trim( $text, '-' );
+	return '' !== $text ? $text : 'section';
+}
+
+/**
+ * 为 HTML 中的 H2 / H3 注入稳定 id，并返回目录大纲。
+ *
+ * @param string $html 文章 HTML。
+ * @return array{0: string, 1: array<int, array{level: int, id: string, text: string}>}
+ */
+function rackora_inject_heading_ids( $html ) {
+	$outline = array();
+	$used    = array();
+
+	$html = preg_replace_callback(
+		'/<h([23])(\s[^>]*)?>(.*?)<\/h\1>/is',
+		static function ( $matches ) use ( &$outline, &$used ) {
+			$level = (int) $matches[1];
+			$attrs = (string) $matches[2];
+			$inner = $matches[3];
+			$text  = trim( wp_strip_all_tags( $inner ) );
+			if ( '' === $text ) {
+				return $matches[0];
+			}
+
+			$id = '';
+			if ( preg_match( '/\sid=(["\'])([^"\']+)\1/i', $attrs, $id_match ) ) {
+				$id = $id_match[2];
+			}
+
+			$base = '' !== $id ? $id : rackora_slugify_heading( $text );
+			$candidate = $base;
+			$n         = 2;
+			while ( isset( $used[ $candidate ] ) ) {
+				$candidate = $base . '-' . $n;
+				++$n;
+			}
+			$used[ $candidate ] = true;
+			$id                 = $candidate;
+
+			if ( preg_match( '/\sid=/i', $attrs ) ) {
+				$attrs = preg_replace( '/\sid=(["\'])[^"\']*\1/i', ' id="' . esc_attr( $id ) . '"', $attrs, 1 );
+			} else {
+				$attrs .= ' id="' . esc_attr( $id ) . '"';
+			}
+
+			$outline[] = array(
+				'level' => $level,
+				'id'    => $id,
+				'text'  => $text,
+			);
+
+			return '<h' . $level . $attrs . '>' . $inner . '</h' . $level . '>';
+		},
+		$html
+	);
+
+	return array( $html, $outline );
+}
+
+/**
+ * 当前文章的目录大纲（请求内缓存，与正文标题 id 共用）。
+ *
+ * @param int|null $post_id 文章 ID。
+ * @return array<int, array{level: int, id: string, text: string}>
+ */
+function rackora_post_heading_outline( $post_id = null ) {
+	$post_id = $post_id ? (int) $post_id : (int) get_the_ID();
+	if ( $post_id <= 0 ) {
+		return array();
+	}
+
+	$global_key = 'rackora_heading_outline_' . $post_id;
+	if ( ! empty( $GLOBALS[ $global_key ] ) && is_array( $GLOBALS[ $global_key ] ) ) {
+		return $GLOBALS[ $global_key ];
+	}
+
+	static $cache = array();
+	if ( isset( $cache[ $post_id ] ) ) {
+		return $cache[ $post_id ];
+	}
+
+	$post = get_post( $post_id );
+	if ( ! $post ) {
+		$cache[ $post_id ] = array();
+		return array();
+	}
+
+	$html = do_blocks( $post->post_content );
+	list( , $outline )     = rackora_inject_heading_ids( $html );
+	$cache[ $post_id ]     = $outline;
+	$GLOBALS[ $global_key ] = $outline;
+	return $outline;
+}
+
+/**
+ * 按既有大纲顺序为正文 H2 / H3 写入相同 id。
+ *
+ * @param string                                                               $html    正文 HTML。
+ * @param array<int, array{level: int, id: string, text: string}> $outline 大纲。
+ * @return string
+ */
+function rackora_apply_heading_outline_ids( $html, $outline ) {
+	$index = 0;
+	return preg_replace_callback(
+		'/<h([23])(\s[^>]*)?>(.*?)<\/h\1>/is',
+		static function ( $matches ) use ( &$index, $outline ) {
+			if ( ! isset( $outline[ $index ] ) ) {
+				return $matches[0];
+			}
+			$level = (int) $matches[1];
+			$attrs = (string) $matches[2];
+			$inner = $matches[3];
+			$id    = $outline[ $index ]['id'];
+			++$index;
+
+			if ( preg_match( '/\sid=/i', $attrs ) ) {
+				$attrs = preg_replace( '/\sid=(["\'])[^"\']*\1/i', ' id="' . esc_attr( $id ) . '"', $attrs, 1 );
+			} else {
+				$attrs .= ' id="' . esc_attr( $id ) . '"';
+			}
+
+			return '<h' . $level . $attrs . '>' . $inner . '</h' . $level . '>';
+		},
+		$html
+	);
+}
+
+/**
+ * 在正文输出时注入与目录一致的标题 id。
+ *
+ * @param string $content 正文 HTML。
+ * @return string
+ */
+function rackora_annotate_content_headings( $content ) {
+	if ( ! is_singular( 'post' ) || ! in_the_loop() || ! is_main_query() ) {
+		return $content;
+	}
+
+	$post_id    = (int) get_the_ID();
+	$global_key = 'rackora_heading_outline_' . $post_id;
+
+	if ( ! empty( $GLOBALS[ $global_key ] ) && is_array( $GLOBALS[ $global_key ] ) ) {
+		return rackora_apply_heading_outline_ids( $content, $GLOBALS[ $global_key ] );
+	}
+
+	list( $content, $outline ) = rackora_inject_heading_ids( $content );
+	if ( $post_id > 0 ) {
+		$GLOBALS[ $global_key ] = $outline;
+	}
+	return $content;
+}
+add_filter( 'the_content', 'rackora_annotate_content_headings', 12 );
