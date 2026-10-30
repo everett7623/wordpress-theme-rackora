@@ -908,18 +908,6 @@ msgstr "暂不索引归档页"
 msgid "Outputs noindex,follow on date archives and the Archives page. Posts and categories are not affected."
 msgstr "日期归档与归档页输出 noindex,follow；文章和分类页面不受影响。"
 
-msgid "Do not index author archives"
-msgstr "暂不索引作者归档"
-
-msgid "Outputs noindex,follow on author archives. Useful for single-author sites that do not want a separate author URL indexed."
-msgstr "作者归档输出 noindex,follow。单作者站点通常不需要单独收录作者页。"
-
-msgid "Hide links to unpublished posts"
-msgstr "隐藏指向未发布文章的链接"
-
-msgid "List items pointing at draft or scheduled posts are removed; in-text links become plain text until the target is published."
-msgstr "指向草稿或定时发布文章的列表项会被去掉，正文中的链接退化为纯文本，目标发布后自动恢复。"
-
 msgid "SEO title"
 msgstr "SEO 标题"
 

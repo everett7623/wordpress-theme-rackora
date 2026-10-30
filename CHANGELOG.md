@@ -4,21 +4,19 @@
 
 ## [0.4.0] - 2026-10-30
 
-借鉴 mofati.top 在 Rank Math 接管前后补上的主题缺口：无插件时主题应独立完成描述、标题与 robots，有插件时彻底让位以免重复。
+只收各站点都适用的缺口：无 SEO 插件时主题应输出完整描述与标题；有插件时 SEO 让位，统计仍由站点自己开关。站点运营向的草稿链隐藏、默认 noindex 作者页、检测到插件就关统计，不进入通用主题。
 
 ### 修复
 
 - 主题 SEO 补齐缺失的 `<meta name="description">`（此前只写了 og/twitter description）
 - `og:locale` 改为 `zh-CN` 这类连字符形式
-- 检测到 SEO 插件时不再输出主题统计脚本，避免与 Rank Math / Yoast 的 GA4 重复加载
+- `robots.txt` 缺少 `User-agent` 分组时补齐 WordPress 默认规则
 
 ### 功能
 
 - 文章侧栏增加「SEO 标题」，用于文档标题与 Open Graph（有 SEO 插件时忽略）
-- `robots.txt`：缺少 `User-agent` 时补齐核心默认规则，并屏蔽 `/?s=`、`/search/`
-- 搜索结果与作者归档默认 `noindex,follow`（作者归档可在设置中关闭）
-- 统计默认排除已登录用户
-- 正文指向未发布文章的站内链接：列表项隐藏、行内链接退化为纯文本（可在设置中关闭）
+- 搜索结果 `noindex,follow`；主题接管 SEO 时 `robots.txt` 屏蔽 `/?s=` 与 `/search/`
+- 统计可选排除已登录用户（默认开启，与常见分析工具一致）
 
 ## [0.3.0] - 2026-10-29
 

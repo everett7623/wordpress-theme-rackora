@@ -39,8 +39,6 @@ function rackora_settings_defaults() {
 		'seo_description'     => '',
 		'noindex_tags'        => true,
 		'noindex_archives'    => true,
-		'noindex_authors'     => true,
-		'hide_draft_links'    => true,
 		'google_verification' => '',
 		'bing_verification'   => '',
 		'baidu_verification'  => '',

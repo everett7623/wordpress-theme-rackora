@@ -486,10 +486,6 @@ function rackora_should_noindex() {
 		return true;
 	}
 
-	if ( is_author() ) {
-		return (bool) rackora_option( 'noindex_authors' );
-	}
-
 	if ( is_singular( 'post' ) ) {
 		return 'noindex' === (string) get_post_meta( get_queried_object_id(), '_rackora_robots', true );
 	}

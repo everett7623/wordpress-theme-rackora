@@ -19,11 +19,6 @@ function rackora_analytics_active() {
 		$active = false;
 	}
 
-	if ( $active && '' !== rackora_detected_seo_plugin() ) {
-		// SEO 插件常同时注入 GA4 / 统计；默认让位，可用过滤器强制主题输出。
-		$active = false;
-	}
-
 	/**
 	 * 过滤主题统计脚本开关。
 	 *
