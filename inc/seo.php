@@ -48,6 +48,13 @@ function rackora_document_title_parts( $parts ) {
 
 	unset( $parts['tagline'] );
 
+	if ( is_singular() ) {
+		$seo_title = rackora_singular_seo_title( get_queried_object_id() );
+		if ( '' !== $seo_title ) {
+			$parts['title'] = $seo_title;
+		}
+	}
+
 	if ( isset( $parts['page'] ) ) {
 		$page = $parts['page'];
 		unset( $parts['page'] );
@@ -101,6 +108,25 @@ function rackora_post_description( $post ) {
 }
 
 /**
+ * 单篇 SEO 标题（编辑器侧栏），未填写时为空字符串。
+ *
+ * @param int $post_id 内容 ID。
+ * @return string
+ */
+function rackora_singular_seo_title( $post_id ) {
+	return trim( (string) get_post_meta( (int) $post_id, '_rackora_seo_title', true ) );
+}
+
+/**
+ * Open Graph locale：将 WordPress 的 zh_CN 转为 zh-CN。
+ *
+ * @return string
+ */
+function rackora_og_locale() {
+	return str_replace( '_', '-', get_locale() );
+}
+
+/**
  * 收集当前路由的 SEO 信息。
  *
  * @return array{base: string, url: string, title: string, description: string, image: string, type: string}
@@ -123,7 +149,8 @@ function rackora_seo_context() {
 		if ( ! is_home() ) {
 			$post = get_queried_object();
 			if ( $post instanceof WP_Post ) {
-				$context['title']       = wp_strip_all_tags( get_the_title( $post ) );
+				$seo_title              = rackora_singular_seo_title( $post->ID );
+				$context['title']       = '' !== $seo_title ? $seo_title : wp_strip_all_tags( get_the_title( $post ) );
 				$context['description'] = rackora_post_description( $post );
 				$thumbnail              = get_the_post_thumbnail_url( $post, 'full' );
 				if ( $thumbnail ) {
@@ -136,7 +163,8 @@ function rackora_seo_context() {
 	} elseif ( is_singular() ) {
 		$post                   = get_queried_object();
 		$context['base']        = (string) wp_get_canonical_url( $post );
-		$context['title']       = wp_strip_all_tags( get_the_title( $post ) );
+		$seo_title              = rackora_singular_seo_title( $post->ID );
+		$context['title']       = '' !== $seo_title ? $seo_title : wp_strip_all_tags( get_the_title( $post ) );
 		$context['description'] = rackora_post_description( $post );
 		$context['type']        = rackora_is_template_page( 'about' ) ? 'profile' : 'article';
 
@@ -217,10 +245,11 @@ function rackora_render_seo_head() {
 	}
 
 	$tags = array(
+		array( 'name', 'description', $context['description'] ),
 		array( 'link', 'canonical', $context['url'] ),
 		array( 'property', 'og:type', $context['type'] ),
 		array( 'property', 'og:site_name', get_bloginfo( 'name' ) ),
-		array( 'property', 'og:locale', get_locale() ),
+		array( 'property', 'og:locale', rackora_og_locale() ),
 		array( 'property', 'og:title', $context['title'] ),
 		array( 'property', 'og:url', $context['url'] ),
 		array( 'property', 'og:description', $context['description'] ),
@@ -453,8 +482,12 @@ add_filter( 'wp_robots', 'rackora_wp_robots' );
  * @return bool
  */
 function rackora_should_noindex() {
-	if ( is_404() ) {
+	if ( is_404() || is_search() ) {
 		return true;
+	}
+
+	if ( is_author() ) {
+		return (bool) rackora_option( 'noindex_authors' );
 	}
 
 	if ( is_singular( 'post' ) ) {
@@ -482,3 +515,29 @@ function rackora_should_noindex() {
 
 	return false;
 }
+
+/**
+ * robots.txt：补齐 User-agent 分组，并屏蔽站内搜索（搜索页本身也 noindex）。
+ *
+ * 检测到 SEO 插件时不改 robots.txt，避免与插件规则打架。
+ *
+ * @param string $output 当前 robots.txt。
+ * @param bool   $public 站点是否对搜索引擎公开。
+ * @return string
+ */
+function rackora_robots_txt( $output, $public ) {
+	if ( ! $public || ! rackora_seo_active() ) {
+		return $output;
+	}
+
+	if ( false === stripos( $output, 'User-agent:' ) ) {
+		$output = "User-agent: *\nDisallow: /wp-admin/\nAllow: /wp-admin/admin-ajax.php\n" . $output;
+	}
+
+	if ( false === stripos( $output, 'Disallow: /?s=' ) ) {
+		$output .= "Disallow: /?s=\nDisallow: /search/\n";
+	}
+
+	return $output;
+}
+add_filter( 'robots_txt', 'rackora_robots_txt', -1, 2 );

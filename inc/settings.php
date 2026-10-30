@@ -172,6 +172,16 @@ function rackora_settings_fields() {
 					'label'       => __( 'Do not index date archives', 'rackora' ),
 					'description' => __( 'Outputs noindex,follow on date archives and the Archives page. Posts and categories are not affected.', 'rackora' ),
 				),
+				'noindex_authors'     => array(
+					'type'        => 'checkbox',
+					'label'       => __( 'Do not index author archives', 'rackora' ),
+					'description' => __( 'Outputs noindex,follow on author archives. Useful for single-author sites that do not want a separate author URL indexed.', 'rackora' ),
+				),
+				'hide_draft_links'    => array(
+					'type'        => 'checkbox',
+					'label'       => __( 'Hide links to unpublished posts', 'rackora' ),
+					'description' => __( 'List items pointing at draft or scheduled posts are removed; in-text links become plain text until the target is published.', 'rackora' ),
+				),
 				'google_verification' => array(
 					'type'        => 'text',
 					'label'       => __( 'Google verification code', 'rackora' ),
@@ -217,10 +227,15 @@ function rackora_settings_fields() {
 		'analytics'  => array(
 			'title'  => __( 'Analytics', 'rackora' ),
 			'fields' => array(
-				'analytics_enabled'  => array(
+				'analytics_enabled'           => array(
 					'type'        => 'checkbox',
 					'label'       => __( 'Enable third-party analytics', 'rackora' ),
-					'description' => __( 'Off by default. Only services with a valid ID are loaded.', 'rackora' ),
+					'description' => __( 'Off by default. Only services with a valid ID are loaded. Turned off automatically when a dedicated SEO plugin is active, because those plugins often inject the same trackers.', 'rackora' ),
+				),
+				'analytics_exclude_logged_in' => array(
+					'type'        => 'checkbox',
+					'label'       => __( 'Exclude logged-in users from analytics', 'rackora' ),
+					'description' => __( 'Skip third-party trackers for anyone who is signed in, including administrators.', 'rackora' ),
 				),
 				'ga4_id'             => array(
 					'type'        => 'text',
@@ -624,7 +639,7 @@ function rackora_render_settings_page() {
 				<p>
 					<?php
 					/* translators: %s: SEO plugin name. */
-					echo esc_html( sprintf( __( '%s is active, so Rackora leaves canonical, Open Graph, JSON-LD and robots rules to it. Verification codes and analytics still apply.', 'rackora' ), $seo_plugin ) );
+					echo esc_html( sprintf( __( '%s is active, so Rackora leaves canonical, Open Graph, JSON-LD, robots rules and third-party analytics to it. Verification codes still apply.', 'rackora' ), $seo_plugin ) );
 					?>
 				</p>
 			</div>

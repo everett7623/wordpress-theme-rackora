@@ -111,3 +111,46 @@ function rackora_disable_emoji() {
 	add_filter( 'emoji_svg_url', '__return_false' );
 }
 add_action( 'init', 'rackora_disable_emoji' );
+
+/**
+ * 正文中指向尚未发布文章的站内链接：列表项整项隐藏，行内链接退化为纯文本。
+ *
+ * 适合知识库分批发布；目标文章发布后自动恢复。
+ *
+ * @param string $content 正文 HTML。
+ * @return string
+ */
+function rackora_hide_unpublished_internal_links( $content ) {
+	if ( ! rackora_option( 'hide_draft_links' ) || is_admin() || is_preview() || false === strpos( $content, 'href' ) ) {
+		return $content;
+	}
+
+	$home = preg_quote( untrailingslashit( home_url() ), '#' );
+	$link = '<a\s[^>]*href="(?:' . $home . ')?/([a-z0-9-]+)/?"[^>]*>(.*?)</a>';
+
+	$hidden = static function ( $slug ) {
+		static $cache = array();
+		if ( ! isset( $cache[ $slug ] ) ) {
+			$post           = get_page_by_path( $slug, OBJECT, 'post' );
+			$cache[ $slug ] = $post instanceof WP_Post && 'publish' !== $post->post_status;
+		}
+		return $cache[ $slug ];
+	};
+
+	$content = preg_replace_callback(
+		'#<li>\s*' . $link . '[^<]*</li>\s*#is',
+		static function ( $m ) use ( $hidden ) {
+			return $hidden( $m[1] ) ? '' : $m[0];
+		},
+		$content
+	);
+
+	return preg_replace_callback(
+		'#' . $link . '#is',
+		static function ( $m ) use ( $hidden ) {
+			return $hidden( $m[1] ) ? $m[2] : $m[0];
+		},
+		$content
+	);
+}
+add_filter( 'the_content', 'rackora_hide_unpublished_internal_links', 20 );

@@ -2,7 +2,7 @@
 # This file is distributed under the GNU General Public License v3 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Rackora 0.3.0\n"
+"Project-Id-Version: Rackora 0.4.0\n"
 "Report-Msgid-Bugs-To: https://github.com/everett7623/wordpress-theme-rackora/issues\n"
 "PO-Revision-Date: 2026-10-15 13:10+0800\n"
 "Last-Translator: everettlabs\n"
@@ -907,6 +907,30 @@ msgstr "暂不索引归档页"
 #: inc/settings.php:90
 msgid "Outputs noindex,follow on date archives and the Archives page. Posts and categories are not affected."
 msgstr "日期归档与归档页输出 noindex,follow；文章和分类页面不受影响。"
+
+msgid "Do not index author archives"
+msgstr "暂不索引作者归档"
+
+msgid "Outputs noindex,follow on author archives. Useful for single-author sites that do not want a separate author URL indexed."
+msgstr "作者归档输出 noindex,follow。单作者站点通常不需要单独收录作者页。"
+
+msgid "Hide links to unpublished posts"
+msgstr "隐藏指向未发布文章的链接"
+
+msgid "List items pointing at draft or scheduled posts are removed; in-text links become plain text until the target is published."
+msgstr "指向草稿或定时发布文章的列表项会被去掉，正文中的链接退化为纯文本，目标发布后自动恢复。"
+
+msgid "SEO title"
+msgstr "SEO 标题"
+
+msgid "Replaces the document title and Open Graph title. Leave empty to use the post title. Ignored when an SEO plugin is active."
+msgstr "替换文档标题与 Open Graph 标题；留空则使用文章标题。检测到 SEO 插件时忽略。"
+
+msgid "Exclude logged-in users from analytics"
+msgstr "统计排除已登录用户"
+
+msgid "Skip third-party trackers for anyone who is signed in, including administrators."
+msgstr "已登录用户（含管理员）不加载第三方统计脚本。"
 
 #: inc/settings.php:94
 msgid "Google verification code"

@@ -2,7 +2,7 @@
 # This file is distributed under the GNU General Public License v3 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Rackora 0.3.0\n"
+"Project-Id-Version: Rackora 0.4.0\n"
 "Report-Msgid-Bugs-To: https://github.com/everett7623/wordpress-theme-rackora/issues\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Rackora\n"

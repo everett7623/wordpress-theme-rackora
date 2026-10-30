@@ -47,6 +47,11 @@ function rackora_post_meta_fields() {
 			'label' => __( 'Next review due', 'rackora' ),
 			'type'  => 'date',
 		),
+		'_rackora_seo_title'          => array(
+			'label' => __( 'SEO title', 'rackora' ),
+			'type'  => 'text',
+			'help'  => __( 'Replaces the document title and Open Graph title. Leave empty to use the post title. Ignored when an SEO plugin is active.', 'rackora' ),
+		),
 		'_rackora_primary_keyword'    => array(
 			'label' => __( 'Primary keyword', 'rackora' ),
 			'type'  => 'text',

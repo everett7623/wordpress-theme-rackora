@@ -10,7 +10,7 @@
 
 Rackora 是一个面向独立博客、知识库与技术写作的内容优先主题，由 [Halo 版 Rackora](https://github.com/everett7623/halo-theme-rackora) 移植而来。前台保持 Halo 版安静、低图片的出版式版式；底层完全按 WordPress 区块主题（全站编辑）实现：`theme.json` 设计令牌、区块模板与模式、核心区块优先，Rackora 特有的组件以服务端渲染的自定义区块提供。
 
-- 当前版本：`v0.3.0`
+- 当前版本：`v0.4.0`
 - 环境要求：WordPress `>= 6.6`（已在 7.1 测试），PHP `>= 7.4`
 - 更新日志：[CHANGELOG.md](CHANGELOG.md)
 - 许可证：[GPL-3.0-or-later](LICENSE)
@@ -33,8 +33,9 @@ Rackora 是一个面向独立博客、知识库与技术写作的内容优先主
 - 文档模板：目录常驻侧栏，同分类文章列表高亮当前篇。
 - 归档时间线、全部分类、全部标签、友情链接与关于页模板；日期归档同样使用时间线。
 - 浅色、深色与跟随系统三种配色，访客的选择保存在浏览器中且首屏无闪烁；打印样式与减少动态效果。
-- 页面级 SEO：自指 canonical（含列表分页）、`rel="prev/next"`、Open Graph、Twitter Card，以及 WebSite（含 SearchAction）、Organization、BlogPosting / TechArticle、BreadcrumbList、WebPage / AboutPage 结构化数据；检测到 SEO 插件时自动让位。
-- 文章目录服务端渲染大纲；单篇 / 分类 / 标签可控制索引；阅读数可限「仅文章」并带服务端限流。
+- 页面级 SEO：`<meta name="description">`、自指 canonical（含列表分页）、`rel="prev/next"`、Open Graph、Twitter Card，以及 WebSite（含 SearchAction）、Organization、BlogPosting / TechArticle、BreadcrumbList、WebPage / AboutPage 结构化数据；检测到 SEO 插件时自动让位。
+- 文章可填 SEO 标题；搜索页、作者归档、标签页与日期归档可 noindex；`robots.txt` 屏蔽站内搜索；正文指向未发布文章的链接会隐藏或退化为纯文本。
+- 文章目录服务端渲染大纲；阅读数可限「仅文章」并带服务端限流。
 - 可选的 GA4、Microsoft Clarity、百度统计，ICP / 公网安备信息与带披露的推广位，默认均不启用或不显示。
 - 自带简体中文翻译，界面语言跟随「设置 → 常规 → 站点语言」。
 
@@ -109,9 +110,9 @@ Halo 版的 9 组主题设置在 WordPress 中分散到了各自的原生位置�
 
 ## SEO 与插件
 
-Rackora 自行输出 canonical、Open Graph、Twitter Card、结构化数据与 robots 规则。检测到 Yoast SEO、Rank Math、All in One SEO、SEOPress、The SEO Framework、Slim SEO 或 Squirrly SEO 时，这些输出会自动停用以免重复，站点验证与访问分析设置仍然生效。也可以在「外观 → Rackora」中手动关闭，或通过 `rackora_seo_active` 过滤器控制。
+Rackora 自行输出 `<meta name="description">`、canonical、Open Graph、Twitter Card、结构化数据与 robots 规则。检测到 Yoast SEO、Rank Math、All in One SEO、SEOPress、The SEO Framework、Slim SEO 或 Squirrly SEO 时，这些输出以及主题自带的第三方统计会自动停用以免重复；站点验证码仍然生效。也可以在「外观 → Rackora」中手动关闭，或通过 `rackora_seo_active` / `rackora_analytics_active` 过滤器控制。
 
-标签页与日期归档默认输出 `noindex,follow`，可在设置中关闭；单个标签可在编辑页单独允许或禁止索引。站点地图使用 WordPress 自带的 `wp-sitemap.xml`。
+标签页、日期归档、作者归档与搜索结果默认输出 `noindex,follow`（作者归档可在设置中关闭）；单个标签 / 分类可在编辑页单独允许或禁止索引。`robots.txt` 会屏蔽 `/?s=` 与 `/search/`。站点地图使用 WordPress 自带的 `wp-sitemap.xml`；若使用 SEO 插件，改用该插件的站点地图。
 
 ## 隐私与外部服务
 
@@ -119,7 +120,7 @@ Rackora 自行输出 canonical、Open Graph、Twitter Card、结构化数据与 
 
 | 能力              | 设置位置         | 外部地址                   | 默认 |
 | ----------------- | ---------------- | -------------------------- | ---- |
-| GA4               | 外观 → Rackora   | `www.googletagmanager.com` | 关闭 |
+| GA4               | 外观 → Rackora   | `www.googletagmanager.com` | 关闭；SEO 插件激活时自动让位；默不统计登录用户 |
 | Microsoft Clarity | 外观 → Rackora   | `www.clarity.ms`           | 关闭 |
 | 百度统计          | 外观 → Rackora   | `hm.baidu.com`             | 关闭 |
 | 分享按钮          | 分享栏区块       | 点击后跳转到对应平台       | 显示 |

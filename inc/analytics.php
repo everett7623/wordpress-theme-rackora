@@ -8,10 +8,35 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
+ * 主题统计脚本是否应输出。
+ *
+ * @return bool
+ */
+function rackora_analytics_active() {
+	$active = (bool) rackora_option( 'analytics_enabled' ) && ! is_preview();
+
+	if ( $active && rackora_option( 'analytics_exclude_logged_in' ) && is_user_logged_in() ) {
+		$active = false;
+	}
+
+	if ( $active && '' !== rackora_detected_seo_plugin() ) {
+		// SEO 插件常同时注入 GA4 / 统计；默认让位，可用过滤器强制主题输出。
+		$active = false;
+	}
+
+	/**
+	 * 过滤主题统计脚本开关。
+	 *
+	 * @param bool $active 是否输出第三方统计。
+	 */
+	return (bool) apply_filters( 'rackora_analytics_active', $active );
+}
+
+/**
  * 输出已启用且 ID 有效的统计脚本。
  */
 function rackora_render_analytics() {
-	if ( ! rackora_option( 'analytics_enabled' ) || is_preview() ) {
+	if ( ! rackora_analytics_active() ) {
 		return;
 	}
 
