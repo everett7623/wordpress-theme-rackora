@@ -2,6 +2,12 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。GitHub Release 的说明与此文件对应章节保持一致。
 
+## [0.4.1] - 2026-10-30
+
+### 变更
+
+- 重制主题封面 `screenshot.png`（1200×900）：按品牌色与正文字体绘制标准 WordPress 主题缩略图
+
 ## [0.4.0] - 2026-10-30
 
 只收各站点都适用的缺口：无 SEO 插件时主题应输出完整描述与标题；有插件时 SEO 让位，统计仍由站点自己开关。站点运营向的草稿链隐藏、默认 noindex 作者页、检测到插件就关统计，不进入通用主题。
@@ -57,6 +63,7 @@
 - 首个面向 WordPress 的 Rackora 区块主题发布
 - 全站编辑模板与模式、自定义区块、浅色 / 深色配色、页面级 SEO 与可选分析脚本
 
+[0.4.1]: https://github.com/everett7623/wordpress-theme-rackora/releases/tag/v0.4.1
 [0.4.0]: https://github.com/everett7623/wordpress-theme-rackora/releases/tag/v0.4.0
 [0.3.0]: https://github.com/everett7623/wordpress-theme-rackora/releases/tag/v0.3.0
 [0.2.0]: https://github.com/everett7623/wordpress-theme-rackora/releases/tag/v0.2.0

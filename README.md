@@ -10,7 +10,7 @@
 
 Rackora 是一个面向独立博客、知识库与技术写作的内容优先主题，由 [Halo 版 Rackora](https://github.com/everett7623/halo-theme-rackora) 移植而来。前台保持 Halo 版安静、低图片的出版式版式；底层完全按 WordPress 区块主题（全站编辑）实现：`theme.json` 设计令牌、区块模板与模式、核心区块优先，Rackora 特有的组件以服务端渲染的自定义区块提供。
 
-- 当前版本：`v0.4.0`
+- 当前版本：`v0.4.1`
 - 环境要求：WordPress `>= 6.6`（已在 7.1 测试），PHP `>= 7.4`
 - 更新日志：[CHANGELOG.md](CHANGELOG.md)
 - 许可证：[GPL-3.0-or-later](LICENSE)
