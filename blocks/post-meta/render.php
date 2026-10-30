@@ -70,7 +70,7 @@ $rackora_reading = sprintf( _n( '%s min read', '%s min read', $rackora_minutes, 
 				</span>
 			<?php endif; ?>
 			<span><?php echo esc_html( $rackora_reading ); ?></span>
-			<?php if ( rackora_option( 'views_enabled' ) ) : ?>
+			<?php if ( rackora_views_trackable( $rackora_post->ID ) ) : ?>
 				<span><?php echo esc_html( rackora_views_label( rackora_get_views( $rackora_post->ID ) ) ); ?></span>
 			<?php endif; ?>
 		<?php endif; ?>

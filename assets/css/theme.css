@@ -551,7 +551,7 @@ img {
 	width: 100%;
 }
 
-.article-layout:not(:has(> .article-sidebar)) {
+.article-layout:not(:has(> .article-sidebar > *)) {
 	grid-template-columns: minmax(0, 1fr);
 }
 
@@ -679,6 +679,10 @@ img {
 	display: grid;
 	gap: 28px;
 	min-width: 0;
+}
+
+.article-sidebar:not(:has(> *)) {
+	display: none;
 }
 
 .article-sidebar__section {

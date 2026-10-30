@@ -48,9 +48,16 @@ function rackora_post_meta_fields() {
 			'type'  => 'date',
 		),
 		'_rackora_seo_title'          => array(
-			'label' => __( 'SEO title', 'rackora' ),
-			'type'  => 'text',
-			'help'  => __( 'Replaces the document title and Open Graph title. Leave empty to use the post title. Ignored when an SEO plugin is active.', 'rackora' ),
+			'label'     => __( 'SEO title', 'rackora' ),
+			'type'      => 'text',
+			'postTypes' => array( 'post', 'page' ),
+			'help'      => __( 'Replaces the document title and Open Graph title. Leave empty to use the post title. Ignored when an SEO plugin is active.', 'rackora' ),
+		),
+		'_rackora_seo_description'    => array(
+			'label'     => __( 'SEO description', 'rackora' ),
+			'type'      => 'textarea',
+			'postTypes' => array( 'post', 'page' ),
+			'help'      => __( 'Custom meta description for search engines and social cards. Leave empty to use the excerpt.', 'rackora' ),
 		),
 		'_rackora_primary_keyword'    => array(
 			'label' => __( 'Primary keyword', 'rackora' ),
@@ -74,14 +81,15 @@ function rackora_post_meta_fields() {
 			'help'  => __( 'Only fill in an ownership that has been reviewed against your content architecture.', 'rackora' ),
 		),
 		'_rackora_robots'             => array(
-			'label'   => __( 'Search indexing', 'rackora' ),
-			'type'    => 'select',
-			'default' => '',
-			'options' => array(
+			'label'     => __( 'Search indexing', 'rackora' ),
+			'type'      => 'select',
+			'postTypes' => array( 'post', 'page' ),
+			'default'   => '',
+			'options'   => array(
 				''        => __( 'Allow indexing', 'rackora' ),
 				'noindex' => __( 'Do not index this post', 'rackora' ),
 			),
-			'help'    => __( 'Outputs noindex,follow when search engines should skip this post.', 'rackora' ),
+			'help'      => __( 'Outputs noindex,follow when search engines should skip this post.', 'rackora' ),
 		),
 	);
 }
@@ -96,7 +104,12 @@ function rackora_post_meta_fields() {
 function rackora_sanitize_post_meta( $value, $meta_key ) {
 	$fields = rackora_post_meta_fields();
 	$field  = isset( $fields[ $meta_key ] ) ? $fields[ $meta_key ] : array( 'type' => 'text' );
-	$value  = sanitize_text_field( (string) $value );
+
+	if ( 'textarea' === $field['type'] ) {
+		return sanitize_textarea_field( (string) $value );
+	}
+
+	$value = sanitize_text_field( (string) $value );
 
 	switch ( $field['type'] ) {
 		case 'select':
@@ -111,24 +124,27 @@ function rackora_sanitize_post_meta( $value, $meta_key ) {
 }
 
 /**
- * 注册文章、标签与分类元数据。
+ * 注册文章、页面、标签与分类元数据。
  */
 function rackora_register_meta() {
 	foreach ( rackora_post_meta_fields() as $key => $field ) {
-		register_post_meta(
-			'post',
-			$key,
-			array(
-				'type'              => 'string',
-				'single'            => true,
-				'default'           => (string) ( $field['default'] ?? '' ),
-				'show_in_rest'      => true,
-				'sanitize_callback' => 'rackora_sanitize_post_meta',
-				'auth_callback'     => static function ( $allowed, $meta_key, $post_id ) {
-					return current_user_can( 'edit_post', $post_id );
-				},
-			)
-		);
+		$post_types = isset( $field['postTypes'] ) && is_array( $field['postTypes'] ) ? $field['postTypes'] : array( 'post' );
+		foreach ( $post_types as $post_type ) {
+			register_post_meta(
+				$post_type,
+				$key,
+				array(
+					'type'              => 'string',
+					'single'            => true,
+					'default'           => (string) ( $field['default'] ?? '' ),
+					'show_in_rest'      => true,
+					'sanitize_callback' => 'rackora_sanitize_post_meta',
+					'auth_callback'     => static function ( $allowed, $meta_key, $post_id ) {
+						return current_user_can( 'edit_post', $post_id );
+					},
+				)
+			);
+		}
 	}
 
 	$index_policy_args = array(

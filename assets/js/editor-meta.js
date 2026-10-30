@@ -10,39 +10,52 @@
 	if (!PluginDocumentSettingPanel) return;
 
 	const { createElement: el } = wp.element;
-	const { TextControl, SelectControl } = wp.components;
+	const { TextControl, TextareaControl, SelectControl } = wp.components;
 	const { useSelect } = wp.data;
 	const { useEntityProp } = wp.coreData;
 
-	function MetaFields() {
-		const [meta, setMeta] = useEntityProp("postType", "post", "meta");
+	function MetaFields({ postType }) {
+		const [meta, setMeta] = useEntityProp("postType", postType, "meta");
 		if (!meta) return null;
 
-		return Object.entries(data.postMeta).map(([key, field]) => {
-			const common = {
-				key,
-				label: field.label,
-				help: field.help,
-				value: meta[key] ?? "",
-				onChange: (value) => setMeta({ ...meta, [key]: value }),
-				__nextHasNoMarginBottom: true,
-				__next40pxDefaultSize: true,
-			};
+		return Object.entries(data.postMeta)
+			.filter(([, field]) => (field.postTypes ? field.postTypes.includes(postType) : postType === "post"))
+			.map(([key, field]) => {
+				const common = {
+					key,
+					label: field.label,
+					help: field.help,
+					value: meta[key] ?? "",
+					onChange: (value) => setMeta({ ...meta, [key]: value }),
+					__nextHasNoMarginBottom: true,
+				};
 
-			if (field.type === "select") {
-				return el(SelectControl, {
+				if (field.type === "textarea") {
+					return el(TextareaControl, { ...common, rows: 3 });
+				}
+				if (field.type === "select") {
+					return el(SelectControl, {
+						...common,
+						__next40pxDefaultSize: true,
+						options: Object.entries(field.options).map(([value, label]) => ({ value, label })),
+					});
+				}
+				return el(TextControl, {
 					...common,
-					options: Object.entries(field.options).map(([value, label]) => ({ value, label })),
+					__next40pxDefaultSize: true,
+					type: field.type === "date" || field.type === "number" ? field.type : "text",
 				});
-			}
-			return el(TextControl, { ...common, type: field.type === "date" || field.type === "number" ? field.type : "text" });
-		});
+			});
 	}
 
 	function RackoraMetaPanel() {
 		const postType = useSelect((select) => select("core/editor")?.getCurrentPostType?.(), []);
-		if (postType !== "post") return null;
-		return el(PluginDocumentSettingPanel, { name: "rackora-post-meta", title: data.i18n.metaPanel }, el(MetaFields));
+		if (postType !== "post" && postType !== "page") return null;
+		return el(
+			PluginDocumentSettingPanel,
+			{ name: "rackora-post-meta", title: data.i18n.metaPanel },
+			el(MetaFields, { postType })
+		);
 	}
 
 	wp.plugins.registerPlugin("rackora-post-meta", { render: RackoraMetaPanel, icon: null });

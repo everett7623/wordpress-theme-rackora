@@ -390,6 +390,8 @@ function rackora_sanitize_settings( $input ) {
 		}
 	}
 
+	delete_transient( 'rackora_total_views' );
+
 	return $clean;
 }
 

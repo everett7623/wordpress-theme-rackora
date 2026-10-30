@@ -14,6 +14,10 @@ if ( ! $rackora_post_id ) {
 	return;
 }
 
+if ( ! rackora_is_editor_preview() && (int) get_comments_number( $rackora_post_id ) < 1 ) {
+	return;
+}
+
 $rackora_comments = get_comments(
 	array(
 		'post_id' => $rackora_post_id,
@@ -22,6 +26,10 @@ $rackora_comments = get_comments(
 		'number'  => max( 1, (int) $attributes['count'] ),
 	)
 );
+
+if ( ! $rackora_comments && ! rackora_is_editor_preview() ) {
+	return;
+}
 ?>
 <section <?php echo get_block_wrapper_attributes( array( 'class' => 'article-sidebar__section' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 	<header class="article-sidebar__heading"><h2><?php esc_html_e( 'Recent comments', 'rackora' ); ?></h2></header>

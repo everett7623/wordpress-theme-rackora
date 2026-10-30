@@ -55,6 +55,11 @@ function rackora_document_title_parts( $parts ) {
 		}
 	}
 
+	if ( rackora_is_template_page( 'archives' ) && rackora_current_page() > 1 && empty( $parts['page'] ) ) {
+		/* translators: %s: page number. */
+		$parts['page'] = sprintf( __( 'Page %s', 'rackora' ), number_format_i18n( rackora_current_page() ) );
+	}
+
 	if ( isset( $parts['page'] ) ) {
 		$page = $parts['page'];
 		unset( $parts['page'] );
@@ -98,10 +103,17 @@ function rackora_organization_logo_url() {
 /**
  * 纯文本摘要，用于 meta description 与结构化数据。
  *
- * @param WP_Post $post 文章。
+ * 优先读取单篇「SEO 描述」元数据，未填写时回退到摘要。
+ *
+ * @param WP_Post $post 文章或页面。
  * @return string
  */
 function rackora_post_description( $post ) {
+	$custom = rackora_singular_seo_description( $post->ID );
+	if ( '' !== $custom ) {
+		return $custom;
+	}
+
 	$text = has_excerpt( $post ) ? $post->post_excerpt : get_the_excerpt( $post );
 	$text = trim( (string) preg_replace( '/\s+/u', ' ', wp_strip_all_tags( $text ) ) );
 	return html_entity_decode( $text, ENT_QUOTES, get_bloginfo( 'charset' ) );
@@ -118,6 +130,36 @@ function rackora_singular_seo_title( $post_id ) {
 }
 
 /**
+ * 单篇 SEO 描述（编辑器侧栏），未填写时为空字符串。
+ *
+ * @param int $post_id 内容 ID。
+ * @return string
+ */
+function rackora_singular_seo_description( $post_id ) {
+	$text = (string) get_post_meta( (int) $post_id, '_rackora_seo_description', true );
+	$text = trim( (string) preg_replace( '/\s+/u', ' ', wp_strip_all_tags( $text ) ) );
+	return html_entity_decode( $text, ENT_QUOTES, get_bloginfo( 'charset' ) );
+}
+
+/**
+ * 读取特色图片的替代文本，未填写时回退到页面标题。
+ *
+ * @param WP_Post $post           文章或页面。
+ * @param string  $fallback_title 回退标题。
+ * @return string
+ */
+function rackora_post_thumbnail_alt( $post, $fallback_title ) {
+	$thumb_id = (int) get_post_thumbnail_id( $post );
+	if ( $thumb_id > 0 ) {
+		$alt = trim( (string) get_post_meta( $thumb_id, '_wp_attachment_image_alt', true ) );
+		if ( '' !== $alt ) {
+			return $alt;
+		}
+	}
+	return $fallback_title;
+}
+
+/**
  * Open Graph locale：将 WordPress 的 zh_CN 转为 zh-CN。
  *
  * @return string
@@ -129,16 +171,18 @@ function rackora_og_locale() {
 /**
  * 收集当前路由的 SEO 信息。
  *
- * @return array{base: string, url: string, title: string, description: string, image: string, type: string}
+ * @return array{base: string, url: string, title: string, description: string, image: string, image_alt: string, type: string}
  */
 function rackora_seo_context() {
 	$paged   = rackora_current_page();
+	$title   = wp_get_document_title();
 	$context = array(
 		'base'        => '',
 		'url'         => '',
-		'title'       => wp_get_document_title(),
+		'title'       => $title,
 		'description' => rackora_site_description(),
 		'image'       => rackora_custom_logo_url(),
+		'image_alt'   => get_bloginfo( 'name', 'display' ),
 		'type'        => 'website',
 	);
 
@@ -154,7 +198,8 @@ function rackora_seo_context() {
 				$context['description'] = rackora_post_description( $post );
 				$thumbnail              = get_the_post_thumbnail_url( $post, 'full' );
 				if ( $thumbnail ) {
-					$context['image'] = $thumbnail;
+					$context['image']     = $thumbnail;
+					$context['image_alt'] = rackora_post_thumbnail_alt( $post, $context['title'] );
 				}
 			}
 		}
@@ -170,7 +215,8 @@ function rackora_seo_context() {
 
 		$thumbnail = get_the_post_thumbnail_url( $post, 'full' );
 		if ( $thumbnail ) {
-			$context['image'] = $thumbnail;
+			$context['image']     = $thumbnail;
+			$context['image_alt'] = rackora_post_thumbnail_alt( $post, $context['title'] );
 		}
 
 		// 归档、分类索引等页面模板带有自己的分页。
@@ -187,10 +233,11 @@ function rackora_seo_context() {
 			$context['description'] = $description;
 		}
 	} elseif ( is_author() ) {
-		$author          = get_queried_object();
-		$context['base'] = get_author_posts_url( $author->ID );
-		$context['type'] = 'profile';
-		$context['image'] = get_avatar_url( $author->ID, array( 'size' => 512 ) );
+		$author               = get_queried_object();
+		$context['base']      = get_author_posts_url( $author->ID );
+		$context['type']      = 'profile';
+		$context['image']     = get_avatar_url( $author->ID, array( 'size' => 512 ) );
+		$context['image_alt'] = (string) $author->display_name;
 
 		$bio = trim( (string) get_the_author_meta( 'description', $author->ID ) );
 		if ( '' !== $bio ) {
@@ -254,16 +301,28 @@ function rackora_render_seo_head() {
 		array( 'property', 'og:url', $context['url'] ),
 		array( 'property', 'og:description', $context['description'] ),
 		array( 'property', 'og:image', $context['image'] ),
+		array( 'property', 'og:image:alt', '' !== $context['image'] ? $context['image_alt'] : '' ),
 		array( 'name', 'twitter:card', '' !== $context['image'] ? 'summary_large_image' : 'summary' ),
 		array( 'name', 'twitter:title', $context['title'] ),
 		array( 'name', 'twitter:description', $context['description'] ),
 		array( 'name', 'twitter:image', $context['image'] ),
+		array( 'name', 'twitter:image:alt', '' !== $context['image'] ? $context['image_alt'] : '' ),
 	);
 
 	if ( is_singular( 'post' ) ) {
-		$post   = get_queried_object();
-		$tags[] = array( 'property', 'article:published_time', get_post_time( 'c', true, $post ) );
-		$tags[] = array( 'property', 'article:modified_time', rackora_is_modified( $post ) ? get_post_modified_time( 'c', true, $post ) : get_post_time( 'c', true, $post ) );
+		$post     = get_queried_object();
+		$category = rackora_primary_category( $post->ID );
+		$tags[]   = array( 'property', 'article:published_time', get_post_time( 'c', true, $post ) );
+		$tags[]   = array( 'property', 'article:modified_time', rackora_is_modified( $post ) ? get_post_modified_time( 'c', true, $post ) : get_post_time( 'c', true, $post ) );
+		if ( $category ) {
+			$tags[] = array( 'property', 'article:section', $category->name );
+		}
+		$post_tags = get_the_tags( $post->ID );
+		if ( is_array( $post_tags ) ) {
+			foreach ( $post_tags as $post_tag ) {
+				$tags[] = array( 'property', 'article:tag', $post_tag->name );
+			}
+		}
 	}
 
 	foreach ( $tags as $tag ) {
@@ -374,8 +433,18 @@ function rackora_render_json_ld() {
 		$post      = get_queried_object();
 		$url       = (string) get_permalink( $post );
 		$thumbnail = get_the_post_thumbnail_url( $post, 'full' );
+		$category  = rackora_primary_category( $post->ID );
+		$words     = rackora_word_count( $post );
+		$post_tags = get_the_tags( $post->ID );
+		$keywords  = is_array( $post_tags ) ? wp_list_pluck( $post_tags, 'name' ) : array();
+		if ( ! $keywords ) {
+			$primary_kw = trim( (string) get_post_meta( $post->ID, '_rackora_primary_keyword', true ) );
+			if ( '' !== $primary_kw ) {
+				$keywords = array( $primary_kw );
+			}
+		}
 
-		$graphs[] = array(
+		$article = array(
 			'@context'         => 'https://schema.org',
 			'@type'            => 'single-docs' === get_page_template_slug( $post ) ? 'TechArticle' : 'BlogPosting',
 			'@id'              => $url,
@@ -403,11 +472,20 @@ function rackora_render_json_ld() {
 			),
 			'image'            => $thumbnail ? $thumbnail : rackora_organization_logo_url(),
 		);
+		if ( $words > 0 ) {
+			$article['wordCount'] = $words;
+		}
+		if ( $category ) {
+			$article['articleSection'] = $category->name;
+		}
+		if ( $keywords ) {
+			$article['keywords'] = array_values( $keywords );
+		}
+		$graphs[] = $article;
 
 		$crumbs   = array(
 			array( get_bloginfo( 'name' ), $site_url ),
 		);
-		$category = rackora_primary_category( $post->ID );
 		if ( $category ) {
 			$crumbs[] = array( $category->name, get_category_link( $category ) );
 		}
@@ -449,6 +527,69 @@ function rackora_render_json_ld() {
 				'name'  => $org_name,
 			),
 		);
+	} elseif ( is_category() || is_tag() || is_tax() ) {
+		$term = get_queried_object();
+		$link = get_term_link( $term );
+		if ( ! is_wp_error( $link ) ) {
+			$term_desc = trim( wp_strip_all_tags( term_description( $term ) ) );
+			$graphs[]  = array(
+				'@context'    => 'https://schema.org',
+				'@type'       => 'CollectionPage',
+				'@id'         => $link,
+				'url'         => $link,
+				'name'        => single_term_title( '', false ),
+				'description' => '' !== $term_desc ? $term_desc : rackora_site_description(),
+				'inLanguage'  => $language,
+				'isPartOf'    => array(
+					'@type' => 'WebSite',
+					'name'  => get_bloginfo( 'name' ),
+					'url'   => $site_url,
+				),
+			);
+
+			$crumbs    = array( array( get_bloginfo( 'name' ), $site_url ) );
+			$index_tpl = is_category() ? 'categories' : ( is_tag() ? 'tags' : '' );
+			$index_id  = '' !== $index_tpl ? rackora_template_page_id( $index_tpl ) : 0;
+			if ( $index_id ) {
+				$crumbs[] = array( wp_strip_all_tags( get_the_title( $index_id ) ), (string) get_permalink( $index_id ) );
+			}
+			$crumbs[] = array( single_term_title( '', false ), $link );
+
+			$items = array();
+			foreach ( $crumbs as $index => $crumb ) {
+				$items[] = array(
+					'@type'    => 'ListItem',
+					'position' => $index + 1,
+					'name'     => $crumb[0],
+					'item'     => $crumb[1],
+				);
+			}
+			$graphs[] = array(
+				'@context'        => 'https://schema.org',
+				'@type'           => 'BreadcrumbList',
+				'itemListElement' => $items,
+			);
+		}
+	} elseif ( is_author() ) {
+		$author = get_queried_object();
+		$url    = get_author_posts_url( $author->ID );
+		$bio    = trim( (string) get_the_author_meta( 'description', $author->ID ) );
+
+		$graphs[] = array(
+			'@context'    => 'https://schema.org',
+			'@type'       => 'ProfilePage',
+			'@id'         => $url,
+			'url'         => $url,
+			'name'        => (string) $author->display_name,
+			'description' => '' !== $bio ? $bio : rackora_site_description(),
+			'inLanguage'  => $language,
+			'mainEntity'  => array(
+				'@type' => 'Person',
+				'name'  => (string) $author->display_name,
+				'url'   => $url,
+				'image' => get_avatar_url( $author->ID, array( 'size' => 512 ) ),
+			),
+		);
 	}
 
 	foreach ( $graphs as $graph ) {
@@ -486,8 +627,8 @@ function rackora_should_noindex() {
 		return true;
 	}
 
-	if ( is_singular( 'post' ) ) {
-		return 'noindex' === (string) get_post_meta( get_queried_object_id(), '_rackora_robots', true );
+	if ( is_singular( array( 'post', 'page' ) ) && 'noindex' === (string) get_post_meta( get_queried_object_id(), '_rackora_robots', true ) ) {
+		return true;
 	}
 
 	if ( is_tag() || is_category() ) {

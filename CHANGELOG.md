@@ -2,11 +2,36 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。GitHub Release 的说明与此文件对应章节保持一致。
 
+## [0.5.0] - 2026-10-30
+
+### 修复
+
+- 修复文章无评论时最新评论区块在侧栏仍渲染空白占位，且当侧栏无内容时自动折叠单栏布局
+- 修复文章卡片与文章元信息在「仅统计文章阅读数」开启后仍对页面渲染阅读数
+- 修复站点总阅读数未过滤已发布状态以及未遵从「仅统计文章阅读数」过滤条件，并在设置保存时及时清理总阅读数缓存
+- 修复归档时间线年份标题在含 WordPress 管理栏时吸顶偏移重叠（补齐 `--rack-admin-bar`）
+- 修复多页页面在静态首页模式下分页检测回退及归档模板多页标题分页后缀缺失
+
+### 性能
+
+- 优化页面模板映射为单次批量预解析并接入 Transient 缓存与文章保存/删除联动失效机制
+- 优化字数估算与阅读时长计算，避免重复正则剥离正文字符
+- 优化文章大纲解析与正文标题锚点注入，在正文不含标题标签时直接短路跳过正则匹配
+- 优化默认 Logo 回退图片输出属性，增加 `fetchpriority="high"` 提高 LCP 得分
+- 优化目录滚动监听逻辑，缓存页头高度避免每帧重复触发 `getComputedStyle` 样式重排
+
+### 功能
+
+- 文章与页面侧栏新增「SEO 描述」（`_rackora_seo_description`）自定义元字段，并在主题 SEO 输出中优先使用
+- 独立页面现支持配置「SEO 标题」、「SEO 描述」与「搜索索引策略」（noindex）
+- 结构化数据增强：文章输出 `wordCount`、`articleSection` 与 `keywords`；分类/标签归档输出 `CollectionPage` + `BreadcrumbList`；作者页输出 `ProfilePage`
+- 社交卡片增强：自动补齐 `og:image:alt` 与 `twitter:image:alt`；单篇文章输出 `article:section` 与 `article:tag`
+
 ## [0.4.1] - 2026-10-30
 
 ### 变更
 
-- 重制主题封面 `screenshot.png`（1200×900）：按品牌色与正文字体绘制标准 WordPress 主题缩略图
+- 对齐 Halo 版主题封面与品牌图标：更新 `screenshot.png`（1200×900）、`docs/marketplace-cover.png` 与多尺寸品牌 Logo（`docs/rackora-logo-*.png`、`docs/rackora-mark.svg`）
 
 ## [0.4.0] - 2026-10-30
 
@@ -63,6 +88,7 @@
 - 首个面向 WordPress 的 Rackora 区块主题发布
 - 全站编辑模板与模式、自定义区块、浅色 / 深色配色、页面级 SEO 与可选分析脚本
 
+[0.5.0]: https://github.com/everett7623/wordpress-theme-rackora/releases/tag/v0.5.0
 [0.4.1]: https://github.com/everett7623/wordpress-theme-rackora/releases/tag/v0.4.1
 [0.4.0]: https://github.com/everett7623/wordpress-theme-rackora/releases/tag/v0.4.0
 [0.3.0]: https://github.com/everett7623/wordpress-theme-rackora/releases/tag/v0.3.0

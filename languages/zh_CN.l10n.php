@@ -8,6 +8,9 @@ return array(
   'po-revision-date' => '2026-10-15 13:10+0800',
   'messages' => 
   array(
+    'Custom meta description for search engines and social cards. Leave empty to use the excerpt.' => '用于搜索引擎与社交卡片的自定义元描述；留空则使用文章摘要。',
+    'SEO description' => 'SEO 描述',
+    'Page %s' => '第 %s 页',
     'Rackora' => 'Rackora',
     'https://github.com/everett7623/wordpress-theme-rackora' => 'https://github.com/everett7623/wordpress-theme-rackora',
     'A minimal, content-first block theme for independent publishing, knowledge bases, and technical writing. Quiet low-image layouts, light and dark color schemes, table of contents, code highlighting, and complete page-level SEO output.' => '面向独立出版、知识库与技术写作的极简、内容优先区块主题：安静的低图片版式、明暗配色、文章目录、代码高亮与完整的页面级 SEO 输出。',

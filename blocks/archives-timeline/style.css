@@ -12,7 +12,7 @@
 
 .timeline-year > h2 {
 	position: sticky;
-	top: calc(var(--rack-header-height) + 20px);
+	top: calc(var(--rack-header-height) + var(--rack-admin-bar) + 20px);
 	align-self: start;
 	margin: 0;
 	color: var(--rack-accent);

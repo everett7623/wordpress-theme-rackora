@@ -1652,3 +1652,28 @@ msgstr ""
 msgctxt "Template part name"
 msgid "Footer"
 msgstr ""
+
+#. translators: %s: page number.
+#: inc/seo.php:59
+msgid "Page %s"
+msgstr ""
+
+#: inc/meta.php:57
+msgid "SEO description"
+msgstr ""
+
+#: inc/meta.php:60
+msgid "Custom meta description for search engines and social cards. Leave empty to use the excerpt."
+msgstr ""
+
+#: inc/meta.php:84
+msgid "Search indexing"
+msgstr ""
+
+#: inc/meta.php:90
+msgid "Do not index this post"
+msgstr ""
+
+#: inc/meta.php:92
+msgid "Outputs noindex,follow when search engines should skip this post."
+msgstr ""

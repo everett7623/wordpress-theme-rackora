@@ -54,8 +54,23 @@ function rackora_total_views() {
 
 	if ( false === $total ) {
 		global $wpdb;
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery -- 聚合查询，结果写入 transient 缓存。
-		$total = (int) $wpdb->get_var( $wpdb->prepare( "SELECT SUM(meta_value) FROM {$wpdb->postmeta} WHERE meta_key = %s", '_rackora_views' ) );
+		if ( rackora_option( 'views_posts_only' ) ) {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery -- 聚合查询，结果写入 transient 缓存。
+			$total = (int) $wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT SUM(pm.meta_value) FROM {$wpdb->postmeta} pm INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id WHERE pm.meta_key = %s AND p.post_status = 'publish' AND p.post_type = 'post'",
+					'_rackora_views'
+				)
+			);
+		} else {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery -- 聚合查询，结果写入 transient 缓存。
+			$total = (int) $wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT SUM(pm.meta_value) FROM {$wpdb->postmeta} pm INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id WHERE pm.meta_key = %s AND p.post_status = 'publish'",
+					'_rackora_views'
+				)
+			);
+		}
 		set_transient( 'rackora_total_views', $total, HOUR_IN_SECONDS );
 	}
 

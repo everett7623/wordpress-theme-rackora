@@ -1656,3 +1656,28 @@ msgstr "页头"
 msgctxt "Template part name"
 msgid "Footer"
 msgstr "页脚"
+
+#. translators: %s: page number.
+#: inc/seo.php:59
+msgid "Page %s"
+msgstr "第 %s 页"
+
+#: inc/meta.php:57
+msgid "SEO description"
+msgstr "SEO 描述"
+
+#: inc/meta.php:60
+msgid "Custom meta description for search engines and social cards. Leave empty to use the excerpt."
+msgstr "用于搜索引擎与社交卡片的自定义元描述；留空则使用文章摘要。"
+
+#: inc/meta.php:84
+msgid "Search indexing"
+msgstr "搜索索引策略"
+
+#: inc/meta.php:90
+msgid "Do not index this post"
+msgstr "暂不索引此内容"
+
+#: inc/meta.php:92
+msgid "Outputs noindex,follow when search engines should skip this post."
+msgstr "搜索引擎应跳过此内容时输出 noindex,follow。"

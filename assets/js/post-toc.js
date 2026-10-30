@@ -126,10 +126,12 @@ export function initTableOfContents(content) {
 	initMobileToc(section, navigation);
 
 	let scheduled = false;
+	const readHeaderHeight = () =>
+		Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--rack-header-height")) || 62;
+	let header = readHeaderHeight();
+
 	const update = () => {
 		scheduled = false;
-		const style = getComputedStyle(document.documentElement);
-		const header = Number.parseFloat(style.getPropertyValue("--rack-header-height")) || 62;
 		const marker = Math.max(header + 24, Math.min(window.innerHeight * 0.48, 520));
 		let active = headings[0];
 		for (const heading of headings) {
@@ -146,9 +148,13 @@ export function initTableOfContents(content) {
 		scheduled = true;
 		window.requestAnimationFrame(update);
 	};
+	const onResize = () => {
+		header = readHeaderHeight();
+		schedule();
+	};
 
 	schedule();
 	window.addEventListener("scroll", schedule, { passive: true });
-	window.addEventListener("resize", schedule);
+	window.addEventListener("resize", onResize);
 	window.addEventListener("hashchange", schedule);
 }

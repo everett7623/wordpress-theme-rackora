@@ -51,7 +51,7 @@ $rackora_classes  = 'post-entry' . ( $rackora_pinned ? ' is-pinned' : '' ) . ( $
 		<h2 class="post-entry__title"><a href="<?php echo esc_url( $rackora_link ); ?>"><?php echo wp_kses_post( $rackora_title ); ?></a></h2>
 		<p class="post-entry__excerpt"><?php echo esc_html( wp_strip_all_tags( get_the_excerpt( $rackora_post ) ) ); ?></p>
 		<div class="post-entry__meta">
-			<?php if ( rackora_option( 'views_enabled' ) ) : ?>
+			<?php if ( rackora_views_trackable( $rackora_post->ID ) ) : ?>
 				<span><?php echo esc_html( rackora_views_label( rackora_get_views( $rackora_post->ID ) ) ); ?></span>
 			<?php endif; ?>
 			<span><?php echo esc_html( rackora_comments_label( (int) get_comments_number( $rackora_post ) ) ); ?></span>

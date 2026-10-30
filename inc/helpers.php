@@ -222,6 +222,99 @@ function rackora_site_logo_url() {
 }
 
 /**
+ * 批量解析并缓存全部 Rackora 页面模板对应的页面 ID。
+ *
+ * 优先匹配手动选择了 page-{$template} 模板的已发布页面，其次匹配别名为 $template 的顶层页面。
+ *
+ * @param bool $reset 是否清空静态与 transient 缓存。
+ * @return array<string, int>
+ */
+function rackora_template_page_map( $reset = false ) {
+	static $map = null;
+
+	if ( $reset ) {
+		$map = null;
+		delete_transient( 'rackora_template_pages' );
+		return array();
+	}
+
+	if ( is_array( $map ) ) {
+		return $map;
+	}
+
+	$cached = get_transient( 'rackora_template_pages' );
+	if ( is_array( $cached ) ) {
+		$map = $cached;
+		return $map;
+	}
+
+	$templates   = array( 'archives', 'categories', 'tags', 'links', 'about' );
+	$map         = array_fill_keys( $templates, 0 );
+	$meta_values = array_map(
+		static function ( $slug ) {
+			return 'page-' . $slug;
+		},
+		$templates
+	);
+
+	$by_template = get_posts(
+		array(
+			'post_type'        => 'page',
+			'post_status'      => 'publish',
+			'posts_per_page'   => 20,
+			'no_found_rows'    => true,
+			'suppress_filters' => false,
+			'meta_query'       => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+				array(
+					'key'     => '_wp_page_template',
+					'value'   => $meta_values,
+					'compare' => 'IN',
+				),
+			),
+		)
+	);
+
+	foreach ( $by_template as $page ) {
+		$slug = preg_replace( '/^page-/', '', (string) get_page_template_slug( $page->ID ) );
+		if ( isset( $map[ $slug ] ) && 0 === $map[ $slug ] ) {
+			$map[ $slug ] = (int) $page->ID;
+		}
+	}
+
+	$missing = array_keys(
+		array_filter(
+			$map,
+			static function ( $id ) {
+				return 0 === $id;
+			}
+		)
+	);
+
+	if ( $missing ) {
+		$by_slug = get_posts(
+			array(
+				'post_type'        => 'page',
+				'post_status'      => 'publish',
+				'posts_per_page'   => count( $missing ),
+				'post_name__in'    => $missing,
+				'post_parent'      => 0,
+				'no_found_rows'    => true,
+				'suppress_filters' => false,
+			)
+		);
+		foreach ( $by_slug as $page ) {
+			$slug = (string) $page->post_name;
+			if ( isset( $map[ $slug ] ) && 0 === $map[ $slug ] ) {
+				$map[ $slug ] = (int) $page->ID;
+			}
+		}
+	}
+
+	set_transient( 'rackora_template_pages', $map, DAY_IN_SECONDS );
+	return $map;
+}
+
+/**
  * 查找使用指定 Rackora 页面模板的已发布页面。
  *
  * 优先匹配手动选择了 page-{$template} 模板的页面，其次匹配别名为 $template 的页面
@@ -231,35 +324,8 @@ function rackora_site_logo_url() {
  * @return int 页面 ID，未找到时为 0。
  */
 function rackora_template_page_id( $template ) {
-	static $cache = array();
-
-	if ( array_key_exists( $template, $cache ) ) {
-		return $cache[ $template ];
-	}
-
-	$ids = get_posts(
-		array(
-			'post_type'        => 'page',
-			'post_status'      => 'publish',
-			'posts_per_page'   => 1,
-			'fields'           => 'ids',
-			'no_found_rows'    => true,
-			'suppress_filters' => false,
-			'meta_key'         => '_wp_page_template', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-			'meta_value'       => 'page-' . $template, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
-		)
-	);
-
-	$page_id = $ids ? (int) $ids[0] : 0;
-	if ( ! $page_id ) {
-		$page = get_page_by_path( $template );
-		if ( $page && 'publish' === $page->post_status ) {
-			$page_id = (int) $page->ID;
-		}
-	}
-
-	$cache[ $template ] = $page_id;
-	return $page_id;
+	$map = rackora_template_page_map();
+	return isset( $map[ $template ] ) ? (int) $map[ $template ] : 0;
 }
 
 /**
@@ -293,7 +359,7 @@ function rackora_is_template_page( $template ) {
  * @return int
  */
 function rackora_current_page() {
-	return max( 1, (int) get_query_var( 'paged' ) );
+	return max( 1, (int) get_query_var( 'paged' ), (int) get_query_var( 'page' ) );
 }
 
 /**
@@ -330,6 +396,30 @@ function rackora_primary_category( $post_id ) {
 }
 
 /**
+ * 去除空白与标签后的正文字符数（请求内按文章 ID 缓存）。
+ *
+ * @param int|WP_Post|null $post 文章。
+ * @return int
+ */
+function rackora_word_count( $post = null ) {
+	$post = get_post( $post );
+	if ( ! $post ) {
+		return 0;
+	}
+
+	static $cache = array();
+	if ( isset( $cache[ $post->ID ] ) ) {
+		return $cache[ $post->ID ];
+	}
+
+	$text = wp_strip_all_tags( strip_shortcodes( $post->post_content ) );
+	$text = (string) preg_replace( '/\s+/u', '', $text );
+
+	$cache[ $post->ID ] = mb_strlen( $text );
+	return $cache[ $post->ID ];
+}
+
+/**
  * 去除空白后按字符数估算阅读时长（分钟）。
  *
  * 中文界面按每分钟 450 字、其他语言按每分钟 900 字符计算，与 Halo 版保持一致。
@@ -343,11 +433,9 @@ function rackora_reading_minutes( $post = null ) {
 		return 0;
 	}
 
-	$text  = wp_strip_all_tags( strip_shortcodes( $post->post_content ) );
-	$text  = (string) preg_replace( '/\s+/u', '', $text );
 	$speed = 0 === strpos( determine_locale(), 'zh' ) ? 450 : 900;
 
-	return max( 1, (int) ceil( mb_strlen( $text ) / $speed ) );
+	return max( 1, (int) ceil( rackora_word_count( $post ) / $speed ) );
 }
 
 /**
@@ -511,8 +599,9 @@ function rackora_post_heading_outline( $post_id = null ) {
 	}
 
 	$post = get_post( $post_id );
-	if ( ! $post ) {
-		$cache[ $post_id ] = array();
+	if ( ! $post || false === stripos( $post->post_content, '<h' ) ) {
+		$cache[ $post_id ]      = array();
+		$GLOBALS[ $global_key ] = array();
 		return array();
 	}
 
@@ -563,7 +652,7 @@ function rackora_apply_heading_outline_ids( $html, $outline ) {
  * @return string
  */
 function rackora_annotate_content_headings( $content ) {
-	if ( ! is_singular( 'post' ) || ! in_the_loop() || ! is_main_query() ) {
+	if ( ! is_singular( 'post' ) || ! in_the_loop() || ! is_main_query() || false === stripos( $content, '<h' ) ) {
 		return $content;
 	}
 

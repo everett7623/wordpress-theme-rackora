@@ -64,13 +64,24 @@ function rackora_custom_logo_fallback( $html ) {
 	}
 
 	return sprintf(
-		'<a href="%1$s" class="custom-logo-link rackora-logo-fallback" rel="home"><img class="custom-logo" src="%2$s" width="64" height="64" alt="%3$s" decoding="async" /></a>',
+		'<a href="%1$s" class="custom-logo-link rackora-logo-fallback" rel="home"><img class="custom-logo" src="%2$s" width="64" height="64" alt="%3$s" decoding="async" fetchpriority="high" /></a>',
 		esc_url( home_url( '/' ) ),
 		esc_url( rackora_mark_url() ),
 		esc_attr( get_bloginfo( 'name', 'display' ) )
 	);
 }
 add_filter( 'get_custom_logo', 'rackora_custom_logo_fallback' );
+
+/**
+ * 页面变更时刷新 Rackora 页面模板的映射缓存。
+ */
+function rackora_flush_template_page_cache() {
+	rackora_template_page_map( true );
+}
+add_action( 'save_post_page', 'rackora_flush_template_page_cache' );
+add_action( 'deleted_post', 'rackora_flush_template_page_cache' );
+add_action( 'trashed_post', 'rackora_flush_template_page_cache' );
+add_action( 'untrashed_post', 'rackora_flush_template_page_cache' );
 
 /**
  * 未设置站点图标时输出主题 SVG 图标作为 favicon。
