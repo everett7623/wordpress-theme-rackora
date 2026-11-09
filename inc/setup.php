@@ -84,6 +84,22 @@ add_action( 'trashed_post', 'rackora_flush_template_page_cache' );
 add_action( 'untrashed_post', 'rackora_flush_template_page_cache' );
 
 /**
+ * 页面模板元数据单独变更时刷新映射缓存。
+ *
+ * @param int|string $meta_id   元数据行 ID。
+ * @param int        $object_id 文章 ID。
+ * @param string     $meta_key  元数据键名。
+ */
+function rackora_flush_template_page_cache_on_meta( $meta_id, $object_id, $meta_key ) {
+	if ( '_wp_page_template' === $meta_key ) {
+		rackora_template_page_map( true );
+	}
+}
+add_action( 'added_post_meta', 'rackora_flush_template_page_cache_on_meta', 10, 3 );
+add_action( 'updated_post_meta', 'rackora_flush_template_page_cache_on_meta', 10, 3 );
+add_action( 'deleted_post_meta', 'rackora_flush_template_page_cache_on_meta', 10, 3 );
+
+/**
  * 未设置站点图标时输出主题 SVG 图标作为 favicon。
  */
 function rackora_favicon_fallback() {

@@ -48,7 +48,7 @@ function rackora_document_title_parts( $parts ) {
 
 	unset( $parts['tagline'] );
 
-	if ( is_singular() ) {
+	if ( is_singular() || ( is_home() && ! is_front_page() ) ) {
 		$seo_title = rackora_singular_seo_title( get_queried_object_id() );
 		if ( '' !== $seo_title ) {
 			$parts['title'] = $seo_title;
@@ -204,7 +204,24 @@ function rackora_seo_context() {
 			}
 		}
 	} elseif ( is_home() ) {
-		$context['base'] = (string) get_permalink( (int) get_option( 'page_for_posts' ) );
+		$posts_page_id   = (int) get_option( 'page_for_posts' );
+		$context['base'] = (string) get_permalink( $posts_page_id );
+		$posts_page      = $posts_page_id > 0 ? get_post( $posts_page_id ) : null;
+		if ( $posts_page instanceof WP_Post ) {
+			$seo_title        = rackora_singular_seo_title( $posts_page->ID );
+			$context['title'] = '' !== $seo_title ? $seo_title : wp_strip_all_tags( get_the_title( $posts_page ) );
+			$custom_desc      = rackora_singular_seo_description( $posts_page->ID );
+			if ( '' !== $custom_desc ) {
+				$context['description'] = $custom_desc;
+			} elseif ( has_excerpt( $posts_page ) ) {
+				$context['description'] = rackora_post_description( $posts_page );
+			}
+			$thumbnail = get_the_post_thumbnail_url( $posts_page, 'full' );
+			if ( $thumbnail ) {
+				$context['image']     = $thumbnail;
+				$context['image_alt'] = rackora_post_thumbnail_alt( $posts_page, $context['title'] );
+			}
+		}
 	} elseif ( is_singular() ) {
 		$post                   = get_queried_object();
 		$context['base']        = (string) wp_get_canonical_url( $post );
@@ -219,8 +236,8 @@ function rackora_seo_context() {
 			$context['image_alt'] = rackora_post_thumbnail_alt( $post, $context['title'] );
 		}
 
-		// 归档、分类索引等页面模板带有自己的分页。
-		if ( is_page() && $paged > 1 ) {
+		// 归档页面模板带有自己的列表分页。
+		if ( rackora_is_template_page( 'archives' ) && $paged > 1 ) {
 			$context['url'] = rackora_paged_url( (string) get_permalink( $post ), $paged );
 		}
 	} elseif ( is_category() || is_tag() || is_tax() ) {
@@ -247,6 +264,12 @@ function rackora_seo_context() {
 		$year  = (int) get_query_var( 'year' );
 		$month = (int) get_query_var( 'monthnum' );
 		$day   = (int) get_query_var( 'day' );
+		$m     = (string) get_query_var( 'm' );
+		if ( ! $year && '' !== $m ) {
+			$year  = (int) substr( $m, 0, 4 );
+			$month = (int) substr( $m, 4, 2 );
+			$day   = (int) substr( $m, 6, 2 );
+		}
 		if ( $day ) {
 			$context['base'] = get_day_link( $year, $month, $day );
 		} elseif ( $month ) {
@@ -627,7 +650,7 @@ function rackora_should_noindex() {
 		return true;
 	}
 
-	if ( is_singular( array( 'post', 'page' ) ) && 'noindex' === (string) get_post_meta( get_queried_object_id(), '_rackora_robots', true ) ) {
+	if ( ( is_singular( array( 'post', 'page' ) ) || ( is_home() && ! is_front_page() ) ) && 'noindex' === (string) get_post_meta( get_queried_object_id(), '_rackora_robots', true ) ) {
 		return true;
 	}
 

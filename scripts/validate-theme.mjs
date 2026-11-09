@@ -67,10 +67,68 @@ for (const file of [...list("templates", ".html"), ...list("parts", ".html"), ..
   }
 }
 
-// 5. zh_CN 翻译没有遗漏
+// 5. zh_CN 翻译没有遗漏，且 po / mo / PHP 词条保持一致
 const po = read("languages/zh_CN.po");
 const untranslated = [...po.matchAll(/\nmsgid "(.+)"\n(?:msgid_plural ".*"\n)?msgstr(?:\[0\])? ""\n/g)].map((m) => m[1]);
 if (untranslated.length) errors.push(`zh_CN.po 有 ${untranslated.length} 条未翻译：${untranslated.slice(0, 3).join(" | ")}`);
+
+const unescapePo = (s) => s.replace(/\\n/g, "\n").replace(/\\r/g, "\r").replace(/\\t/g, "\t").replace(/\\"/g, '"').replace(/\\\\/g, "\\");
+const poMap = new Map();
+for (const block of po.split(/\r?\n\r?\n+/)) {
+  let ctx = null, id = null, str = null, field = null;
+  for (const raw of block.split(/\r?\n/)) {
+    const line = raw.trim();
+    if (!line || line.startsWith("#")) continue;
+    let m;
+    if ((m = line.match(/^msgctxt\s+"(.*)"$/))) { ctx = unescapePo(m[1]); field = "ctx"; }
+    else if ((m = line.match(/^msgid\s+"(.*)"$/))) { id = unescapePo(m[1]); field = "id"; }
+    else if (line.startsWith("msgid_plural ")) { field = "plural"; }
+    else if ((m = line.match(/^msgstr(?:\[0\])?\s+"(.*)"$/))) { str = unescapePo(m[1]); field = "str"; }
+    else if ((m = line.match(/^"(.*)"$/))) {
+      const val = unescapePo(m[1]);
+      if (field === "ctx") ctx += val;
+      else if (field === "id") id += val;
+      else if (field === "str") str += val;
+    }
+  }
+  if (id !== null && str !== null) poMap.set(ctx !== null ? `${ctx}\x04${id}` : id, str);
+}
+
+const moBuf = readFileSync(path.join(root, "languages/zh_CN.mo"));
+const moCount = moBuf.readUInt32LE(8);
+const moOrigOff = moBuf.readUInt32LE(12);
+const moTransOff = moBuf.readUInt32LE(16);
+const moMap = new Map();
+for (let i = 0; i < moCount; i++) {
+  const oLen = moBuf.readUInt32LE(moOrigOff + i * 8);
+  const oPos = moBuf.readUInt32LE(moOrigOff + i * 8 + 4);
+  const tLen = moBuf.readUInt32LE(moTransOff + i * 8);
+  const tPos = moBuf.readUInt32LE(moTransOff + i * 8 + 4);
+  moMap.set(moBuf.subarray(oPos, oPos + oLen).toString("utf8"), moBuf.subarray(tPos, tPos + tLen).toString("utf8"));
+}
+for (const [k, v] of poMap) {
+  if (moMap.get(k) !== v) {
+    errors.push(`zh_CN.mo 与 zh_CN.po 不一致：${JSON.stringify(k)}`);
+    break;
+  }
+}
+
+for (const file of walk(".", ".php")) {
+  if (file.startsWith("languages/")) continue;
+  const src = read(file);
+  for (const m of src.matchAll(/\b(?:__|esc_html__|esc_html_e|esc_attr__|esc_attr_e|_e)\(\s*'((?:\\'|[^'])+)'\s*,\s*'rackora'\s*\)/g)) {
+    const key = m[1].replace(/\\'/g, "'");
+    if (!poMap.has(key)) errors.push(`${file}: 词条未收录到 zh_CN.po：${key}`);
+  }
+  for (const m of src.matchAll(/\b(?:_x|esc_html_x|esc_attr_x)\(\s*'((?:\\'|[^'])+)'\s*,\s*'((?:\\'|[^'])+)'\s*,\s*'rackora'\s*\)/g)) {
+    const key = `${m[2].replace(/\\'/g, "'")}\x04${m[1].replace(/\\'/g, "'")}`;
+    if (!poMap.has(key)) errors.push(`${file}: 上下文词条未收录到 zh_CN.po：${key}`);
+  }
+  for (const m of src.matchAll(/\b_n\(\s*'((?:\\'|[^'])+)'\s*,\s*'((?:\\'|[^'])+)'\s*,[^,]+,\s*'rackora'\s*\)/g)) {
+    const key = m[1].replace(/\\'/g, "'");
+    if (!poMap.has(key)) errors.push(`${file}: 复数词条未收录到 zh_CN.po：${key}`);
+  }
+}
 
 // 6. 前端脚本不留调试输出，单文件不超过 300 行有效代码
 for (const file of list("assets/js", ".js")) {

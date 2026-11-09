@@ -1677,3 +1677,29 @@ msgstr ""
 #: inc/meta.php:92
 msgid "Outputs noindex,follow when search engines should skip this post."
 msgstr ""
+
+#: inc/settings.php:86
+msgid "Count views on posts only"
+msgstr ""
+
+#: inc/settings.php:87
+msgid "When enabled, pages and other content types are excluded from view counts and the site total."
+msgstr ""
+
+#: inc/blocks.php:73
+msgid "Use theme share defaults"
+msgstr ""
+
+#: inc/meta.php:196
+msgid "For tags, \"Follow theme setting\" uses Appearance → Rackora. For categories, inherit means allow indexing unless overridden here."
+msgstr ""
+
+#: inc/settings.php:223
+msgid "Off by default. Only services with a valid ID are loaded. Turn this off if an SEO or analytics plugin already injects the same tracker."
+msgstr ""
+
+#. translators: %s: SEO plugin name.
+#: inc/settings.php:634
+#, php-format
+msgid "%s is active, so Rackora leaves canonical, Open Graph, JSON-LD and robots rules to it. Verification codes still apply. Turn off theme analytics if the plugin already installs a tracker."
+msgstr ""

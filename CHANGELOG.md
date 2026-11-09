@@ -2,6 +2,20 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。GitHub Release 的说明与此文件对应章节保持一致。
 
+## [0.5.1] - 2026-11-09
+
+### 修复
+
+- 修复 `languages/zh_CN.mo` 编译产物丢失带 `msgctxt` 上下文、复数形式与转义引号词条的问题，并补齐 `zh_CN.po` 与 `rackora.pot` 缺失的 6 条历史词条
+- 修复普通独立页面在使用 `<!--nextpage-->` 分页时 Canonical URL 被错误覆写为归档分页格式（`/page/N/`）的问题
+- 修复朴素固定链接（`?m=YYYYMMDD`）下日期归档页无法解析年份与月份导致缺失全部 SEO 标签的问题
+- 修复「静态首页 + 独立文章页（Posts Page）」模式下，文章页未读取自身页面的自定义 SEO 标题、SEO 描述、摘要、特色图片与 `noindex` 设置的问题
+- 修复通过 REST API 或快速编辑单独变更 `_wp_page_template` 元数据时页面模板映射缓存未即时刷新的问题
+
+### 变更
+
+- 校验脚本 `scripts/validate-theme.mjs` 增加 PHP 翻译词条覆盖率检查以及 `zh_CN.po` 与 `zh_CN.mo` 键值一致性检查
+
 ## [0.5.0] - 2026-10-30
 
 ### 修复
@@ -88,6 +102,7 @@
 - 首个面向 WordPress 的 Rackora 区块主题发布
 - 全站编辑模板与模式、自定义区块、浅色 / 深色配色、页面级 SEO 与可选分析脚本
 
+[0.5.1]: https://github.com/everett7623/wordpress-theme-rackora/releases/tag/v0.5.1
 [0.5.0]: https://github.com/everett7623/wordpress-theme-rackora/releases/tag/v0.5.0
 [0.4.1]: https://github.com/everett7623/wordpress-theme-rackora/releases/tag/v0.4.1
 [0.4.0]: https://github.com/everett7623/wordpress-theme-rackora/releases/tag/v0.4.0
