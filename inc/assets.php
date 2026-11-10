@@ -46,8 +46,8 @@ function rackora_enqueue_assets() {
 	wp_register_script_module( 'rackora/shared', get_theme_file_uri( 'assets/js/shared.js' ), array(), $version );
 	wp_enqueue_script_module( 'rackora/theme', get_theme_file_uri( 'assets/js/theme.js' ), array( 'rackora/shared' ), $version );
 
-	// 目录、代码高亮与阅读进度脚本仅加载于文章（含文档模板），避免关于页等静态页白付代价。
-	if ( ! is_singular( 'post' ) ) {
+	// 目录、代码高亮、阅读计数与分享栏脚本仅加载于单篇内容（文章与页面）。
+	if ( ! is_singular() ) {
 		return;
 	}
 

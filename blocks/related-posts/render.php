@@ -20,11 +20,13 @@ $rackora_sidebar  = 'sidebar' === $attributes['layout'];
 $rackora_count    = max( 1, (int) $attributes['count'] );
 $rackora_category = rackora_primary_category( $rackora_post_id );
 $rackora_query    = array(
-	'post_type'           => 'post',
-	'post_status'         => 'publish',
-	'posts_per_page'      => $rackora_count,
-	'ignore_sticky_posts' => true,
-	'no_found_rows'       => true,
+	'post_type'              => 'post',
+	'post_status'            => 'publish',
+	'posts_per_page'         => $rackora_count,
+	'ignore_sticky_posts'    => true,
+	'no_found_rows'          => true,
+	'update_post_meta_cache' => false,
+	'update_post_term_cache' => false,
 );
 
 if ( ! $attributes['includeCurrent'] ) {

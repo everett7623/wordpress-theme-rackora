@@ -108,6 +108,54 @@ function rackora_should_count_view( $post, $request ) {
 }
 
 /**
+ * 文章状态变化或删除时清理站点总阅读数缓存。
+ */
+function rackora_flush_total_views_cache() {
+	delete_transient( 'rackora_total_views' );
+}
+add_action( 'transition_post_status', 'rackora_flush_total_views_cache' );
+add_action( 'deleted_post', 'rackora_flush_total_views_cache' );
+
+/**
+ * 识别访客客户端 IP（兼容反向代理与 CDN 转发头，可通过过滤器覆写）。
+ *
+ * @param WP_REST_Request $request 请求。
+ * @return string
+ */
+function rackora_client_ip( $request ) {
+	$candidates = array(
+		$request->get_header( 'cf_connecting_ip' ),
+		$request->get_header( 'x_real_ip' ),
+		$request->get_header( 'x_forwarded_for' ),
+		! empty( $_SERVER['REMOTE_ADDR'] ) ? (string) wp_unslash( $_SERVER['REMOTE_ADDR'] ) : '',
+	);
+
+	$ip = '';
+	foreach ( $candidates as $raw ) {
+		if ( ! is_string( $raw ) || '' === trim( $raw ) ) {
+			continue;
+		}
+		$first = trim( explode( ',', $raw )[0] );
+		if ( false !== filter_var( $first, FILTER_VALIDATE_IP ) ) {
+			$ip = $first;
+			break;
+		}
+	}
+
+	if ( '' === $ip ) {
+		$ip = 'unknown';
+	}
+
+	/**
+	 * 过滤用于阅读防刷限流的访客 IP。
+	 *
+	 * @param string          $ip      客户端 IP。
+	 * @param WP_REST_Request $request REST 请求。
+	 */
+	return (string) apply_filters( 'rackora_client_ip', $ip, $request );
+}
+
+/**
  * 同一访客对同一篇文章的服务端限流（按 IP，一小时内只计一次）。
  *
  * @param int             $post_id 文章 ID。
@@ -115,13 +163,7 @@ function rackora_should_count_view( $post, $request ) {
  * @return bool 为 true 表示应跳过计数。
  */
 function rackora_view_rate_limited( $post_id, $request ) {
-	$ip = '';
-	if ( ! empty( $_SERVER['REMOTE_ADDR'] ) ) {
-		$ip = (string) wp_unslash( $_SERVER['REMOTE_ADDR'] );
-	}
-	if ( '' === $ip ) {
-		$ip = 'unknown';
-	}
+	$ip = rackora_client_ip( $request );
 
 	$key = 'rackora_vr_' . md5( $ip . '|' . (int) $post_id );
 	if ( get_transient( $key ) ) {

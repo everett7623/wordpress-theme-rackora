@@ -613,6 +613,46 @@ function rackora_render_json_ld() {
 				'image' => get_avatar_url( $author->ID, array( 'size' => 512 ) ),
 			),
 		);
+	} elseif ( is_date() ) {
+		$ctx = rackora_seo_context();
+		if ( '' !== $ctx['base'] ) {
+			$graphs[] = array(
+				'@context'    => 'https://schema.org',
+				'@type'       => 'CollectionPage',
+				'@id'         => $ctx['base'],
+				'url'         => $ctx['base'],
+				'name'        => $ctx['title'],
+				'description' => $ctx['description'],
+				'inLanguage'  => $language,
+				'isPartOf'    => array(
+					'@type' => 'WebSite',
+					'name'  => get_bloginfo( 'name' ),
+					'url'   => $site_url,
+				),
+			);
+
+			$crumbs   = array( array( get_bloginfo( 'name' ), $site_url ) );
+			$index_id = rackora_template_page_id( 'archives' );
+			if ( $index_id ) {
+				$crumbs[] = array( wp_strip_all_tags( get_the_title( $index_id ) ), (string) get_permalink( $index_id ) );
+			}
+			$crumbs[] = array( $ctx['title'], $ctx['base'] );
+
+			$items = array();
+			foreach ( $crumbs as $index => $crumb ) {
+				$items[] = array(
+					'@type'    => 'ListItem',
+					'position' => $index + 1,
+					'name'     => $crumb[0],
+					'item'     => $crumb[1],
+				);
+			}
+			$graphs[] = array(
+				'@context'        => 'https://schema.org',
+				'@type'           => 'BreadcrumbList',
+				'itemListElement' => $items,
+			);
+		}
 	}
 
 	foreach ( $graphs as $graph ) {

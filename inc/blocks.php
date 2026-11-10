@@ -180,14 +180,21 @@ function rackora_wrap_category_counts( $content ) {
 add_filter( 'render_block_core/categories', 'rackora_wrap_category_counts' );
 
 /**
- * 分类与标签归档的面包屑中插入「全部分类 / 全部标签」索引页。
+ * 分类、标签与日期归档的面包屑中插入「全部分类 / 全部标签 / 归档」索引页。
  *
  * @param array $items 面包屑项。
  * @return array
  */
 function rackora_breadcrumb_index_items( $items ) {
-	$template = is_category() ? 'categories' : ( is_tag() ? 'tags' : '' );
-	$page_id  = '' !== $template ? rackora_template_page_id( $template ) : 0;
+	$template = '';
+	if ( is_category() ) {
+		$template = 'categories';
+	} elseif ( is_tag() ) {
+		$template = 'tags';
+	} elseif ( is_date() ) {
+		$template = 'archives';
+	}
+	$page_id = '' !== $template ? rackora_template_page_id( $template ) : 0;
 
 	if ( ! $page_id ) {
 		return $items;

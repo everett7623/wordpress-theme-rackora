@@ -20,11 +20,12 @@ if ( is_date() ) {
 } else {
 	$rackora_query = new WP_Query(
 		array(
-			'post_type'           => 'post',
-			'post_status'         => 'publish',
-			'posts_per_page'      => max( 1, (int) get_option( 'posts_per_page' ) ),
-			'paged'               => $rackora_paged,
-			'ignore_sticky_posts' => true,
+			'post_type'              => 'post',
+			'post_status'            => 'publish',
+			'posts_per_page'         => max( 1, (int) get_option( 'posts_per_page' ) ),
+			'paged'                  => $rackora_paged,
+			'ignore_sticky_posts'    => true,
+			'update_post_meta_cache' => false,
 		)
 	);
 	$rackora_posts = $rackora_query->posts;

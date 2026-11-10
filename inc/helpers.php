@@ -599,13 +599,25 @@ function rackora_post_heading_outline( $post_id = null ) {
 	}
 
 	$post = get_post( $post_id );
-	if ( ! $post || false === stripos( $post->post_content, '<h' ) ) {
+	if ( ! $post ) {
+		$cache[ $post_id ]      = array();
+		$GLOBALS[ $global_key ] = array();
+		return array();
+	}
+
+	if ( false === stripos( $post->post_content, '<h' ) && false === strpos( $post->post_content, '<!-- wp:block' ) && false === strpos( $post->post_content, '[' ) ) {
 		$cache[ $post_id ]      = array();
 		$GLOBALS[ $global_key ] = array();
 		return array();
 	}
 
 	$html = do_blocks( $post->post_content );
+	if ( false === stripos( $html, '<h' ) ) {
+		$cache[ $post_id ]      = array();
+		$GLOBALS[ $global_key ] = array();
+		return array();
+	}
+
 	list( , $outline )     = rackora_inject_heading_ids( $html );
 	$cache[ $post_id ]     = $outline;
 	$GLOBALS[ $global_key ] = $outline;
@@ -652,7 +664,7 @@ function rackora_apply_heading_outline_ids( $html, $outline ) {
  * @return string
  */
 function rackora_annotate_content_headings( $content ) {
-	if ( ! is_singular( 'post' ) || ! in_the_loop() || ! is_main_query() || false === stripos( $content, '<h' ) ) {
+	if ( ! is_singular() || ! in_the_loop() || ! is_main_query() || false === stripos( $content, '<h' ) ) {
 		return $content;
 	}
 

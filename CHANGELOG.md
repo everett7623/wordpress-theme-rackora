@@ -2,6 +2,28 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。GitHub Release 的说明与此文件对应章节保持一致。
 
+## [0.6.0] - 2026-11-10
+
+### 修复
+
+- 修复侧栏多级分类列表（含子分类 `.children`）缺少 `flex-wrap: wrap` 导致父分类与子分类挤压在同一行的问题
+- 修复静态页面（Page）未加载正文增强脚本导致代码块语法高亮与复制按钮、宽表格滚动包装、图片灯箱、分享栏复制按钮及页面阅读量统计失效的问题
+- 修复文章包含同步样板（`<!-- wp:block`）或短代码输出标题时，目录大纲（`rackora_post_heading_outline`）因过早短路而误判为空的问题
+- 修复文章状态变更（移入回收站、转为草稿）或删除时，全站总阅读量（`rackora_total_views`）Transient 缓存未同步清理的问题
+- 修复归档标题区块（`rackora/archive-heading`）读取索引页面手动摘要时未剥离 HTML 标签的问题
+
+### 性能
+
+- 优化文章系列区块（`rackora/post-series`）查询：改为仅拉取文章 ID 数组（`fields => ids`）与必要元数据排序，切片后再按需预热目标文章缓存，避免拉取最多 100 篇文章的完整 `post_content`
+- 优化归档时间线（`rackora/archives-timeline`）自定义查询，显式关闭无需使用的 Post Meta 缓存预热（`update_post_meta_cache => false`）
+- 优化相关文章区块（`rackora/related-posts`）查询，显式关闭无需使用的 Post Meta 与分类法词元缓存预热
+
+### 功能
+
+- 日期归档页（`is_date()`）面包屑导航在站点存在「归档」索引页（`page-archives` 模板）时自动挂载归档页层级
+- 日期归档页补齐 `CollectionPage` 与 `BreadcrumbList` Schema.org JSON-LD 结构化数据输出
+- 阅读量服务端防刷限流新增 `rackora_client_ip()` 识别，兼容 Cloudflare / 反向代理转发头并提供 `rackora_client_ip` 过滤器
+
 ## [0.5.1] - 2026-11-09
 
 ### 修复

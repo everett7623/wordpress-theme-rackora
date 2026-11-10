@@ -21,7 +21,7 @@ $rackora_avatar  = '';
 if ( 'auto' !== $rackora_variant && is_page() ) {
 	$rackora_page  = get_queried_object();
 	$rackora_title = get_the_title( $rackora_page );
-	$rackora_text  = has_excerpt( $rackora_page ) ? get_the_excerpt( $rackora_page ) : '';
+	$rackora_text  = has_excerpt( $rackora_page ) ? trim( wp_strip_all_tags( $rackora_page->post_excerpt ) ) : '';
 
 	if ( '' === $rackora_text ) {
 		switch ( $rackora_variant ) {

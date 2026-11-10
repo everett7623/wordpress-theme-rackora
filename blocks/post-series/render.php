@@ -16,49 +16,58 @@ if ( ! $rackora_post_id || '' === $rackora_series ) {
 	return;
 }
 
-$rackora_items = get_posts(
-	array(
-		'post_type'        => 'post',
-		'post_status'      => 'publish',
-		'posts_per_page'   => 100,
-		'orderby'          => 'date',
-		'order'            => 'ASC',
-		'no_found_rows'    => true,
-		'suppress_filters' => false,
-		'meta_key'         => '_rackora_series', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-		'meta_value'       => $rackora_series, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+$rackora_item_ids = array_map(
+	'intval',
+	get_posts(
+		array(
+			'post_type'              => 'post',
+			'post_status'            => 'publish',
+			'posts_per_page'         => 100,
+			'orderby'                => 'date',
+			'order'                  => 'ASC',
+			'fields'                 => 'ids',
+			'no_found_rows'          => true,
+			'update_post_term_cache' => false,
+			'suppress_filters'       => false,
+			'meta_key'               => '_rackora_series', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+			'meta_value'             => $rackora_series, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+		)
 	)
 );
 
-if ( count( $rackora_items ) < 2 ) {
+if ( count( $rackora_item_ids ) < 2 ) {
 	return;
 }
 
-// 未填写序号的文章排在最后，同序号保持发布时间顺序（usort 自 PHP 8 起稳定，这里显式比较时间以兼容旧版本）。
+update_meta_cache( 'post', $rackora_item_ids );
+$rackora_positions = array_flip( $rackora_item_ids );
+
+// 未填写序号的文章排在最后，同序号保持查询返回的发布时间顺序。
 usort(
-	$rackora_items,
-	static function ( $left, $right ) {
-		$left_order  = get_post_meta( $left->ID, '_rackora_series_order', true );
-		$right_order = get_post_meta( $right->ID, '_rackora_series_order', true );
+	$rackora_item_ids,
+	static function ( $left_id, $right_id ) use ( $rackora_positions ) {
+		$left_order  = get_post_meta( $left_id, '_rackora_series_order', true );
+		$right_order = get_post_meta( $right_id, '_rackora_series_order', true );
 		$left_order  = '' === $left_order ? PHP_INT_MAX : (int) $left_order;
 		$right_order = '' === $right_order ? PHP_INT_MAX : (int) $right_order;
 
 		if ( $left_order !== $right_order ) {
 			return $left_order < $right_order ? -1 : 1;
 		}
-		return strcmp( $left->post_date_gmt, $right->post_date_gmt );
+		return $rackora_positions[ $left_id ] <=> $rackora_positions[ $right_id ];
 	}
 );
 
-$rackora_items = array_slice( $rackora_items, 0, max( 1, (int) $attributes['count'] ) );
+$rackora_item_ids = array_slice( $rackora_item_ids, 0, max( 1, (int) $attributes['count'] ) );
+_prime_post_caches( $rackora_item_ids, false, false );
 ?>
 <aside <?php echo get_block_wrapper_attributes( array( 'class' => 'series-posts', 'aria-label' => __( 'Series', 'rackora' ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 	<h2><span><?php esc_html_e( 'Series', 'rackora' ); ?></span><span><?php echo esc_html( $rackora_series ); ?></span></h2>
 	<ol>
-		<?php foreach ( $rackora_items as $rackora_item ) : ?>
-			<?php $rackora_current = (int) $rackora_item->ID === $rackora_post_id; ?>
+		<?php foreach ( $rackora_item_ids as $rackora_item_id ) : ?>
+			<?php $rackora_current = $rackora_item_id === $rackora_post_id; ?>
 			<li<?php echo $rackora_current ? ' class="is-current"' : ''; ?>>
-				<a href="<?php echo esc_url( get_permalink( $rackora_item ) ); ?>"<?php echo $rackora_current ? ' aria-current="page"' : ''; ?>><?php echo wp_kses_post( get_the_title( $rackora_item ) ); ?></a>
+				<a href="<?php echo esc_url( get_permalink( $rackora_item_id ) ); ?>"<?php echo $rackora_current ? ' aria-current="page"' : ''; ?>><?php echo wp_kses_post( get_the_title( $rackora_item_id ) ); ?></a>
 			</li>
 		<?php endforeach; ?>
 	</ol>
