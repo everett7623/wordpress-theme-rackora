@@ -16,6 +16,11 @@ defined( 'ABSPATH' ) || exit;
  * @return string 插件名称，未检测到时为空字符串。
  */
 function rackora_detected_seo_plugin() {
+	static $detected = null;
+	if ( null !== $detected ) {
+		return $detected;
+	}
+
 	$by_file = array(
 		'wordpress-seo/wp-seo.php'             => 'Yoast SEO',
 		'seo-by-rank-math/rank-math.php'       => 'Rank Math',
@@ -33,7 +38,8 @@ function rackora_detected_seo_plugin() {
 
 	foreach ( $by_file as $file => $name ) {
 		if ( is_plugin_active( $file ) ) {
-			return $name;
+			$detected = $name;
+			return $detected;
 		}
 	}
 
@@ -50,10 +56,13 @@ function rackora_detected_seo_plugin() {
 
 	foreach ( $by_constant as $constant => $name ) {
 		if ( defined( $constant ) ) {
-			return $name;
+			$detected = $name;
+			return $detected;
 		}
 	}
-	return '';
+
+	$detected = '';
+	return $detected;
 }
 
 /**

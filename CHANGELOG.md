@@ -2,6 +2,25 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。GitHub Release 的说明与此文件对应章节保持一致。
 
+## [0.6.1] - 2026-11-17
+
+### 修复
+
+- 修复阅读量限流函数 `rackora_client_ip()` 直接信任外部代理头可能被伪造绕过防刷限制的问题；改为默认以 `REMOTE_ADDR` 为准，仅在来源属于内网/保留网段或通过 `rackora_trust_proxy_headers` 过滤器显式开启时解析代理转发头
+- 修复文章目录区块（`rackora/post-toc`）在独立页面（Page）前台仍被跳过渲染的问题，现已支持在页面中展示目录
+- 修复正文含短代码输出标题时，目录大纲（`rackora_post_heading_outline()`）未执行短代码导致标题与大纲映射错位的问题
+
+### 性能
+
+- 为 `rackora_settings_defaults()` 与 `rackora_detected_seo_plugin()` 增加请求内静态缓存，消除单次渲染中的重复计算与插件状态遍历
+- 为分类/标签汇总区块（`rackora/term-index`）与友情链接区块（`rackora/friend-links`）的 `get_terms()` 查询关闭多余的 Term Meta 缓存预热
+- 为后台分类编辑页「精选文章」列表查询关闭多余的 Post Meta 与分类法词元缓存预热
+
+### 体验
+
+- 图片放大灯箱支持点击放大后的图片本身直接关闭，并增加 `zoom-out` 光标提示
+- 移动端目录抽屉开启时自动聚焦关闭按钮，通过关闭按钮或 `Escape` 退出时自动将焦点归还至目录触发按钮
+
 ## [0.6.0] - 2026-11-10
 
 ### 修复

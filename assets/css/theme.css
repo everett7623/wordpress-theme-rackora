@@ -1047,6 +1047,7 @@ body.toc-open {
 	max-height: 88vh;
 	margin: 0 auto;
 	object-fit: contain;
+	cursor: zoom-out;
 }
 
 .image-lightbox__close {

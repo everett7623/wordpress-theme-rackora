@@ -61,10 +61,12 @@ function initMobileToc(section, navigation) {
 	panel.querySelector("[data-mobile-toc-close]").setAttribute("aria-label", t("close", "Close"));
 	panel.querySelector("nav").append(...Array.from(navigation.children, (node) => node.cloneNode(true)));
 
-	const close = () => {
+	const closeButton = panel.querySelector("[data-mobile-toc-close]");
+	const close = (restoreFocus = false) => {
 		panel.hidden = true;
 		document.body.classList.remove("toc-open");
 		toggle.setAttribute("aria-expanded", "false");
+		if (restoreFocus) toggle.focus();
 	};
 
 	toggle.addEventListener("click", () => {
@@ -72,13 +74,14 @@ function initMobileToc(section, navigation) {
 		panel.hidden = !open;
 		document.body.classList.toggle("toc-open", open);
 		toggle.setAttribute("aria-expanded", String(open));
+		if (open) closeButton.focus();
 	});
-	panel.querySelector("[data-mobile-toc-close]").addEventListener("click", close);
+	closeButton.addEventListener("click", () => close(true));
 	panel.addEventListener("click", (event) => {
-		if (event.target === panel || event.target.closest("a")) close();
+		if (event.target === panel || event.target.closest("a")) close(event.target === panel);
 	});
 	document.addEventListener("keydown", (event) => {
-		if (event.key === "Escape" && !panel.hidden) close();
+		if (event.key === "Escape" && !panel.hidden) close(true);
 	});
 
 	(section.closest(".article-sidebar") || section).after(toggle);

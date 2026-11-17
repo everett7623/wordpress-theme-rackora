@@ -71,7 +71,7 @@ function initLightbox(content) {
 	const preview = dialog.querySelector("img");
 	dialog.querySelector("button").addEventListener("click", () => dialog.close());
 	dialog.addEventListener("click", (event) => {
-		if (event.target === dialog) dialog.close();
+		if (event.target === dialog || event.target === preview) dialog.close();
 	});
 	document.body.append(dialog);
 

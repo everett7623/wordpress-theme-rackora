@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-if ( ! is_singular( 'post' ) && ! rackora_is_editor_preview() ) {
+if ( ! is_singular() && ! rackora_is_editor_preview() ) {
 	return;
 }
 

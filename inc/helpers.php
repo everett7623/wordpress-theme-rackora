@@ -16,12 +16,17 @@ defined( 'ABSPATH' ) || exit;
  * @return array<string, mixed>
  */
 function rackora_settings_defaults() {
+	static $defaults = null;
+	if ( is_array( $defaults ) ) {
+		return $defaults;
+	}
+
 	$social = array();
 	foreach ( array_keys( rackora_social_platforms() ) as $key ) {
 		$social[ $key ] = '';
 	}
 
-	return array(
+	$defaults = array(
 		'color_scheme'        => 'auto',
 		'views_enabled'       => true,
 		'views_posts_only'    => false,
@@ -53,6 +58,8 @@ function rackora_settings_defaults() {
 		'clarity_id'          => '',
 		'baidu_analytics_id'  => '',
 	);
+
+	return $defaults;
 }
 
 /**
@@ -612,6 +619,9 @@ function rackora_post_heading_outline( $post_id = null ) {
 	}
 
 	$html = do_blocks( $post->post_content );
+	if ( false !== strpos( $html, '[' ) ) {
+		$html = do_shortcode( $html );
+	}
 	if ( false === stripos( $html, '<h' ) ) {
 		$cache[ $post_id ]      = array();
 		$GLOBALS[ $global_key ] = array();

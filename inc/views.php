@@ -117,18 +117,37 @@ add_action( 'transition_post_status', 'rackora_flush_total_views_cache' );
 add_action( 'deleted_post', 'rackora_flush_total_views_cache' );
 
 /**
- * 识别访客客户端 IP（兼容反向代理与 CDN 转发头，可通过过滤器覆写）。
+ * 识别访客客户端 IP。
+ *
+ * 默认优先使用 REMOTE_ADDR，防止客户端直接伪造转发头绕过限流；仅当远程地址属于内网/保留网段
+ * （如反向代理或容器网关）或通过 rackora_trust_proxy_headers 显式信任时，才读取 CDN / 代理转发头。
  *
  * @param WP_REST_Request $request 请求。
  * @return string
  */
 function rackora_client_ip( $request ) {
-	$candidates = array(
-		$request->get_header( 'cf_connecting_ip' ),
-		$request->get_header( 'x_real_ip' ),
-		$request->get_header( 'x_forwarded_for' ),
-		! empty( $_SERVER['REMOTE_ADDR'] ) ? (string) wp_unslash( $_SERVER['REMOTE_ADDR'] ) : '',
-	);
+	$remote_addr = ! empty( $_SERVER['REMOTE_ADDR'] ) ? trim( (string) wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
+	$is_trusted_proxy = '' !== $remote_addr
+		&& false !== filter_var( $remote_addr, FILTER_VALIDATE_IP )
+		&& false === filter_var( $remote_addr, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE );
+
+	/**
+	 * 过滤是否信任 CDN / 反向代理转发的客户端 IP 请求头。
+	 *
+	 * @param bool            $trust       是否信任转发头。
+	 * @param string          $remote_addr 原始 REMOTE_ADDR。
+	 * @param WP_REST_Request $request     REST 请求。
+	 */
+	$trust_headers = (bool) apply_filters( 'rackora_trust_proxy_headers', $is_trusted_proxy, $remote_addr, $request );
+
+	$candidates = $trust_headers
+		? array(
+			$request->get_header( 'cf_connecting_ip' ),
+			$request->get_header( 'x_real_ip' ),
+			$request->get_header( 'x_forwarded_for' ),
+			$remote_addr,
+		)
+		: array( $remote_addr );
 
 	$ip = '';
 	foreach ( $candidates as $raw ) {

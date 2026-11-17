@@ -9,8 +9,9 @@ defined( 'ABSPATH' ) || exit;
 
 $rackora_groups  = get_terms(
 	array(
-		'taxonomy'   => 'link_category',
-		'hide_empty' => true,
+		'taxonomy'               => 'link_category',
+		'hide_empty'             => true,
+		'update_term_meta_cache' => false,
 	)
 );
 $rackora_groups  = is_wp_error( $rackora_groups ) ? array() : $rackora_groups;

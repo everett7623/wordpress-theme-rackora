@@ -236,11 +236,13 @@ function rackora_category_edit_fields( $term ) {
 	$current = (int) get_term_meta( $term->term_id, 'rackora_featured_post', true );
 	$posts   = get_posts(
 		array(
-			'post_type'      => 'post',
-			'post_status'    => 'publish',
-			'posts_per_page' => 200,
-			'cat'            => $term->term_id,
-			'no_found_rows'  => true,
+			'post_type'              => 'post',
+			'post_status'            => 'publish',
+			'posts_per_page'         => 200,
+			'cat'                    => $term->term_id,
+			'no_found_rows'          => true,
+			'update_post_meta_cache' => false,
+			'update_post_term_cache' => false,
 		)
 	);
 

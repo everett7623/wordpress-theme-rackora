@@ -16,18 +16,20 @@ $rackora_children = array();
 if ( $rackora_is_tags ) {
 	$rackora_terms = get_terms(
 		array(
-			'taxonomy'   => 'post_tag',
-			'hide_empty' => true,
-			'orderby'    => 'name',
+			'taxonomy'               => 'post_tag',
+			'hide_empty'             => true,
+			'orderby'                => 'name',
+			'update_term_meta_cache' => false,
 		)
 	);
 } else {
 	// 一次取回全部分类，在 PHP 中按父子分组，避免每个顶级分类再查一次库。
 	$rackora_all = get_terms(
 		array(
-			'taxonomy'   => 'category',
-			'hide_empty' => false,
-			'orderby'    => 'name',
+			'taxonomy'               => 'category',
+			'hide_empty'             => false,
+			'orderby'                => 'name',
+			'update_term_meta_cache' => false,
 		)
 	);
 	if ( ! is_wp_error( $rackora_all ) && $rackora_all ) {
