@@ -675,6 +675,9 @@ img {
 .article-sidebar {
 	position: sticky;
 	top: calc(var(--rack-header-height) + var(--rack-admin-bar) + 30px);
+	max-height: calc(100vh - var(--rack-header-height) - var(--rack-admin-bar) - 48px);
+	overflow-y: auto;
+	scrollbar-width: thin;
 	align-self: start;
 	display: grid;
 	gap: 28px;
@@ -1175,6 +1178,29 @@ body.toc-open {
 }
 
 @media print {
+	:root,
+	:root[data-color-scheme="dark"],
+	:root[data-color-scheme="auto"] {
+		color-scheme: light;
+		--rack-paper: #fff;
+		--rack-surface: #fff;
+		--rack-ink: #000;
+		--rack-ink-soft: #222;
+		--rack-muted: #555;
+		--rack-line: #ccc;
+		--rack-line-strong: #999;
+		--rack-accent: #000;
+		--rack-accent-hover: #000;
+		--rack-accent-soft: #f5f5f5;
+		--wp--preset--color--paper: #fff;
+		--wp--preset--color--surface: #fff;
+		--wp--preset--color--ink: #000;
+		--wp--preset--color--ink-soft: #222;
+		--wp--preset--color--muted: #555;
+		--wp--preset--color--line: #ccc;
+		--wp--preset--color--line-strong: #999;
+	}
+
 	body::before,
 	.site-header,
 	.site-footer,

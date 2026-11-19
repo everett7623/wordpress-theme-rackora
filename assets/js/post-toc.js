@@ -30,12 +30,29 @@ function ensureUniqueId(base, usedIds, element) {
 	return id;
 }
 
-function setActiveLink(targetId) {
-	for (const link of document.querySelectorAll("[data-toc] a, [data-mobile-toc] nav a")) {
+function setActiveLink(links, targetId, sidebar) {
+	let activeSidebarLink = null;
+	for (const link of links) {
 		const active = link.getAttribute("href") === `#${targetId}`;
 		link.classList.toggle("is-active", active);
-		if (active) link.setAttribute("aria-current", "location");
-		else link.removeAttribute("aria-current");
+		if (active) {
+			link.setAttribute("aria-current", "location");
+			if (!activeSidebarLink && sidebar && sidebar.contains(link)) {
+				activeSidebarLink = link;
+			}
+		} else {
+			link.removeAttribute("aria-current");
+		}
+	}
+
+	if (activeSidebarLink && sidebar.scrollHeight > sidebar.clientHeight) {
+		const top = activeSidebarLink.offsetTop;
+		const bottom = top + activeSidebarLink.offsetHeight;
+		if (top < sidebar.scrollTop) {
+			sidebar.scrollTop = Math.max(0, top - 16);
+		} else if (bottom > sidebar.scrollTop + sidebar.clientHeight) {
+			sidebar.scrollTop = bottom - sidebar.clientHeight + 16;
+		}
 	}
 }
 
@@ -128,6 +145,9 @@ export function initTableOfContents(content) {
 	section.hidden = false;
 	initMobileToc(section, navigation);
 
+	const sidebar = section.closest(".article-sidebar");
+	const tocLinks = Array.from(document.querySelectorAll("[data-toc] a, [data-mobile-toc] nav a"));
+	let currentActiveId = "";
 	let scheduled = false;
 	const readHeaderHeight = () =>
 		Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--rack-header-height")) || 62;
@@ -144,7 +164,9 @@ export function initTableOfContents(content) {
 		if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
 			active = headings.at(-1) || active;
 		}
-		setActiveLink(active.id);
+		if (active.id === currentActiveId) return;
+		currentActiveId = active.id;
+		setActiveLink(tocLinks, currentActiveId, sidebar);
 	};
 	const schedule = () => {
 		if (scheduled) return;

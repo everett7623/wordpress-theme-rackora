@@ -12,13 +12,17 @@ function currentScheme() {
 
 function initThemeToggle() {
 	const toggles = document.querySelectorAll("[data-theme-toggle]");
-	if (!toggles.length) return;
+	const themeMeta = document.querySelector('meta[name="theme-color"]');
 
 	const update = () => {
-		const label =
-			currentScheme() === "dark"
-				? t("switchToLight", "Switch to light mode")
-				: t("switchToDark", "Switch to dark mode");
+		const isDark = currentScheme() === "dark";
+		if (themeMeta) {
+			themeMeta.setAttribute("content", isDark ? "#111312" : "#f4f6f4");
+		}
+		if (!toggles.length) return;
+		const label = isDark
+			? t("switchToLight", "Switch to light mode")
+			: t("switchToDark", "Switch to dark mode");
 		for (const toggle of toggles) {
 			toggle.setAttribute("aria-label", label);
 			toggle.title = label;
@@ -38,7 +42,7 @@ function initThemeToggle() {
 		});
 	}
 
-	// 跟随系统配色时，系统切换明暗后同步按钮提示文字。
+	// 跟随系统配色时，系统切换明暗后同步按钮提示文字与状态栏颜色。
 	window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", update);
 	update();
 }
@@ -47,8 +51,21 @@ function initBackToTop() {
 	const button = document.querySelector("[data-back-to-top]");
 	if (!button) return;
 
-	const update = () => button.classList.toggle("is-visible", window.scrollY > 600);
-	window.addEventListener("scroll", update, { passive: true });
+	let visible = null;
+	let scheduled = false;
+	const update = () => {
+		scheduled = false;
+		const next = window.scrollY > 600;
+		if (next === visible) return;
+		visible = next;
+		button.classList.toggle("is-visible", visible);
+	};
+	const schedule = () => {
+		if (scheduled) return;
+		scheduled = true;
+		window.requestAnimationFrame(update);
+	};
+	window.addEventListener("scroll", schedule, { passive: true });
 	button.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 	update();
 }

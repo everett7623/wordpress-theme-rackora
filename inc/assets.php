@@ -101,14 +101,14 @@ function rackora_enqueue_core_block_styles() {
 add_action( 'init', 'rackora_enqueue_core_block_styles' );
 
 /**
- * 在样式之前恢复访客上次选择的配色，避免首屏闪烁。
+ * 在样式之前恢复访客上次选择的配色并同步浏览器状态栏颜色，避免首屏闪烁。
  */
 function rackora_print_color_scheme_script() {
-	$script = '(function(){try{var s=localStorage.getItem("rackora-color-scheme");if(s==="light"||s==="dark"){document.documentElement.setAttribute("data-color-scheme",s);}}catch(e){}})();';
-	wp_print_inline_script_tag( $script, array( 'id' => 'rackora-color-scheme' ) );
+	$default_color = 'dark' === rackora_color_scheme() ? '#111312' : '#f4f6f4';
+	printf( '<meta name="theme-color" content="%s" />' . "\n", esc_attr( $default_color ) );
 
-	echo '<meta name="theme-color" content="#f6f8f7" media="(prefers-color-scheme: light)" />' . "\n";
-	echo '<meta name="theme-color" content="#101714" media="(prefers-color-scheme: dark)" />' . "\n";
+	$script = '(function(){try{var d=document.documentElement,s=localStorage.getItem("rackora-color-scheme");if(s==="light"||s==="dark"){d.setAttribute("data-color-scheme",s);}var m=document.querySelector(\'meta[name="theme-color"]\');if(m){var c=d.getAttribute("data-color-scheme"),k=c==="dark"||(c!=="light"&&window.matchMedia("(prefers-color-scheme: dark)").matches);m.setAttribute("content",k?"#111312":"#f4f6f4");}}catch(e){}})();';
+	wp_print_inline_script_tag( $script, array( 'id' => 'rackora-color-scheme' ) );
 }
 add_action( 'wp_head', 'rackora_print_color_scheme_script', 2 );
 

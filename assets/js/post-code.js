@@ -10,18 +10,26 @@ const LANGUAGE_ALIASES = {
 	zsh: "bash",
 	yml: "yaml",
 	ts: "typescript",
+	tsx: "typescript",
 	js: "javascript",
+	jsx: "javascript",
 	html: "xml",
+	xhtml: "xml",
+	svg: "xml",
 	text: "plaintext",
+	txt: "plaintext",
+	plain: "plaintext",
 	py: "python",
 	golang: "go",
 	rs: "rust",
 	conf: "nginx",
+	docker: "dockerfile",
+	toml: "ini",
 };
 
 function languageName(code) {
 	const className = Array.from(code.classList).find((item) => item.startsWith("language-") || item.startsWith("lang-"));
-	const raw = className ? className.replace(/^lang(uage)?-/, "") : "text";
+	const raw = (className ? className.replace(/^lang(uage)?-/, "") : "text").toLowerCase();
 	return LANGUAGE_ALIASES[raw] || raw;
 }
 
