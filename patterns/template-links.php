@@ -14,4 +14,6 @@ defined( 'ABSPATH' ) || exit;
 
 <!-- wp:rackora/friend-links /-->
 
+<!-- wp:post-content {"className":"article-content links-content"} /-->
+
 <!-- wp:pattern {"slug":"rackora/comments"} /-->

@@ -519,11 +519,13 @@ function rackora_is_editor_preview() {
  * @return string
  */
 function rackora_slugify_heading( $text ) {
-	$text = strtolower( trim( wp_strip_all_tags( $text ) ) );
-	$text = preg_replace( '/[^\p{L}\p{N}\s-]+/u', '', $text );
-	$text = preg_replace( '/[\s_]+/u', '-', $text );
-	$text = preg_replace( '/-+/', '-', $text );
-	$text = trim( $text, '-' );
+	$charset = get_bloginfo( 'charset' );
+	$text    = html_entity_decode( trim( wp_strip_all_tags( $text ) ), ENT_QUOTES | ENT_HTML5, '' !== $charset ? $charset : 'UTF-8' );
+	$text    = mb_strtolower( $text, 'UTF-8' );
+	$text    = preg_replace( '/[^\p{L}\p{N}\s-]+/u', '', $text );
+	$text    = preg_replace( '/[\s_]+/u', '-', $text );
+	$text    = preg_replace( '/-+/', '-', $text );
+	$text    = trim( $text, '-' );
 	return '' !== $text ? $text : 'section';
 }
 
@@ -536,14 +538,16 @@ function rackora_slugify_heading( $text ) {
 function rackora_inject_heading_ids( $html ) {
 	$outline = array();
 	$used    = array();
+	$charset = get_bloginfo( 'charset' );
+	$charset = '' !== $charset ? $charset : 'UTF-8';
 
 	$html = preg_replace_callback(
 		'/<h([23])(\s[^>]*)?>(.*?)<\/h\1>/is',
-		static function ( $matches ) use ( &$outline, &$used ) {
+		static function ( $matches ) use ( &$outline, &$used, $charset ) {
 			$level = (int) $matches[1];
 			$attrs = (string) $matches[2];
 			$inner = $matches[3];
-			$text  = trim( wp_strip_all_tags( $inner ) );
+			$text  = html_entity_decode( trim( wp_strip_all_tags( $inner ) ), ENT_QUOTES | ENT_HTML5, $charset );
 			if ( '' === $text ) {
 				return $matches[0];
 			}

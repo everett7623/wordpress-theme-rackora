@@ -25,17 +25,22 @@ $rackora_classes  = 'post-entry' . ( $rackora_pinned ? ' is-pinned' : '' ) . ( $
 ?>
 <article <?php echo get_block_wrapper_attributes( array( 'class' => $rackora_classes ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 	<?php if ( $rackora_cover ) : ?>
-		<a class="post-cover" href="<?php echo esc_url( $rackora_link ); ?>" tabindex="-1" aria-hidden="true">
-			<?php
-			echo get_the_post_thumbnail(
-				$rackora_post,
-				'medium_large',
-				array(
-					'loading'  => 'lazy',
-					'decoding' => 'async',
-				)
+		<?php
+		$rackora_is_first_cover = empty( $GLOBALS['rackora_first_cover_rendered'] );
+		$rackora_cover_attrs    = $rackora_is_first_cover
+			? array(
+				'loading'       => 'eager',
+				'decoding'      => 'async',
+				'fetchpriority' => 'high',
+			)
+			: array(
+				'loading'  => 'lazy',
+				'decoding' => 'async',
 			);
-			?>
+		$GLOBALS['rackora_first_cover_rendered'] = true;
+		?>
+		<a class="post-cover" href="<?php echo esc_url( $rackora_link ); ?>" tabindex="-1" aria-hidden="true">
+			<?php echo get_the_post_thumbnail( $rackora_post, 'medium_large', $rackora_cover_attrs ); ?>
 		</a>
 	<?php endif; ?>
 	<div class="post-entry__body">

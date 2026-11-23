@@ -7,6 +7,14 @@
 	overflow-wrap: anywhere;
 }
 
+.article-content:empty {
+	display: none;
+}
+
+.links-content {
+	margin-top: 32px;
+}
+
 .article-content > :first-child {
 	margin-top: 0;
 }

@@ -130,3 +130,18 @@
 .wp-block-post-comments-form input[type="submit"]:hover {
 	background: var(--rack-accent-hover);
 }
+
+@media (max-width: 720px) {
+	.comments .wp-block-comment-template ol {
+		padding-left: 16px;
+	}
+
+	.comments .wp-block-comment-template ol ol ol {
+		padding-left: 0;
+	}
+
+	.comment-item {
+		grid-template-columns: 32px minmax(0, 1fr);
+		gap: 10px;
+	}
+}

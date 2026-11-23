@@ -17,7 +17,7 @@ if ( ! $rackora_post ) {
 }
 
 $rackora_variant = (string) $attributes['variant'];
-$rackora_deck    = $attributes['showDeck'] && has_excerpt( $rackora_post ) ? wp_strip_all_tags( $rackora_post->post_excerpt ) : '';
+$rackora_deck    = $attributes['showDeck'] && ! post_password_required( $rackora_post ) && has_excerpt( $rackora_post ) ? wp_strip_all_tags( $rackora_post->post_excerpt ) : '';
 
 // 关于页没有手动摘要时，用站点副标题作为导语。
 if ( 'page' === $rackora_variant && '' === $rackora_deck && $attributes['showDeck'] && rackora_is_template_page( 'about' ) ) {

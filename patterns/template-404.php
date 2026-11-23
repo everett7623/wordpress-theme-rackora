@@ -25,6 +25,8 @@ $rackora_archives_url = rackora_template_page_url( 'archives' );
 <p><?php esc_html_e( 'This address may have changed, or the content may have been consolidated.', 'rackora' ); ?></p>
 <!-- /wp:paragraph -->
 
+<!-- wp:search <?php echo serialize_block_attributes( array( 'label' => __( 'Search', 'rackora' ), 'showLabel' => false, 'placeholder' => __( 'Search this site', 'rackora' ), 'buttonText' => __( 'Search', 'rackora' ), 'className' => 'error-search-form' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> /-->
+
 <!-- wp:buttons {"className":"error-actions"} -->
 <div class="wp-block-buttons error-actions"><!-- wp:button -->
 <div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Back home', 'rackora' ); ?></a></div>

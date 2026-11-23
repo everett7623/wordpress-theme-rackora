@@ -109,6 +109,10 @@ function rackora_organization_logo_url() {
  * @return string
  */
 function rackora_post_description( $post ) {
+	if ( post_password_required( $post ) ) {
+		return '';
+	}
+
 	$custom = rackora_singular_seo_description( $post->ID );
 	if ( '' !== $custom ) {
 		return $custom;
