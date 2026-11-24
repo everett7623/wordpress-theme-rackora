@@ -108,13 +108,34 @@ function rackora_should_count_view( $post, $request ) {
 }
 
 /**
- * 文章状态变化或删除时清理站点总阅读数缓存。
+ * 已发布内容删除时清理站点总阅读数缓存。
+ *
+ * @param int          $post_id 内容 ID。
+ * @param WP_Post|null $post    内容对象。
  */
-function rackora_flush_total_views_cache() {
+function rackora_flush_total_views_cache( $post_id = 0, $post = null ) {
+	if ( $post instanceof WP_Post && 'publish' !== $post->post_status ) {
+		return;
+	}
 	delete_transient( 'rackora_total_views' );
 }
-add_action( 'transition_post_status', 'rackora_flush_total_views_cache' );
-add_action( 'deleted_post', 'rackora_flush_total_views_cache' );
+add_action( 'deleted_post', 'rackora_flush_total_views_cache', 10, 2 );
+
+/**
+ * 仅在内容状态跨越 publish 边界时清理站点总阅读数缓存，避免日常编辑与自动保存击穿缓存。
+ *
+ * @param string $new_status 新状态。
+ * @param string $old_status 旧状态。
+ */
+function rackora_flush_total_views_cache_on_transition( $new_status, $old_status ) {
+	if ( $new_status === $old_status ) {
+		return;
+	}
+	if ( 'publish' === $new_status || 'publish' === $old_status ) {
+		delete_transient( 'rackora_total_views' );
+	}
+}
+add_action( 'transition_post_status', 'rackora_flush_total_views_cache_on_transition', 10, 2 );
 
 /**
  * 识别访客客户端 IP。

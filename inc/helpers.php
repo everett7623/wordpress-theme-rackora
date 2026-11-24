@@ -542,11 +542,11 @@ function rackora_inject_heading_ids( $html ) {
 	$charset = '' !== $charset ? $charset : 'UTF-8';
 
 	$html = preg_replace_callback(
-		'/<h([23])(\s[^>]*)?>(.*?)<\/h\1>/is',
+		'/(?:<(pre|script|style|textarea)\b[^>]*>.*?<\/\1>)(*SKIP)(*FAIL)|<h([23])(\s[^>]*)?>(.*?)<\/h\2>/is',
 		static function ( $matches ) use ( &$outline, &$used, $charset ) {
-			$level = (int) $matches[1];
-			$attrs = (string) $matches[2];
-			$inner = $matches[3];
+			$level = (int) $matches[2];
+			$attrs = (string) $matches[3];
+			$inner = $matches[4];
 			$text  = html_entity_decode( trim( wp_strip_all_tags( $inner ) ), ENT_QUOTES | ENT_HTML5, $charset );
 			if ( '' === $text ) {
 				return $matches[0];
@@ -648,14 +648,14 @@ function rackora_post_heading_outline( $post_id = null ) {
 function rackora_apply_heading_outline_ids( $html, $outline ) {
 	$index = 0;
 	return preg_replace_callback(
-		'/<h([23])(\s[^>]*)?>(.*?)<\/h\1>/is',
+		'/(?:<(pre|script|style|textarea)\b[^>]*>.*?<\/\1>)(*SKIP)(*FAIL)|<h([23])(\s[^>]*)?>(.*?)<\/h\2>/is',
 		static function ( $matches ) use ( &$index, $outline ) {
 			if ( ! isset( $outline[ $index ] ) ) {
 				return $matches[0];
 			}
-			$level = (int) $matches[1];
-			$attrs = (string) $matches[2];
-			$inner = $matches[3];
+			$level = (int) $matches[2];
+			$attrs = (string) $matches[3];
+			$inner = $matches[4];
 			$id    = $outline[ $index ]['id'];
 			++$index;
 

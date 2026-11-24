@@ -19,31 +19,45 @@ function rackora_register_blocks() {
 		true
 	);
 
-	$inspector = array();
-	$files     = glob( get_theme_file_path( 'blocks/*/block.json' ) );
+	$files = glob( get_theme_file_path( 'blocks/*/block.json' ) );
 
 	foreach ( $files ? $files : array() as $file ) {
-		$block = register_block_type( dirname( $file ) );
-		if ( ! $block ) {
-			continue;
-		}
-		// 只把 block.json 中声明的属性交给通用属性面板，排除区块支持自动添加的属性。
-		$metadata                  = wp_json_file_decode( $file, array( 'associative' => true ) );
-		$inspector[ $block->name ] = isset( $metadata['attributes'] ) ? array_keys( $metadata['attributes'] ) : array();
+		register_block_type( dirname( $file ) );
 	}
-
-	wp_add_inline_script(
-		'rackora-editor',
-		'window.rackoraEditor = ' . wp_json_encode( rackora_editor_data( $inspector ), JSON_UNESCAPED_UNICODE | JSON_HEX_TAG ) . ';',
-		'before'
-	);
 }
 add_action( 'init', 'rackora_register_blocks' );
 
 /**
- * 在文章编辑器侧栏加载「Rackora」元数据面板。
+ * 收集 blocks/ 中各自定义区块在属性面板展示的声明属性（仅在块编辑器内调用）。
+ *
+ * @return array<string, string[]>
+ */
+function rackora_block_inspector_map() {
+	$inspector = array();
+	$files     = glob( get_theme_file_path( 'blocks/*/block.json' ) );
+
+	foreach ( $files ? $files : array() as $file ) {
+		// 只把 block.json 中声明的属性交给通用属性面板，排除区块支持自动添加的属性。
+		$metadata = wp_json_file_decode( $file, array( 'associative' => true ) );
+		if ( ! is_array( $metadata ) || empty( $metadata['name'] ) ) {
+			continue;
+		}
+		$inspector[ $metadata['name'] ] = isset( $metadata['attributes'] ) ? array_keys( $metadata['attributes'] ) : array();
+	}
+
+	return $inspector;
+}
+
+/**
+ * 在块编辑器中注入区块配置数据并加载「Rackora」元数据面板。
  */
 function rackora_enqueue_editor_meta_panel() {
+	wp_add_inline_script(
+		'rackora-editor',
+		'window.rackoraEditor = ' . wp_json_encode( rackora_editor_data( rackora_block_inspector_map() ), JSON_UNESCAPED_UNICODE | JSON_HEX_TAG ) . ';',
+		'before'
+	);
+
 	wp_enqueue_script(
 		'rackora-editor-meta',
 		get_theme_file_uri( 'assets/js/editor-meta.js' ),

@@ -19,7 +19,12 @@ if ( rackora_option( 'views_enabled' ) ) {
 }
 $rackora_stats[ __( 'Posts', 'rackora' ) ]      = (int) wp_count_posts( 'post' )->publish;
 $rackora_stats[ __( 'Comments', 'rackora' ) ]   = (int) wp_count_comments()->approved;
-$rackora_stats[ __( 'Categories', 'rackora' ) ] = (int) wp_count_terms( array( 'taxonomy' => 'category' ) );
+$rackora_stats[ __( 'Categories', 'rackora' ) ] = (int) wp_count_terms(
+	array(
+		'taxonomy'   => 'category',
+		'hide_empty' => true,
+	)
+);
 ?>
 <dl <?php echo get_block_wrapper_attributes( array( 'class' => 'profile-stats' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 	<?php foreach ( $rackora_stats as $rackora_label => $rackora_value ) : ?>

@@ -232,7 +232,7 @@ function rackora_seo_context() {
 		$seo_title              = rackora_singular_seo_title( $post->ID );
 		$context['title']       = '' !== $seo_title ? $seo_title : wp_strip_all_tags( get_the_title( $post ) );
 		$context['description'] = rackora_post_description( $post );
-		$context['type']        = rackora_is_template_page( 'about' ) ? 'profile' : 'article';
+		$context['type']        = rackora_is_template_page( 'about' ) ? 'profile' : ( is_singular( 'post' ) ? 'article' : 'website' );
 
 		$thumbnail = get_the_post_thumbnail_url( $post, 'full' );
 		if ( $thumbnail ) {

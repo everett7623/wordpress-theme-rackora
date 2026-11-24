@@ -73,13 +73,20 @@ function rackora_custom_logo_fallback( $html ) {
 add_filter( 'get_custom_logo', 'rackora_custom_logo_fallback' );
 
 /**
- * 页面变更时刷新 Rackora 页面模板的映射缓存。
+ * 页面变更时刷新 Rackora 页面模板的映射缓存（忽略非页面内容变更）。
+ *
+ * @param int          $post_id 内容 ID。
+ * @param WP_Post|null $post    内容对象（deleted_post 钩子提供）。
  */
-function rackora_flush_template_page_cache() {
+function rackora_flush_template_page_cache( $post_id = 0, $post = null ) {
+	$post_type = $post instanceof WP_Post ? $post->post_type : ( $post_id ? (string) get_post_type( $post_id ) : '' );
+	if ( '' !== $post_type && 'page' !== $post_type ) {
+		return;
+	}
 	rackora_template_page_map( true );
 }
-add_action( 'save_post_page', 'rackora_flush_template_page_cache' );
-add_action( 'deleted_post', 'rackora_flush_template_page_cache' );
+add_action( 'save_post_page', 'rackora_flush_template_page_cache', 10, 2 );
+add_action( 'deleted_post', 'rackora_flush_template_page_cache', 10, 2 );
 add_action( 'trashed_post', 'rackora_flush_template_page_cache' );
 add_action( 'untrashed_post', 'rackora_flush_template_page_cache' );
 

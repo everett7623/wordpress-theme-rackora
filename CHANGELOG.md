@@ -2,6 +2,21 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。GitHub Release 的说明与此文件对应章节保持一致。
 
+## [0.6.4] - 2026-11-24
+
+### 修复
+
+- 修复普通独立页面与索引页的 Open Graph `og:type` 被误标为 `article` 的问题（仅文章输出 `article`，关于页为 `profile`，其余独立页面统一为 `website`）
+- 修复标题锚点注入与目录大纲正则可能误匹配 `<pre>`、`<script>`、`<style>`、`<textarea>` 内部字面量 `<h2>`/`<h3>` 标签的问题
+- 修复站点统计区块（`rackora/site-stats`）统计分类总数时包含空分类导致与侧栏分类列表数量不一致的问题
+
+### 性能与体验
+
+- 优化区块注册启动开销：将 `window.rackoraEditor` 编辑器配置采集与序列化下沉至 `enqueue_block_editor_assets` 钩子，消除前台每次请求中 21 次多余的 `block.json` 磁盘读取与 JSON 编解码
+- 精准收敛页面模板缓存（`rackora_template_pages`）失效条件，仅在 `page` 类型内容变更时刷新
+- 精准收敛全站总阅读量缓存（`rackora_total_views`）失效条件，仅在内容状态跨越 `publish` 边界或已发布内容删除时清理
+- 文章卡片在摘要为空时不再输出空白 `<p class="post-entry__excerpt">` 元素
+
 ## [0.6.3] - 2026-11-23
 
 ### 修复
