@@ -513,19 +513,73 @@ function rackora_is_editor_preview() {
 }
 
 /**
+ * 将可能包含 HTML 标签或字符实体的文本转为规范化纯文本。
+ *
+ * 用于 meta 标签、JSON-LD、分享链接与使用 esc_html() 输出的标题/摘要，避免二次转义或实体字面量泄露。
+ *
+ * @param string $text 原始文本。
+ * @return string
+ */
+function rackora_plain_text( $text ) {
+	$charset = get_bloginfo( 'charset' );
+	$text    = wp_strip_all_tags( (string) $text );
+	$text    = html_entity_decode( $text, ENT_QUOTES | ENT_HTML5, '' !== $charset ? $charset : 'UTF-8' );
+	return trim( (string) preg_replace( '/\s+/u', ' ', $text ) );
+}
+
+/**
+ * 解析当前日期归档的年、月、日（兼容朴素固定链接 ?m=YYYYMMDD）。
+ *
+ * @return array{year: int, month: int, day: int}
+ */
+function rackora_date_archive_parts() {
+	$year  = (int) get_query_var( 'year' );
+	$month = (int) get_query_var( 'monthnum' );
+	$day   = (int) get_query_var( 'day' );
+	$m     = (string) get_query_var( 'm' );
+
+	if ( ! $year && '' !== $m ) {
+		$year  = (int) substr( $m, 0, 4 );
+		$month = (int) substr( $m, 4, 2 );
+		$day   = (int) substr( $m, 6, 2 );
+	}
+
+	return array(
+		'year'  => $year,
+		'month' => $month,
+		'day'   => $day,
+	);
+}
+
+/**
+ * 当前日期归档的干净标题（不含站点名与分页后缀）。
+ *
+ * @return string
+ */
+function rackora_date_archive_title() {
+	$parts = rackora_date_archive_parts();
+	if ( $parts['day'] ) {
+		return date_i18n( get_option( 'date_format' ), mktime( 0, 0, 0, $parts['month'], $parts['day'], $parts['year'] ) );
+	}
+	if ( $parts['month'] ) {
+		return date_i18n( _x( 'F Y', 'monthly archives date format', 'rackora' ), mktime( 0, 0, 0, $parts['month'], 1, $parts['year'] ) );
+	}
+	return $parts['year'] ? (string) $parts['year'] : '';
+}
+
+/**
  * 将标题文本转为 URL 锚点片段。
  *
  * @param string $text 标题文本。
  * @return string
  */
 function rackora_slugify_heading( $text ) {
-	$charset = get_bloginfo( 'charset' );
-	$text    = html_entity_decode( trim( wp_strip_all_tags( $text ) ), ENT_QUOTES | ENT_HTML5, '' !== $charset ? $charset : 'UTF-8' );
-	$text    = mb_strtolower( $text, 'UTF-8' );
-	$text    = preg_replace( '/[^\p{L}\p{N}\s-]+/u', '', $text );
-	$text    = preg_replace( '/[\s_]+/u', '-', $text );
-	$text    = preg_replace( '/-+/', '-', $text );
-	$text    = trim( $text, '-' );
+	$text = rackora_plain_text( $text );
+	$text = mb_strtolower( $text, 'UTF-8' );
+	$text = preg_replace( '/[^\p{L}\p{N}\s-]+/u', '', $text );
+	$text = preg_replace( '/[\s_]+/u', '-', $text );
+	$text = preg_replace( '/-+/', '-', $text );
+	$text = trim( $text, '-' );
 	return '' !== $text ? $text : 'section';
 }
 
@@ -538,16 +592,14 @@ function rackora_slugify_heading( $text ) {
 function rackora_inject_heading_ids( $html ) {
 	$outline = array();
 	$used    = array();
-	$charset = get_bloginfo( 'charset' );
-	$charset = '' !== $charset ? $charset : 'UTF-8';
 
 	$html = preg_replace_callback(
 		'/(?:<(pre|script|style|textarea)\b[^>]*>.*?<\/\1>)(*SKIP)(*FAIL)|<h([23])(\s[^>]*)?>(.*?)<\/h\2>/is',
-		static function ( $matches ) use ( &$outline, &$used, $charset ) {
+		static function ( $matches ) use ( &$outline, &$used ) {
 			$level = (int) $matches[2];
 			$attrs = (string) $matches[3];
 			$inner = $matches[4];
-			$text  = html_entity_decode( trim( wp_strip_all_tags( $inner ) ), ENT_QUOTES | ENT_HTML5, $charset );
+			$text  = rackora_plain_text( $inner );
 			if ( '' === $text ) {
 				return $matches[0];
 			}
@@ -599,6 +651,11 @@ function rackora_post_heading_outline( $post_id = null ) {
 		return array();
 	}
 
+	$post = get_post( $post_id );
+	if ( ! $post || post_password_required( $post ) ) {
+		return array();
+	}
+
 	$global_key = 'rackora_heading_outline_' . $post_id;
 	if ( ! empty( $GLOBALS[ $global_key ] ) && is_array( $GLOBALS[ $global_key ] ) ) {
 		return $GLOBALS[ $global_key ];
@@ -607,13 +664,6 @@ function rackora_post_heading_outline( $post_id = null ) {
 	static $cache = array();
 	if ( isset( $cache[ $post_id ] ) ) {
 		return $cache[ $post_id ];
-	}
-
-	$post = get_post( $post_id );
-	if ( ! $post ) {
-		$cache[ $post_id ]      = array();
-		$GLOBALS[ $global_key ] = array();
-		return array();
 	}
 
 	if ( false === stripos( $post->post_content, '<h' ) && false === strpos( $post->post_content, '<!-- wp:block' ) && false === strpos( $post->post_content, '[' ) ) {
@@ -650,12 +700,15 @@ function rackora_apply_heading_outline_ids( $html, $outline ) {
 	return preg_replace_callback(
 		'/(?:<(pre|script|style|textarea)\b[^>]*>.*?<\/\1>)(*SKIP)(*FAIL)|<h([23])(\s[^>]*)?>(.*?)<\/h\2>/is',
 		static function ( $matches ) use ( &$index, $outline ) {
+			$inner = $matches[4];
+			if ( '' === rackora_plain_text( $inner ) ) {
+				return $matches[0];
+			}
 			if ( ! isset( $outline[ $index ] ) ) {
 				return $matches[0];
 			}
 			$level = (int) $matches[2];
 			$attrs = (string) $matches[3];
-			$inner = $matches[4];
 			$id    = $outline[ $index ]['id'];
 			++$index;
 

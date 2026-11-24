@@ -119,8 +119,7 @@ function rackora_post_description( $post ) {
 	}
 
 	$text = has_excerpt( $post ) ? $post->post_excerpt : get_the_excerpt( $post );
-	$text = trim( (string) preg_replace( '/\s+/u', ' ', wp_strip_all_tags( $text ) ) );
-	return html_entity_decode( $text, ENT_QUOTES, get_bloginfo( 'charset' ) );
+	return rackora_plain_text( $text );
 }
 
 /**
@@ -130,7 +129,7 @@ function rackora_post_description( $post ) {
  * @return string
  */
 function rackora_singular_seo_title( $post_id ) {
-	return trim( (string) get_post_meta( (int) $post_id, '_rackora_seo_title', true ) );
+	return rackora_plain_text( get_post_meta( (int) $post_id, '_rackora_seo_title', true ) );
 }
 
 /**
@@ -140,9 +139,7 @@ function rackora_singular_seo_title( $post_id ) {
  * @return string
  */
 function rackora_singular_seo_description( $post_id ) {
-	$text = (string) get_post_meta( (int) $post_id, '_rackora_seo_description', true );
-	$text = trim( (string) preg_replace( '/\s+/u', ' ', wp_strip_all_tags( $text ) ) );
-	return html_entity_decode( $text, ENT_QUOTES, get_bloginfo( 'charset' ) );
+	return rackora_plain_text( get_post_meta( (int) $post_id, '_rackora_seo_description', true ) );
 }
 
 /**
@@ -179,14 +176,14 @@ function rackora_og_locale() {
  */
 function rackora_seo_context() {
 	$paged   = rackora_current_page();
-	$title   = wp_get_document_title();
+	$title   = rackora_plain_text( wp_get_document_title() );
 	$context = array(
 		'base'        => '',
 		'url'         => '',
 		'title'       => $title,
-		'description' => rackora_site_description(),
+		'description' => rackora_plain_text( rackora_site_description() ),
 		'image'       => rackora_custom_logo_url(),
-		'image_alt'   => get_bloginfo( 'name', 'display' ),
+		'image_alt'   => rackora_plain_text( get_bloginfo( 'name', 'display' ) ),
 		'type'        => 'website',
 	);
 
@@ -198,7 +195,7 @@ function rackora_seo_context() {
 			$post = get_queried_object();
 			if ( $post instanceof WP_Post ) {
 				$seo_title              = rackora_singular_seo_title( $post->ID );
-				$context['title']       = '' !== $seo_title ? $seo_title : wp_strip_all_tags( get_the_title( $post ) );
+				$context['title']       = '' !== $seo_title ? $seo_title : rackora_plain_text( get_the_title( $post ) );
 				$context['description'] = rackora_post_description( $post );
 				$thumbnail              = get_the_post_thumbnail_url( $post, 'full' );
 				if ( $thumbnail ) {
@@ -213,7 +210,7 @@ function rackora_seo_context() {
 		$posts_page      = $posts_page_id > 0 ? get_post( $posts_page_id ) : null;
 		if ( $posts_page instanceof WP_Post ) {
 			$seo_title        = rackora_singular_seo_title( $posts_page->ID );
-			$context['title'] = '' !== $seo_title ? $seo_title : wp_strip_all_tags( get_the_title( $posts_page ) );
+			$context['title'] = '' !== $seo_title ? $seo_title : rackora_plain_text( get_the_title( $posts_page ) );
 			$custom_desc      = rackora_singular_seo_description( $posts_page->ID );
 			if ( '' !== $custom_desc ) {
 				$context['description'] = $custom_desc;
@@ -230,7 +227,7 @@ function rackora_seo_context() {
 		$post                   = get_queried_object();
 		$context['base']        = (string) wp_get_canonical_url( $post );
 		$seo_title              = rackora_singular_seo_title( $post->ID );
-		$context['title']       = '' !== $seo_title ? $seo_title : wp_strip_all_tags( get_the_title( $post ) );
+		$context['title']       = '' !== $seo_title ? $seo_title : rackora_plain_text( get_the_title( $post ) );
 		$context['description'] = rackora_post_description( $post );
 		$context['type']        = rackora_is_template_page( 'about' ) ? 'profile' : ( is_singular( 'post' ) ? 'article' : 'website' );
 
@@ -249,7 +246,7 @@ function rackora_seo_context() {
 		$link            = get_term_link( $term );
 		$context['base'] = is_wp_error( $link ) ? '' : $link;
 
-		$description = trim( wp_strip_all_tags( term_description( $term ) ) );
+		$description = rackora_plain_text( term_description( $term ) );
 		if ( '' !== $description ) {
 			$context['description'] = $description;
 		}
@@ -260,26 +257,18 @@ function rackora_seo_context() {
 		$context['image']     = get_avatar_url( $author->ID, array( 'size' => 512 ) );
 		$context['image_alt'] = (string) $author->display_name;
 
-		$bio = trim( (string) get_the_author_meta( 'description', $author->ID ) );
+		$bio = rackora_plain_text( get_the_author_meta( 'description', $author->ID ) );
 		if ( '' !== $bio ) {
 			$context['description'] = $bio;
 		}
 	} elseif ( is_date() ) {
-		$year  = (int) get_query_var( 'year' );
-		$month = (int) get_query_var( 'monthnum' );
-		$day   = (int) get_query_var( 'day' );
-		$m     = (string) get_query_var( 'm' );
-		if ( ! $year && '' !== $m ) {
-			$year  = (int) substr( $m, 0, 4 );
-			$month = (int) substr( $m, 4, 2 );
-			$day   = (int) substr( $m, 6, 2 );
-		}
-		if ( $day ) {
-			$context['base'] = get_day_link( $year, $month, $day );
-		} elseif ( $month ) {
-			$context['base'] = get_month_link( $year, $month );
-		} elseif ( $year ) {
-			$context['base'] = get_year_link( $year );
+		$date = rackora_date_archive_parts();
+		if ( $date['day'] ) {
+			$context['base'] = get_day_link( $date['year'], $date['month'], $date['day'] );
+		} elseif ( $date['month'] ) {
+			$context['base'] = get_month_link( $date['year'], $date['month'] );
+		} elseif ( $date['year'] ) {
+			$context['base'] = get_year_link( $date['year'] );
 		}
 	} elseif ( is_post_type_archive() ) {
 		$link            = get_post_type_archive_link( get_query_var( 'post_type' ) );
@@ -365,7 +354,7 @@ function rackora_render_seo_head() {
 	}
 
 	rackora_render_pagination_links( $context['base'] );
-	rackora_render_json_ld();
+	rackora_render_json_ld( $context );
 }
 add_action( 'wp_head', 'rackora_render_seo_head', 5 );
 
@@ -406,26 +395,29 @@ function rackora_render_pagination_links( $base ) {
 /**
  * 当前路由的 JSON-LD：首页输出 WebSite 与 Organization，文章输出 BlogPosting / TechArticle
  * 与 BreadcrumbList，页面输出 WebPage / AboutPage。
+ *
+ * @param array<string, string>|null $context 当前路由 SEO 上下文（可选，缺省时自动采集）。
  */
-function rackora_render_json_ld() {
-	$site_url = home_url( '/' );
-	$org_id   = untrailingslashit( home_url() ) . '#organization';
-	$language = get_bloginfo( 'language' );
-	$org_name = (string) rackora_option( 'organization_name' );
-	$org_name = '' !== $org_name ? $org_name : get_bloginfo( 'name' );
-	$logo     = array(
+function rackora_render_json_ld( $context = null ) {
+	$site_url  = home_url( '/' );
+	$site_name = rackora_plain_text( get_bloginfo( 'name', 'display' ) );
+	$org_id    = untrailingslashit( home_url() ) . '#organization';
+	$language  = get_bloginfo( 'language' );
+	$org_name  = rackora_plain_text( rackora_option( 'organization_name' ) );
+	$org_name  = '' !== $org_name ? $org_name : $site_name;
+	$logo      = array(
 		'@type' => 'ImageObject',
 		'url'   => rackora_organization_logo_url(),
 	);
-	$graphs   = array();
+	$graphs    = array();
 
 	if ( is_front_page() || is_home() ) {
 		$website = array(
 			'@context'    => 'https://schema.org',
 			'@type'       => 'WebSite',
-			'name'        => get_bloginfo( 'name' ),
+			'name'        => $site_name,
 			'url'         => $site_url,
-			'description' => rackora_site_description(),
+			'description' => rackora_plain_text( rackora_site_description() ),
 			'inLanguage'  => $language,
 			'publisher'   => array( '@id' => $org_id ),
 			'potentialAction' => array(
@@ -459,6 +451,7 @@ function rackora_render_json_ld() {
 	if ( is_singular( 'post' ) ) {
 		$post      = get_queried_object();
 		$url       = (string) get_permalink( $post );
+		$headline  = rackora_plain_text( get_the_title( $post ) );
 		$thumbnail = get_the_post_thumbnail_url( $post, 'full' );
 		$category  = rackora_primary_category( $post->ID );
 		$words     = rackora_word_count( $post );
@@ -480,7 +473,7 @@ function rackora_render_json_ld() {
 				'@type' => 'WebPage',
 				'@id'   => $url,
 			),
-			'headline'         => wp_strip_all_tags( get_the_title( $post ) ),
+			'headline'         => $headline,
 			'description'      => rackora_post_description( $post ),
 			'inLanguage'       => $language,
 			'datePublished'    => get_post_time( 'c', true, $post ),
@@ -511,12 +504,12 @@ function rackora_render_json_ld() {
 		$graphs[] = $article;
 
 		$crumbs   = array(
-			array( get_bloginfo( 'name' ), $site_url ),
+			array( $site_name, $site_url ),
 		);
 		if ( $category ) {
 			$crumbs[] = array( $category->name, get_category_link( $category ) );
 		}
-		$crumbs[] = array( wp_strip_all_tags( get_the_title( $post ) ), $url );
+		$crumbs[] = array( $headline, $url );
 
 		$items = array();
 		foreach ( $crumbs as $index => $crumb ) {
@@ -540,12 +533,12 @@ function rackora_render_json_ld() {
 			'@type'       => rackora_is_template_page( 'about' ) ? 'AboutPage' : 'WebPage',
 			'@id'         => $url,
 			'url'         => $url,
-			'name'        => wp_strip_all_tags( get_the_title( $post ) ),
+			'name'        => rackora_plain_text( get_the_title( $post ) ),
 			'description' => rackora_post_description( $post ),
 			'inLanguage'  => $language,
 			'isPartOf'    => array(
 				'@type' => 'WebSite',
-				'name'  => get_bloginfo( 'name' ),
+				'name'  => $site_name,
 				'url'   => $site_url,
 			),
 			'publisher'   => array(
@@ -558,29 +551,30 @@ function rackora_render_json_ld() {
 		$term = get_queried_object();
 		$link = get_term_link( $term );
 		if ( ! is_wp_error( $link ) ) {
-			$term_desc = trim( wp_strip_all_tags( term_description( $term ) ) );
+			$term_name = rackora_plain_text( single_term_title( '', false ) );
+			$term_desc = rackora_plain_text( term_description( $term ) );
 			$graphs[]  = array(
 				'@context'    => 'https://schema.org',
 				'@type'       => 'CollectionPage',
 				'@id'         => $link,
 				'url'         => $link,
-				'name'        => single_term_title( '', false ),
-				'description' => '' !== $term_desc ? $term_desc : rackora_site_description(),
+				'name'        => $term_name,
+				'description' => '' !== $term_desc ? $term_desc : rackora_plain_text( rackora_site_description() ),
 				'inLanguage'  => $language,
 				'isPartOf'    => array(
 					'@type' => 'WebSite',
-					'name'  => get_bloginfo( 'name' ),
+					'name'  => $site_name,
 					'url'   => $site_url,
 				),
 			);
 
-			$crumbs    = array( array( get_bloginfo( 'name' ), $site_url ) );
+			$crumbs    = array( array( $site_name, $site_url ) );
 			$index_tpl = is_category() ? 'categories' : ( is_tag() ? 'tags' : '' );
 			$index_id  = '' !== $index_tpl ? rackora_template_page_id( $index_tpl ) : 0;
 			if ( $index_id ) {
-				$crumbs[] = array( wp_strip_all_tags( get_the_title( $index_id ) ), (string) get_permalink( $index_id ) );
+				$crumbs[] = array( rackora_plain_text( get_the_title( $index_id ) ), (string) get_permalink( $index_id ) );
 			}
-			$crumbs[] = array( single_term_title( '', false ), $link );
+			$crumbs[] = array( $term_name, $link );
 
 			$items = array();
 			foreach ( $crumbs as $index => $crumb ) {
@@ -600,7 +594,7 @@ function rackora_render_json_ld() {
 	} elseif ( is_author() ) {
 		$author = get_queried_object();
 		$url    = get_author_posts_url( $author->ID );
-		$bio    = trim( (string) get_the_author_meta( 'description', $author->ID ) );
+		$bio    = rackora_plain_text( get_the_author_meta( 'description', $author->ID ) );
 
 		$graphs[] = array(
 			'@context'    => 'https://schema.org',
@@ -608,7 +602,7 @@ function rackora_render_json_ld() {
 			'@id'         => $url,
 			'url'         => $url,
 			'name'        => (string) $author->display_name,
-			'description' => '' !== $bio ? $bio : rackora_site_description(),
+			'description' => '' !== $bio ? $bio : rackora_plain_text( rackora_site_description() ),
 			'inLanguage'  => $language,
 			'mainEntity'  => array(
 				'@type' => 'Person',
@@ -618,29 +612,30 @@ function rackora_render_json_ld() {
 			),
 		);
 	} elseif ( is_date() ) {
-		$ctx = rackora_seo_context();
-		if ( '' !== $ctx['base'] ) {
+		$ctx        = is_array( $context ) ? $context : rackora_seo_context();
+		$date_title = rackora_date_archive_title();
+		if ( '' !== $ctx['base'] && '' !== $date_title ) {
 			$graphs[] = array(
 				'@context'    => 'https://schema.org',
 				'@type'       => 'CollectionPage',
 				'@id'         => $ctx['base'],
 				'url'         => $ctx['base'],
-				'name'        => $ctx['title'],
+				'name'        => $date_title,
 				'description' => $ctx['description'],
 				'inLanguage'  => $language,
 				'isPartOf'    => array(
 					'@type' => 'WebSite',
-					'name'  => get_bloginfo( 'name' ),
+					'name'  => $site_name,
 					'url'   => $site_url,
 				),
 			);
 
-			$crumbs   = array( array( get_bloginfo( 'name' ), $site_url ) );
+			$crumbs   = array( array( $site_name, $site_url ) );
 			$index_id = rackora_template_page_id( 'archives' );
 			if ( $index_id ) {
-				$crumbs[] = array( wp_strip_all_tags( get_the_title( $index_id ) ), (string) get_permalink( $index_id ) );
+				$crumbs[] = array( rackora_plain_text( get_the_title( $index_id ) ), (string) get_permalink( $index_id ) );
 			}
-			$crumbs[] = array( $ctx['title'], $ctx['base'] );
+			$crumbs[] = array( $date_title, $ctx['base'] );
 
 			$items = array();
 			foreach ( $crumbs as $index => $crumb ) {

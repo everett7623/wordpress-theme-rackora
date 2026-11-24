@@ -124,35 +124,51 @@ function rackora_preload_fonts() {
 add_action( 'wp_head', 'rackora_preload_fonts', 3 );
 
 /**
- * 输出前台脚本配置：界面文案与阅读计数接口。
+ * 输出前台脚本配置：按页面类型精简输出界面文案与阅读计数接口。
  */
 function rackora_print_script_config() {
-	$post_id = is_singular() ? (int) get_queried_object_id() : 0;
+	$i18n = array(
+		'switchToLight' => __( 'Switch to light mode', 'rackora' ),
+		'switchToDark'  => __( 'Switch to dark mode', 'rackora' ),
+	);
 
 	$config = array(
-		'postId'     => $post_id,
-		'trackViews' => $post_id > 0 && rackora_views_trackable( $post_id ),
-		'restUrl'    => esc_url_raw( rest_url( 'rackora/v1/views/' ) ),
-		'nonce'      => is_user_logged_in() ? wp_create_nonce( 'wp_rest' ) : '',
-		'i18n'       => array(
-			'switchToLight' => __( 'Switch to light mode', 'rackora' ),
-			'switchToDark'  => __( 'Switch to dark mode', 'rackora' ),
-			'section'       => __( 'Section', 'rackora' ),
-			/* translators: %s: heading text. */
-			'linkTo'        => __( 'Link to %s', 'rackora' ),
-			'contents'      => __( 'Contents', 'rackora' ),
-			'onThisPage'    => __( 'On this page', 'rackora' ),
-			'close'         => __( 'Close', 'rackora' ),
-			'copyCode'      => __( 'Copy code', 'rackora' ),
-			'copy'          => __( 'Copy', 'rackora' ),
-			'copied'        => __( 'Copied', 'rackora' ),
-			'copyFailed'    => __( 'Copy failed', 'rackora' ),
-			'linkCopied'    => __( 'Link copied', 'rackora' ),
-			'productTable'  => __( 'Product comparison table', 'rackora' ),
-			'dataTable'     => __( 'Data table', 'rackora' ),
-			'sponsored'     => __( 'Sponsored', 'rackora' ),
-		),
+		'i18n' => $i18n,
 	);
+
+	if ( is_singular() ) {
+		$post_id     = (int) get_queried_object_id();
+		$track_views = $post_id > 0 && rackora_views_trackable( $post_id );
+
+		$config['postId']     = $post_id;
+		$config['trackViews'] = $track_views;
+		if ( $track_views ) {
+			$config['restUrl'] = esc_url_raw( rest_url( 'rackora/v1/views/' ) );
+			if ( is_user_logged_in() ) {
+				$config['nonce'] = wp_create_nonce( 'wp_rest' );
+			}
+		}
+
+		$config['i18n'] = array_merge(
+			$i18n,
+			array(
+				'section'      => __( 'Section', 'rackora' ),
+				/* translators: %s: heading text. */
+				'linkTo'       => __( 'Link to %s', 'rackora' ),
+				'contents'     => __( 'Contents', 'rackora' ),
+				'onThisPage'   => __( 'On this page', 'rackora' ),
+				'close'        => __( 'Close', 'rackora' ),
+				'copyCode'     => __( 'Copy code', 'rackora' ),
+				'copy'         => __( 'Copy', 'rackora' ),
+				'copied'       => __( 'Copied', 'rackora' ),
+				'copyFailed'   => __( 'Copy failed', 'rackora' ),
+				'linkCopied'   => __( 'Link copied', 'rackora' ),
+				'productTable' => __( 'Product comparison table', 'rackora' ),
+				'dataTable'    => __( 'Data table', 'rackora' ),
+				'sponsored'    => __( 'Sponsored', 'rackora' ),
+			)
+		);
+	}
 
 	wp_print_inline_script_tag(
 		wp_json_encode( $config, JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ),

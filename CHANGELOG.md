@@ -2,6 +2,21 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。GitHub Release 的说明与此文件对应章节保持一致。
 
+## [0.6.5] - 2026-11-24
+
+### 修复
+
+- 修复密码保护文章或页面未输入密码时，服务端目录区块（`rackora/post-toc`）仍暴露正文 `<h2>`/`<h3>` 章节标题的问题
+- 修复正文包含空标题时，`rackora_apply_heading_outline_ids()` 未同步跳过空标题导致后续章节锚点 ID 顺序错位的问题
+- 新增 `rackora_plain_text()` 统一纯文本解码，修复文章卡片摘要、归档标题、文章导语与侧栏评论摘录的 HTML 实体二次转义乱码，以及 Open Graph、JSON-LD 与分享链接中的实体字面量泄露
+- 修复日期归档页 JSON-LD `CollectionPage.name` 与面包屑末级混入站点名与分页后缀的问题，并消除 `rackora_render_json_ld()` 重复计算 SEO 上下文与重复解析日期参数
+- 修复「静态首页 + 独立文章页（Posts Page）」模式下，归档标题区块（`rackora/archive-heading`）未优先读取文章页手动摘要的问题
+
+### 性能与体验
+
+- 按页面类型裁剪 `<head>` 内联配置（`#rackora-config`）：非单篇页面仅输出配色切换所需文案，不再输出文章页专用文案、阅读计数接口与 `wp_rest` Nonce；单篇页面仅在开启阅读计数且已登录时生成 Nonce
+- 补齐经典内容图片放大灯箱的键盘可访问性：可放大图片支持 `Tab` 聚焦与 `Enter` / `Space` 打开，关闭后自动将焦点归还至触发图片
+
 ## [0.6.4] - 2026-11-24
 
 ### 修复

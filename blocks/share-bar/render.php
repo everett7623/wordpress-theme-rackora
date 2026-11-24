@@ -28,7 +28,7 @@ if ( ! $rackora_post || ( ! $rackora_targets && ! $rackora_show_copy ) ) {
 }
 
 $rackora_url     = (string) get_permalink( $rackora_post );
-$rackora_title   = wp_strip_all_tags( get_the_title( $rackora_post ) );
+$rackora_title   = rackora_plain_text( get_the_title( $rackora_post ) );
 $rackora_e_url   = rawurlencode( $rackora_url );
 $rackora_e_title = rawurlencode( $rackora_title );
 $rackora_e_msg   = rawurlencode( $rackora_title . "\n" . $rackora_url );

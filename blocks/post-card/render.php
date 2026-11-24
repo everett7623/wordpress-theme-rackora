@@ -54,7 +54,7 @@ $rackora_classes  = 'post-entry' . ( $rackora_pinned ? ' is-pinned' : '' ) . ( $
 			<time datetime="<?php echo esc_attr( get_the_date( 'c', $rackora_post ) ); ?>"><?php echo esc_html( get_the_date( 'Y-m-d', $rackora_post ) ); ?></time>
 		</div>
 		<h2 class="post-entry__title"><a href="<?php echo esc_url( $rackora_link ); ?>"><?php echo wp_kses_post( $rackora_title ); ?></a></h2>
-		<?php $rackora_excerpt = trim( wp_strip_all_tags( get_the_excerpt( $rackora_post ) ) ); ?>
+		<?php $rackora_excerpt = rackora_plain_text( get_the_excerpt( $rackora_post ) ); ?>
 		<?php if ( '' !== $rackora_excerpt ) : ?>
 			<p class="post-entry__excerpt"><?php echo esc_html( $rackora_excerpt ); ?></p>
 		<?php endif; ?>

@@ -69,18 +69,36 @@ function initLightbox(content) {
 	dialog.innerHTML = `<button type="button" class="image-lightbox__close">${icon("x")}</button><img alt="" />`;
 	dialog.querySelector("button").setAttribute("aria-label", t("close", "Close"));
 	const preview = dialog.querySelector("img");
+	let activeTrigger = null;
 	dialog.querySelector("button").addEventListener("click", () => dialog.close());
 	dialog.addEventListener("click", (event) => {
 		if (event.target === dialog || event.target === preview) dialog.close();
 	});
+	dialog.addEventListener("close", () => {
+		if (activeTrigger) {
+			activeTrigger.focus();
+			activeTrigger = null;
+		}
+	});
 	document.body.append(dialog);
+
+	const open = (img) => {
+		activeTrigger = img;
+		preview.src = img.currentSrc || img.src;
+		preview.alt = img.alt || "";
+		dialog.showModal();
+	};
 
 	for (const img of images) {
 		img.classList.add("is-zoomable");
-		img.addEventListener("click", () => {
-			preview.src = img.currentSrc || img.src;
-			preview.alt = img.alt || "";
-			dialog.showModal();
+		img.tabIndex = 0;
+		img.setAttribute("role", "button");
+		img.addEventListener("click", () => open(img));
+		img.addEventListener("keydown", (event) => {
+			if (event.key === "Enter" || event.key === " ") {
+				event.preventDefault();
+				open(img);
+			}
 		});
 	}
 }

@@ -38,7 +38,7 @@ if ( ! $rackora_comments && ! rackora_is_editor_preview() ) {
 			<?php foreach ( $rackora_comments as $rackora_comment ) : ?>
 				<li>
 					<strong><?php echo esc_html( get_comment_author( $rackora_comment ) ); ?></strong>
-					<p><?php echo esc_html( wp_html_excerpt( wp_strip_all_tags( $rackora_comment->comment_content ), 96, '…' ) ); ?></p>
+					<p><?php echo esc_html( wp_html_excerpt( rackora_plain_text( $rackora_comment->comment_content ), 96, '…' ) ); ?></p>
 				</li>
 			<?php endforeach; ?>
 		</ul>
