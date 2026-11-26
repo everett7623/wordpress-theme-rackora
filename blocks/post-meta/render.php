@@ -21,7 +21,7 @@ $rackora_deck    = $attributes['showDeck'] && ! post_password_required( $rackora
 
 // 关于页没有手动摘要时，用站点副标题作为导语。
 if ( 'page' === $rackora_variant && '' === $rackora_deck && $attributes['showDeck'] && rackora_is_template_page( 'about' ) ) {
-	$rackora_deck = get_bloginfo( 'description', 'display' );
+	$rackora_deck = rackora_plain_text( get_bloginfo( 'description', 'display' ) );
 }
 
 if ( 'page' === $rackora_variant ) {

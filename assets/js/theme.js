@@ -66,7 +66,10 @@ function initBackToTop() {
 		window.requestAnimationFrame(update);
 	};
 	window.addEventListener("scroll", schedule, { passive: true });
-	button.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+	button.addEventListener("click", () => {
+		const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+		window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+	});
 	update();
 }
 

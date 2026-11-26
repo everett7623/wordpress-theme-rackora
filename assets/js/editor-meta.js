@@ -26,7 +26,7 @@
 					label: field.label,
 					help: field.help,
 					value: meta[key] ?? "",
-					onChange: (value) => setMeta({ ...meta, [key]: value }),
+					onChange: (value) => setMeta({ [key]: value }),
 					__nextHasNoMarginBottom: true,
 				};
 

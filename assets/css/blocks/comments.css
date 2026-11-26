@@ -104,10 +104,9 @@
 	border-radius: 5px;
 }
 
-.wp-block-post-comments-form input:focus,
+.wp-block-post-comments-form input:not([type="submit"]):not([type="checkbox"]):focus,
 .wp-block-post-comments-form textarea:focus {
 	border-color: var(--rack-accent);
-	outline: none;
 }
 
 .wp-block-post-comments-form .comment-notes,

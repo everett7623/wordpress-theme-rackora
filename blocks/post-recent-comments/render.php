@@ -14,7 +14,7 @@ if ( ! $rackora_post_id ) {
 	return;
 }
 
-if ( ! rackora_is_editor_preview() && (int) get_comments_number( $rackora_post_id ) < 1 ) {
+if ( ! rackora_is_editor_preview() && ( post_password_required( $rackora_post_id ) || (int) get_comments_number( $rackora_post_id ) < 1 ) ) {
 	return;
 }
 

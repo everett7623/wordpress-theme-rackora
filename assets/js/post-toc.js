@@ -73,7 +73,10 @@ function initMobileToc(section, navigation) {
 	panel.className = "mobile-toc-panel";
 	panel.hidden = true;
 	panel.dataset.mobileToc = "panel";
-	panel.innerHTML = `<div class="mobile-toc-panel__sheet"><header><strong></strong><button type="button" class="icon-button" data-mobile-toc-close>${icon("x")}</button></header><nav></nav></div>`;
+	panel.setAttribute("role", "dialog");
+	panel.setAttribute("aria-modal", "true");
+	panel.setAttribute("aria-labelledby", "mobile-toc-title");
+	panel.innerHTML = `<div class="mobile-toc-panel__sheet"><header><strong id="mobile-toc-title"></strong><button type="button" class="icon-button" data-mobile-toc-close>${icon("x")}</button></header><nav></nav></div>`;
 	panel.querySelector("strong").textContent = t("onThisPage", "On this page");
 	panel.querySelector("[data-mobile-toc-close]").setAttribute("aria-label", t("close", "Close"));
 	panel.querySelector("nav").append(...Array.from(navigation.children, (node) => node.cloneNode(true)));
@@ -99,6 +102,9 @@ function initMobileToc(section, navigation) {
 	});
 	document.addEventListener("keydown", (event) => {
 		if (event.key === "Escape" && !panel.hidden) close(true);
+	});
+	window.matchMedia("(min-width: 961px)").addEventListener("change", (event) => {
+		if (event.matches && !panel.hidden) close(false);
 	});
 
 	(section.closest(".article-sidebar") || section).after(toggle);
