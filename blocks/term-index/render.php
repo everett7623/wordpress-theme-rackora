@@ -33,12 +33,27 @@ if ( $rackora_is_tags ) {
 		)
 	);
 	if ( ! is_wp_error( $rackora_all ) && $rackora_all ) {
+		$rackora_by_id = array();
 		foreach ( $rackora_all as $rackora_term ) {
-			if ( 0 === (int) $rackora_term->parent ) {
+			$rackora_by_id[ (int) $rackora_term->term_id ] = $rackora_term;
+		}
+		foreach ( $rackora_all as $rackora_term ) {
+			$rackora_parent_id = (int) $rackora_term->parent;
+			if ( 0 === $rackora_parent_id ) {
 				$rackora_terms[] = $rackora_term;
-			} else {
-				$rackora_children[ (int) $rackora_term->parent ][] = $rackora_term;
+				continue;
 			}
+			// 向上追溯到顶级分类，确保三级及以下嵌套子分类也会归入对应顶级分类展示。
+			$rackora_root_id = $rackora_parent_id;
+			$rackora_visited = array( (int) $rackora_term->term_id => true );
+			while ( isset( $rackora_by_id[ $rackora_root_id ] ) && (int) $rackora_by_id[ $rackora_root_id ]->parent > 0 ) {
+				if ( isset( $rackora_visited[ $rackora_root_id ] ) ) {
+					break;
+				}
+				$rackora_visited[ $rackora_root_id ] = true;
+				$rackora_root_id                     = (int) $rackora_by_id[ $rackora_root_id ]->parent;
+			}
+			$rackora_children[ $rackora_root_id ][] = $rackora_term;
 		}
 	}
 }
@@ -70,7 +85,7 @@ if ( is_wp_error( $rackora_terms ) || ! $rackora_terms ) {
 		<ul class="taxonomy-grid">
 			<?php foreach ( $rackora_terms as $rackora_term ) : ?>
 				<?php
-				$rackora_description = trim( wp_strip_all_tags( $rackora_term->description ) );
+				$rackora_description = rackora_plain_text( $rackora_term->description );
 				$rackora_kids        = isset( $rackora_children[ (int) $rackora_term->term_id ] ) ? $rackora_children[ (int) $rackora_term->term_id ] : array();
 				?>
 				<li>

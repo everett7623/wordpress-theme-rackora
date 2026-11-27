@@ -2,6 +2,20 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。GitHub Release 的说明与此文件对应章节保持一致。
 
+## [0.6.7] - 2026-11-27
+
+### 修复
+
+- 修复 WordPress 原生代码块（`core/code`）通过「附加 CSS 类」设置语言（如 `language-php`）时，因类名输出在 `<pre>` 而非 `<code>` 导致语法高亮失效的问题，同时支持不区分大小写匹配 `lang-`/`language-` 前缀
+- 修复页脚导航、分类/标签/日期面包屑索引项与分类索引页简介在包含 `&`、引号时出现 HTML 实体二次转义的问题
+- 修复分类索引区块（`rackora/term-index`）丢失三级及以下嵌套子分类的问题，现自动追溯归入对应顶级分类展示
+
+### 性能与无障碍
+
+- 优化 `rackora_views_trackable()` 在关闭阅读计数时提前短路返回，避免在文章列表中多余调用 `get_post()`
+- 为 `rackora_annotate_content_headings()` 增加 `post_password_required()` 短路，避免误处理密码保护表单中的标题标签
+- 修复搜索输入框（`.wp-block-search__input:focus`）覆盖 `outline: none` 导致键盘聚焦环丢失的问题
+
 ## [0.6.6] - 2026-11-25
 
 ### 修复

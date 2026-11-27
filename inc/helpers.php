@@ -731,7 +731,7 @@ function rackora_apply_heading_outline_ids( $html, $outline ) {
  * @return string
  */
 function rackora_annotate_content_headings( $content ) {
-	if ( ! is_singular() || ! in_the_loop() || ! is_main_query() || false === stripos( $content, '<h' ) ) {
+	if ( ! is_singular() || ! in_the_loop() || ! is_main_query() || post_password_required() || false === stripos( $content, '<h' ) ) {
 		return $content;
 	}
 

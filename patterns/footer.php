@@ -16,7 +16,7 @@ foreach ( array( 'archives', 'categories', 'tags', 'links' ) as $rackora_templat
 	$rackora_page_id = rackora_template_page_id( $rackora_template );
 	if ( $rackora_page_id ) {
 		$rackora_footer_links[] = array(
-			'label' => get_the_title( $rackora_page_id ),
+			'label' => rackora_plain_text( get_the_title( $rackora_page_id ) ),
 			'url'   => get_permalink( $rackora_page_id ),
 		);
 	}

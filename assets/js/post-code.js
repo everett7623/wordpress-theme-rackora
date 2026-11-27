@@ -27,9 +27,14 @@ const LANGUAGE_ALIASES = {
 	toml: "ini",
 };
 
-function languageName(code) {
-	const className = Array.from(code.classList).find((item) => item.startsWith("language-") || item.startsWith("lang-"));
-	const raw = (className ? className.replace(/^lang(uage)?-/, "") : "text").toLowerCase();
+function findLanguageClass(element) {
+	if (!element) return "";
+	return Array.from(element.classList).find((item) => /^lang(uage)?-/i.test(item)) || "";
+}
+
+function languageName(code, pre) {
+	const className = findLanguageClass(code) || findLanguageClass(pre);
+	const raw = (className ? className.replace(/^lang(uage)?-/i, "") : "text").toLowerCase();
 	return LANGUAGE_ALIASES[raw] || raw;
 }
 
@@ -78,7 +83,7 @@ export async function initCodeBlocks(content) {
 		const code = pre.querySelector("code");
 		if (!code || pre.parentElement?.classList.contains("code-block")) continue;
 
-		const language = languageName(code);
+		const language = languageName(code, pre);
 		const wrapper = document.createElement("div");
 		wrapper.className = "code-block";
 		pre.before(wrapper);

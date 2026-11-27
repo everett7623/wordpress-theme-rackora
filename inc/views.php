@@ -16,10 +16,13 @@ defined( 'ABSPATH' ) || exit;
  * @return bool
  */
 function rackora_views_trackable( $post_id ) {
+	if ( ! rackora_option( 'views_enabled' ) ) {
+		return false;
+	}
+
 	$post = get_post( $post_id );
 
-	return (bool) rackora_option( 'views_enabled' )
-		&& $post
+	return $post
 		&& 'publish' === $post->post_status
 		&& '' === $post->post_password
 		&& is_post_type_viewable( $post->post_type )

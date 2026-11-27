@@ -221,7 +221,7 @@ function rackora_breadcrumb_index_items( $items ) {
 		0,
 		array(
 			array(
-				'label' => get_the_title( $page_id ),
+				'label' => rackora_plain_text( get_the_title( $page_id ) ),
 				'url'   => get_permalink( $page_id ),
 			),
 		)
